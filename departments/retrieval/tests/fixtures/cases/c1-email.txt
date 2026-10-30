@@ -1,0 +1,9 @@
+From: sales@yi-manufacturing.zz
+To: purchasing@jia-trading.zz
+Date: 2025-03-20
+Subject: Delay in delivery of water pumps (SYNTHETIC test data)
+
+Dear Purchasing Team,
+We regret to inform you that, due to a shortage of components at our factory, we will not be able to deliver the 200 water pumps by the agreed date of 1 March 2025.
+We expect to ship the first 120 units in mid-April and the remaining 80 units in May. We apologise for the delay and ask for your understanding.
+Regards, Sales Department, Yi Manufacturing Co. (fictional)

@@ -1,0 +1,23 @@
+ZZ Sale of Goods Act (SYNTHETIC)
+Synthetic test data. This is not real law of any jurisdiction.
+
+PART I GENERAL
+
+Section 1. This Act applies to contracts for the sale of goods in ZZ.
+Section 2. A contract for the sale of goods may be made in writing, orally, or partly in writing and partly orally, unless another Act requires writing.
+
+PART II PERFORMANCE
+
+Section 3. The seller must deliver the goods at the time agreed in the contract. Where no time is agreed, the seller must deliver within a reasonable time.
+Section 4. Unless otherwise agreed, the place of delivery is the seller's place of business.
+Section 5. The buyer must examine the goods within a reasonable time after delivery and must give the seller notice of any defect within a reasonable time after discovering it. A buyer who fails to give such notice loses the right to rely on the defect.
+Section 6. Risk of loss passes to the buyer when the goods are delivered, unless the parties agree otherwise.
+Section 7. The buyer must pay the price at the time and place at which the goods are delivered, unless otherwise agreed.
+
+PART III REMEDIES
+
+Section 8. If the seller fails to deliver the goods by the agreed date and the delay deprives the buyer of what the buyer was entitled to expect under the contract, the buyer may terminate the contract by notice to the seller.
+Section 9. If the buyer fails to pay the price when due, the seller may recover the price together with interest from the date payment was due.
+Section 10. A party injured by a breach of contract is entitled to damages equal to the loss caused by the breach, limited to loss that the party in breach foresaw or ought to have foreseen when the contract was made.
+Section 11. A party injured by a breach must take reasonable steps to mitigate its loss. Damages are reduced by any loss that could have been avoided by such steps.
+Section 12. A clause fixing the sum payable on breach is enforceable unless the sum is grossly excessive in relation to the likely loss, in which case the court may reduce it.

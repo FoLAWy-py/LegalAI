@@ -1,0 +1,13 @@
+ZZ Rules of Civil Evidence (SYNTHETIC)
+Synthetic test data. This is not real law of any jurisdiction.
+
+Rule 1. Scope. These rules govern the admission of evidence in civil proceedings in the courts of ZZ.
+Rule 2. Relevance. Evidence is relevant if it has any tendency to make a fact of consequence to the action more or less probable than it would be without the evidence. Irrelevant evidence is not admissible.
+Rule 3. Burden of proof. The party asserting a fact bears the burden of proving it. The standard of proof in civil proceedings is the balance of probabilities.
+Rule 4. Hearsay. A statement made out of court and offered to prove the truth of what it asserts is hearsay and is not admissible except as provided by these rules.
+Rule 5. Business records. A record made in the regular course of business at or near the time of the event it records is not excluded by Rule 4.
+Rule 6. Original documents. To prove the content of a writing, the original is required, unless the original is lost or a duplicate is admitted by agreement.
+Rule 7. Electronic records. An email or other electronic record may be authenticated by evidence that it was sent from or received at an address associated with the person concerned.
+Rule 8. Witnesses. A witness may testify only to matters within the witness's personal knowledge.
+Rule 9. Expert opinion. A witness qualified as an expert may give an opinion if specialised knowledge will help the court understand the evidence.
+Rule 10. Admissions. A statement by a party offered against that party is not hearsay.

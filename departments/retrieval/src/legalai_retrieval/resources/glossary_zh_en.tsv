@@ -1,0 +1,186 @@
+# Bilingual search glossary (zh <-> en), owner: retrieval, version: 1 (2026-10-30).
+#
+# PURPOSE: query expansion for cross-lingual lexical search ONLY.
+# Each line is one concept group: Chinese terms <TAB> English terms, alternatives separated by "|".
+# Pairs are approximate translations of general legal vocabulary. They are NOT statements that a
+# Chinese legal concept and a US/common-law concept are equivalent (ADR-0004 §6), are never shown to
+# users, and are never used to verify anything. They only widen the set of candidate spans.
+# Changelog: v1 initial list of general contract-dispute and civil-procedure vocabulary.
+#
+# --- parties and roles ---
+当事人|双方	party|parties
+一方	one party|either party
+对方|相对人	other party|counterparty
+买方|买受人|购买方	buyer|purchaser
+卖方|出卖人|销售方|供货方	seller|vendor|supplier
+出租人	lessor|landlord
+承租人	lessee|tenant
+借款人	borrower
+贷款人|出借人	lender
+债权人	creditor|obligee
+债务人	debtor|obligor
+保证人	guarantor|surety
+代理人	agent
+被代理人|委托人	principal
+第三人	third party
+原告	plaintiff
+被告	defendant
+法院|人民法院	court
+法官	judge
+证人	witness
+鉴定人	expert witness|appraiser
+# --- formation ---
+合同|契约|协议	contract|agreement
+要约	offer
+承诺	acceptance|accept
+要约邀请	invitation to offer|invitation to treat
+订立|缔结	conclude|formation|form|enter into
+成立	formation|formed|established
+生效	effective|take effect|enter into force
+书面形式|书面	writing|written|in writing
+口头	oral|orally|verbal
+签名|签字	signature|sign|signed
+盖章	seal|stamp
+条款	clause|term|provision
+格式条款	standard term|standard terms|boilerplate
+附件	annex|schedule|attachment
+# --- validity ---
+无效	void|invalid
+可撤销|撤销	voidable|revoke|rescind|set aside
+欺诈	fraud|fraudulent
+胁迫	duress|coercion
+重大误解	material mistake|mistake
+显失公平	unconscionable|grossly unfair
+民事行为能力|行为能力	capacity|legal capacity
+# --- performance ---
+履行	perform|performance
+全面履行	full performance|perform fully
+继续履行|实际履行	specific performance|continue to perform
+交付	deliver|delivery|tender
+交货	deliver goods|delivery of goods|deliver
+货物|标的物	goods|subject matter
+价款|价格	price
+支付|付款	pay|payment
+报酬	remuneration|fee|compensation
+期限|履行期限	time limit|deadline|period|time for performance
+迟延|延迟|逾期	delay|late|overdue|delayed
+提前	early|in advance
+地点|履行地点	place|place of performance
+数量	quantity
+质量	quality
+瑕疵|缺陷	defect|defective|nonconformity|nonconforming
+检验|验收	inspect|inspection|examine|acceptance inspection
+异议	objection|notice of nonconformity|object
+包装	packaging|package
+运输|运送	transport|carriage|shipment|shipping
+风险	risk
+风险转移	passing of risk|transfer of risk
+所有权	ownership|title
+转移	transfer|pass
+发票	invoice
+收据	receipt
+送货单|交货单	delivery note|delivery receipt
+# --- breach and remedies ---
+违约	breach|breach of contract|default
+违约责任	liability for breach|liability for breach of contract
+根本违约	fundamental breach|material breach
+预期违约	anticipatory breach|repudiation
+责任	liability|responsibility|liable
+赔偿	compensate|compensation|damages|indemnify
+损失	loss|losses
+损害赔偿|赔偿损失	damages|compensatory damages
+可得利益	expected profit|lost profits|expectation
+违约金	liquidated damages|penalty|contractual penalty
+定金	deposit|earnest money
+利息	interest
+补救措施	remedy|remedies|cure
+修理|更换|重作	repair|replace|replacement
+减少价款|减价	price reduction|reduce the price
+解除	terminate|termination|rescind|rescission|cancel|cancellation
+终止	terminate|termination|end|discharge
+通知	notice|notify|notification
+催告	demand|reminder|demand for performance
+合理期限|合理期间	reasonable time|reasonable period
+不可抗力	force majeure|act of god
+情势变更	change of circumstances|hardship
+免责	exemption|exclusion of liability|exempt|excuse
+减损|减轻损失	mitigate|mitigation
+过错	fault
+抵销	set-off|setoff|offset
+同时履行抗辩	defense of simultaneous performance
+抗辩	defense|defence|plea
+# --- obligations, guarantees, transfer ---
+债务	debt|obligation
+债权	claim|right of claim|receivable
+义务	obligation|duty
+权利	right|rights
+担保	security|guarantee|collateral
+保证	guarantee|guaranty|suretyship|warranty
+抵押	mortgage
+质押	pledge
+转让	assign|assignment|transfer
+代位	subrogation
+代理	agency|agent|represent
+授权	authorize|authorization|authority
+# --- contract types ---
+买卖合同	sales contract|contract for sale|sale of goods
+借款合同	loan contract|loan agreement
+租赁合同|租赁	lease|lease contract|tenancy
+承揽合同|承揽	work contract|contract for work
+建设工程	construction
+运输合同	contract of carriage
+委托合同	mandate|agency contract
+服务	service|services
+# --- procedure ---
+诉讼	litigation|lawsuit|action|proceedings
+起诉	sue|file suit|bring an action|commence an action
+诉讼请求	claim|claims for relief|prayer for relief
+上诉	appeal
+管辖	jurisdiction|venue
+判决	judgment|judgement
+裁定	ruling|order
+调解	mediation|conciliation
+仲裁	arbitration|arbitrate
+诉讼时效|时效	limitation period|statute of limitations|limitation
+期间	period|time period
+送达	service|serve
+答辩	answer|defense|response
+反诉	counterclaim
+撤诉	withdraw|withdrawal of action|dismiss
+# --- evidence ---
+证据	evidence
+举证	burden of proof|produce evidence|adduce evidence
+举证责任	burden of proof|burden of production
+证明	prove|proof|demonstrate|establish
+证明目的	purpose of proof|what the evidence is offered to prove
+证明标准	standard of proof
+高度可能性|高度盖然性	preponderance|more likely than not|high probability
+书证	documentary evidence|document|documents
+物证	physical evidence|real evidence
+电子数据	electronic data|electronic evidence|email|emails|electronic records
+证人证言|证言	testimony|witness testimony
+鉴定意见	expert opinion|expert report
+原件	original
+复印件|复制件	copy|duplicate
+质证	cross-examination|examine evidence|challenge evidence
+自认	admission|admit
+免证|无需举证	not required to prove|judicial notice
+相关性|关联性	relevance|relevant
+真实性	authenticity|authentic|genuine
+合法性	legality|lawfully obtained|admissibility
+采信	admit|accept evidence|credit
+传闻	hearsay
+举证期限	time limit for evidence|deadline for producing evidence
+# --- general ---
+法律	law|statute
+规定	provide|provision|prescribe|rule
+适用	apply|application|applicable
+解释	interpretation|interpret|construe
+合理	reasonable
+善意	good faith|bona fide
+诚信|诚实信用	good faith|honesty|integrity
+公平	fairness|fair
+书面通知	written notice
+日	day|days
+月	month|months
+年	year|years

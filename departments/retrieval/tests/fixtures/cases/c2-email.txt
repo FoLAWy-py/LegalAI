@@ -1,0 +1,4 @@
+From: orders@ding-wood.zz
+To: buyer@bing-furniture.zz
+Subject: Late delivery of office chairs (SYNTHETIC test data, other case)
+We will not be able to deliver the 500 office chairs by the agreed date of 1 June 2025 because our supplier is late.
