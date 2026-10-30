@@ -1,5 +1,9 @@
 """Fictional `ZZ` criminal law. Every text here is invented for testing and is not the law of any real place.
 
+Financial offences are the v1 focus: payment card fraud, money laundering and crypto-asset manipulation (Penal
+Code), illegal public fundraising and fundraising fraud (Special Criminal Regulation). Their structure, not their
+wording, is modelled on offence types found in real systems.
+
 Versions are chosen so that temporal traps exist: the ZZ Penal Code (SYNTHETIC) gained Article 30 only on
 2022-01-01, and the ZZ Special Criminal Regulation (SYNTHETIC) lowered its blood-alcohol threshold on 2023-07-01.
 """
@@ -68,14 +72,30 @@ def _penal_articles(*, with_article_30: bool, theft_max: str) -> list[Article]:
             ("damage", "destroy", "毁坏", "故意毁坏财物", "财物"),
         ),
     ]
+    articles += [
+        Article(
+            "Article 24",
+            "Article 24 (Payment card fraud). A person who uses a payment card issued to another, without that "
+            "person's authorisation, to obtain money or goods worth 1,000 ZZ crowns or more commits payment card "
+            "fraud and is liable to imprisonment of up to five years.",
+            ("card", "payment card", "bank card", "信用卡", "银行卡", "盗刷"),
+        ),
+        Article(
+            "Article 25",
+            "Article 25 (Money laundering). A person who, knowing that funds are the proceeds of an offence, "
+            "transfers or converts the funds in order to conceal or disguise their origin commits money "
+            "laundering and is liable to imprisonment of up to five years.",
+            ("laundering", "proceeds", "crypto", "洗钱", "犯罪所得", "转移"),
+        ),
+    ]
     if with_article_30:
         articles.append(
             Article(
                 "Article 30",
-                "Article 30 (Unauthorised access). A person who intentionally accesses a computer system of "
-                "another without authorisation commits unauthorised access and is liable to imprisonment of "
-                "up to one year.",
-                ("computer", "access", "server", "login", "计算机", "非法侵入"),
+                "Article 30 (Crypto-asset market manipulation). A person who places orders for crypto-assets "
+                "without intending them to be executed, in order to mislead other traders about the price, "
+                "commits crypto-asset market manipulation and is liable to imprisonment of up to three years.",
+                ("crypto", "manipulation", "orders", "exchange", "加密资产", "操纵"),
             )
         )
     return articles
@@ -111,6 +131,18 @@ def _regulation_articles(*, alcohol_threshold: str) -> list[Article]:
             "第八条（伪造印章）伪造公司、企业印章，用于签订合同或者出具证明的，构成伪造印章罪，"
             "处二年以下有期徒刑。",
             ("forgery", "forged", "seal", "stamp", "伪造", "印章", "公章"),
+        ),
+        Article(
+            "第九条",
+            "第九条（非法吸收公众资金）未经金融监管部门批准，通过公开宣传，承诺在一定期限内还本付息或者给付回报，"
+            "向社会不特定对象吸收资金的，构成非法吸收公众资金罪，处五年以下有期徒刑。",
+            ("fundraising", "deposits", "investors", "public", "非法集资", "吸收资金", "集资", "公众"),
+        ),
+        Article(
+            "第十条",
+            "第十条（集资诈骗）以非法占有为目的，实施本条例第九条规定的行为的，构成集资诈骗罪，"
+            "处三年以上十年以下有期徒刑。",
+            ("fundraising fraud", "appropriate", "集资诈骗", "非法占有"),
         ),
     ]
 
