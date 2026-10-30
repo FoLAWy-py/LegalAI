@@ -4,7 +4,7 @@ title: Build synthetic outline set, golden-set spec and eval runner
 from: pmo
 to: evaluation
 owner: pmo
-status: delivered
+status: verified
 priority: P1
 created: 2026-10-30
 updated: 2026-10-30
