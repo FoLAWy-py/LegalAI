@@ -6,6 +6,8 @@ Callers may therefore log them, but must still not log the documents themselves.
 
 from enum import StrEnum
 
+from legalai_contracts import DocumentNotFoundError as ContractDocumentNotFoundError
+
 
 class IntakeReason(StrEnum):
     """Machine-readable reason an intake was refused."""
@@ -108,8 +110,13 @@ class TooLargeError(IntakeError):
     reason = IntakeReason.TOO_LARGE
 
 
-class DocumentNotFoundError(CasefileError, LookupError):
-    """No stored document has the requested `doc_id` / `version_id`."""
+class DocumentNotFoundError(CasefileError, ContractDocumentNotFoundError):
+    """No stored document has the requested `doc_id` / `version_id`.
+
+    Subclasses `legalai_contracts.DocumentNotFoundError` (ADR-0007 §3, REQ-PMO-0013), so consumers catch it
+    by the contract class; it is still a `LookupError`. The `doc_id` / `version_id` attributes are set when
+    known; message and attributes carry ids only (P9).
+    """
 
 
 class InvalidRangeError(CasefileError, ValueError):

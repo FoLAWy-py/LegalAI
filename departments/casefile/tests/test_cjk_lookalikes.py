@@ -115,7 +115,7 @@ def test_store_keeps_reversible_record(tmp_path: Path) -> None:
     assert len(stored.substitutions) == 664 and stored.substitution_table == CJK_MAPPING_VERSION
     assert fresh.get_extracted_text(doc.doc_id, doc.version_id) == _pypdf_raw(data)
     meta = json.loads(next(tmp_path.glob("casefile/cases/*/*/*/meta.json")).read_text(encoding="utf-8"))
-    assert meta["schema"] == 2
+    assert meta["schema"] == 3  # 3 since REQ-PMO-0013 (CaseDocument.original_sha256 stored)
     assert meta["substitutions"]["table"] == CJK_MAPPING_VERSION
     stored_text = fresh.get_text(doc.doc_id, doc.version_id, 0, doc.char_count)
     raw = _pypdf_raw(data)
