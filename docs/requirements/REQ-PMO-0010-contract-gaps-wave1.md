@@ -4,7 +4,7 @@ title: Close contract gaps found in Wave 1 (reference dates, traces, store error
 from: pmo
 to: architecture
 owner: pmo
-status: delivered
+status: verified
 priority: P1
 created: 2026-10-30
 updated: 2026-10-30
@@ -184,3 +184,11 @@ value or validator is removed, renamed or tightened. Every new field is optional
     expressible. ADR-0007 Validation names the pilot review as the trigger to revisit.
   - `DraftAnswer` (research Q&A) gets no reference dates in 0.4.0. Its citations must not set `reference_date_id`.
   - Out of scope, as REQ §5 states: jurisdiction applicability between `US` and `US-XX`, and department adoption.
+
+### PMO verification (2026-10-30)
+Verified by the issuer. AC1–AC4 checked: the diff touches only `departments/contracts/`, ADR-0007 and this REQ, so no
+other department's tests changed; the two-reference-date outline and the outline without the new fields are both in
+`test_wave1_gaps.py`; hash meaning is cited from the field descriptions; `CONTRACT_VERSION` is 0.4.0. Merged to `main`
+as `4b8eb88`; `scripts/check_all.py` on main: 531 passed, ALL CHECKS PASSED. Adoption REQs issued: REQ-PMO-0012 to
+REQ-PMO-0017 (verification first, as §8 requires).
+
