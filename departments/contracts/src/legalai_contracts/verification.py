@@ -3,6 +3,7 @@ from enum import StrEnum
 from pydantic import Field, model_validator
 
 from legalai_contracts._base import ContractModel
+from legalai_contracts.answers import ModelTrace
 
 
 class Verdict(StrEnum):
@@ -22,12 +23,20 @@ class ReportStatus(StrEnum):
 
 
 class ItemVerification(ContractModel):
-    """Verdict on one verifiable item: a claim, an outline element, or an evidence link."""
+    """Verdict on one verifiable item: a claim, an outline element, or an evidence link.
+
+    `traces` (contracts 0.4.0, ADR-0007 §5) holds one `ModelTrace` per model call that contributed to
+    this verdict (P5). It is empty when only deterministic checks decided the item. The model id and
+    prompt version belong in `traces`, not only in the free-text `method`.
+    """
 
     item_id: str = Field(min_length=1)
     verdict: Verdict
     method: str = Field(min_length=1, description="Which check produced the verdict.")
     rationale: str
+    traces: tuple[ModelTrace, ...] = Field(
+        default=(), description="Model calls behind this verdict; empty if decided deterministically."
+    )
 
 
 class VerificationReport(ContractModel):

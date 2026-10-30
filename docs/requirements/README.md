@@ -46,6 +46,7 @@ draft ──► open ──► accepted ──► in-progress ──► delivere
 | REQ-PMO-0007 | Re-scope v1 to CN criminal cases (ADR-0006, PROJECT, contracts 0.3.0) | pmo → architecture | delivered | 1 (contracts serialized) |
 | REQ-PMO-0011 | Manual-import path; delete 9 NPC files; 403 is final | pmo → corpus | open | 2 (with PMO-0002 resumption) |
 | REQ-PMO-0008 | CN financial-crime pilot dataset from SPP Guiding Case 175 | pmo → evaluation | draft | 2 (needs PMO-0002, PMO-0005, PMO-0007) |
+| REQ-PMO-0010 | Close contract gaps found in Wave 1 (contracts 0.4.0, ADR-0007) | pmo → architecture | delivered | 1 (contracts serialized) |
 
 Wave 1 REQs touch disjoint departments and can be dispatched to subagents in parallel, each working against
 `ZZ` fakes. Wave 2 starts when its dependencies are delivered.

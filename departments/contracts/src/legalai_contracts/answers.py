@@ -4,7 +4,7 @@ from enum import StrEnum
 from pydantic import Field, model_validator
 
 from legalai_contracts._base import JURISDICTION_PATTERN, ContractModel
-from legalai_contracts.sources import SourceSpan
+from legalai_contracts.sources import SourceKind, SourceSpan
 
 
 class TaskType(StrEnum):
@@ -34,6 +34,10 @@ class LegalQuery(ContractModel):
     For EVIDENCE_OUTLINE, `text` states the cause of action or the charged offence and the facts
     in the user's words, and `case_id` / `party_role` are required. In a criminal case,
     `party_role` is `PROSECUTION` or `DEFENDANT` (ADR-0006).
+
+    `as_of` is the reference date of every law citation that names no other one. An evidence outline may
+    declare further reference dates (`EvidenceOutline.reference_dates`, ADR-0007 §1); which date governs
+    is a legal question answered from cited law, never by this contract.
     """
 
     query_id: str = Field(min_length=1)
@@ -53,15 +57,29 @@ class LegalQuery(ContractModel):
 
 
 class Citation(ContractModel):
-    """A span plus the exact words relied on. The quote must occur verbatim in the span (P1)."""
+    """A span plus the exact words relied on. The quote must occur verbatim in the span (P1).
+
+    `reference_date_id` (contracts 0.4.0, ADR-0007 §1) names the `ReferenceDate` of the enclosing
+    `EvidenceOutline` for which this law citation's version was selected. `None` means the query's
+    `as_of`, exactly as before 0.4.0. Only law citations may set it, and only inside an outline that
+    declares that reference date. It records which date the version was chosen for; it does not say
+    that this date is the legally correct one. That is cited in the reference date's `basis`.
+    """
 
     span: SourceSpan
     quote: str = Field(min_length=1)
+    reference_date_id: str | None = Field(
+        default=None,
+        min_length=1,
+        description="Id of the outline's ReferenceDate this law version was selected for; None = as_of.",
+    )
 
     @model_validator(mode="after")
     def _quote_in_span(self) -> "Citation":
         if self.quote not in self.span.text:
             raise ValueError("quote does not appear verbatim in span text")
+        if self.reference_date_id is not None and self.span.source is not SourceKind.LAW:
+            raise ValueError("only law citations may carry a reference_date_id")
         return self
 
 
@@ -91,7 +109,12 @@ class Claim(ContractModel):
 
 
 class ModelTrace(ContractModel):
-    """What produced an output, so it can be reproduced and audited (P5)."""
+    """What produced an output, so it can be reproduced and audited (P5).
+
+    Token counts (contracts 0.4.0, ADR-0007 §2) are totals over every model call this trace covers, as
+    reported by the provider. `None` means not reported; it is never a stand-in for 0. Cost is not
+    stored: it is derived from the token counts and a pinned price table by whoever reports it.
+    """
 
     model: str = Field(min_length=1)
     prompt_id: str = Field(min_length=1)
@@ -99,6 +122,14 @@ class ModelTrace(ContractModel):
     temperature: float = Field(ge=0)
     source_versions: tuple[str, ...] = Field(
         default=(), description="'doc_id@version_id' for every document consulted."
+    )
+    input_tokens: int | None = Field(
+        default=None, ge=0, description="Prompt/input tokens reported by the provider; None = not reported."
+    )
+    output_tokens: int | None = Field(
+        default=None,
+        ge=0,
+        description="Completion/output tokens reported by the provider; None = not reported.",
     )
 
 
@@ -114,6 +145,9 @@ class DraftAnswer(ContractModel):
 
     @model_validator(mode="after")
     def _consistent(self) -> "DraftAnswer":
+        if any(c.reference_date_id is not None for claim in self.claims for c in claim.citations):
+            # A draft declares no reference dates (contracts 0.4.0), so any id would dangle.
+            raise ValueError("draft answer citations cannot carry reference_date_id")
         if self.abstained:
             if not self.abstain_reason:
                 raise ValueError("abstention requires abstain_reason")
