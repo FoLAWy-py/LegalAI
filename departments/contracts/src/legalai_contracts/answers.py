@@ -13,15 +13,27 @@ class TaskType(StrEnum):
 
 
 class PartyRole(StrEnum):
+    """The side of a case a user acts for, or that bears a burden stated by law.
+
+    These are procedural labels, not legal conclusions. Which party bears what burden is never
+    inferred from the role; it comes only from cited law (ADR-0006).
+
+    - `PLAINTIFF`: the party bringing a civil claim.
+    - `DEFENDANT`: the party a civil claim is brought against, or the accused in a criminal case.
+    - `PROSECUTION`: the party bringing the criminal charge (added in contracts 0.3.0, ADR-0006).
+    """
+
     PLAINTIFF = "plaintiff"
     DEFENDANT = "defendant"
+    PROSECUTION = "prosecution"
 
 
 class LegalQuery(ContractModel):
     """A user request. Jurisdiction and as-of date are mandatory (P4).
 
-    For EVIDENCE_OUTLINE, `text` states the cause of action and facts in the user's words,
-    and `case_id` / `party_role` are required.
+    For EVIDENCE_OUTLINE, `text` states the cause of action or the charged offence and the facts
+    in the user's words, and `case_id` / `party_role` are required. In a criminal case,
+    `party_role` is `PROSECUTION` or `DEFENDANT` (ADR-0006).
     """
 
     query_id: str = Field(min_length=1)

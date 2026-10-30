@@ -15,6 +15,8 @@ depends_on: [ADR-0004, ADR-0005]
 
 ## 1. Context
 Reasoning may cite only retrieved spans; retrieval quality bounds outline quality (P1, P4).
+Sequencing (project owner, 2026-10-30): CN first. Chinese-language law and case files are the priority; cross-lingual
+retrieval (ADR-0004) is still required.
 
 ## 2. Requirement
 1. `Retriever` MUST return law spans filtered to the query jurisdiction and to versions in force on `as_of`

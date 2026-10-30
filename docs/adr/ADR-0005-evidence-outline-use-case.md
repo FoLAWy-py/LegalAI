@@ -2,8 +2,9 @@
 id: ADR-0005
 title: v1 use case — evidence outline (proof chart with gaps) for civil contract disputes
 owner: architecture
-status: accepted
+status: superseded
 deciders: [project owner]
+superseded_by: ADR-0006
 updated: 2026-10-30
 ---
 
