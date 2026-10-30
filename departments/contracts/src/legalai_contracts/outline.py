@@ -8,7 +8,13 @@ from legalai_contracts.sources import SourceKind
 
 
 class Element(ContractModel):
-    """Something that must be proved for the cause of action, grounded in law (ADR-0005)."""
+    """Something that must be proved for the cause of action or the charged offence, grounded in law.
+
+    In a criminal outline, each element is one element of the charged offence (犯罪构成), as
+    stated in the cited `legal_basis` (ADR-0006). `burden_on` is set only when that cited law states
+    who bears the burden for this element; otherwise it is `None`. It is never filled from a default
+    or from memory.
+    """
 
     element_id: str = Field(min_length=1)
     description: str = Field(min_length=1)
@@ -56,10 +62,17 @@ class Gap(ContractModel):
 
 
 class EvidenceOutline(ContractModel):
-    """Proof chart with gaps. Every element is covered by a supporting link or a gap (P3)."""
+    """Proof chart with gaps. Every element is covered by a supporting link or a gap (P3).
+
+    Civil case: elements of the cause of action. Criminal case: elements of the charged offence.
+    A defence or justification appears as `CONTRADICTS` links on the element(s) it would negate. It is
+    not an element of its own (ADR-0006).
+    """
 
     query: LegalQuery
-    cause_of_action: str
+    cause_of_action: str = Field(
+        description="The civil cause of action or, in a criminal case, the charged offence."
+    )
     elements: tuple[Element, ...] = ()
     links: tuple[EvidenceLink, ...] = ()
     gaps: tuple[Gap, ...] = ()
