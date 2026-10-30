@@ -3,10 +3,12 @@
 Everything here is invented: people, companies, places, case files and the law they cite.
 
 Modelling rules (ADR-0006):
-- `as_of` is the date of the alleged conduct (one reference date per outline, §6.2). The fictional law says the
-  provisions in force at the time of the conduct apply (ZZ Penal Code Article 1, ZZ刑事特别条例第一条), and every
-  case's dates fall inside one version window, except ZZ-CRIM-010, which is an expected abstention.
-- Defences are `CONTRADICTS` links on the offence element they would negate, never elements of their own (§4.1).
+- `as_of` is the date of the alleged conduct (one reference date per outline, §6.2). The fictional law
+  says the provisions in force at the time of the conduct apply (ZZ Penal Code Article 1,
+  ZZ刑事特别条例第一条), and every case's dates fall inside one version window, except ZZ-CRIM-010,
+  which is an expected abstention.
+- Defences are `CONTRADICTS` links on the offence element they would negate, never elements of their
+  own (§4.1).
   Link purposes and gap descriptions state facts only, never the legal rule of a defence (§4.3).
 - `burden_on` stays `None`: no cited offence provision states the burden for its own element (§3.2).
 - `party_role` is PROSECUTION for prosecution-side outlines and DEFENDANT for defence-side outlines (§2.1).
@@ -29,7 +31,6 @@ from legalai_contracts import (
     PartyRole,
     TaskType,
 )
-
 from legalai_evaluation.dataset import CaseTag, EvalCase
 from legalai_evaluation.synthetic._authoring import CaseFile, LawDoc, make_case_file
 from legalai_evaluation.synthetic._law import PENAL_CODE, SPECIAL_REGULATION, LawLibrary
@@ -150,7 +151,8 @@ def _case_001(law: LawLibrary) -> BuiltCase:
     pc = law.get(PENAL_CODE, "2022")
     q = _query(
         1,
-        "Prepare an evidence outline for the charge of payment card fraud under Article 24 of the ZZ Penal Code "
+        "Prepare an evidence outline for the charge of payment card fraud under Article 24 of the ZZ Penal "
+        "Code "
         "against Owen Price, who is alleged to have used Lena Hart's bank card at Harbour Electronics on "
         "2 November 2023.",
         date(2023, 11, 2),
@@ -164,7 +166,8 @@ def _case_001(law: LawLibrary) -> BuiltCase:
         "en",
         [
             "INDICTMENT ZZ-PP-2023-1102 (SYNTHETIC)",
-            "The ZZ Public Prosecutor charges Owen Price with payment card fraud contrary to Article 24 of the "
+            "The ZZ Public Prosecutor charges Owen Price with payment card fraud contrary to Article 24 of "
+            "the "
             "ZZ Penal Code.",
         ],
     )
@@ -216,8 +219,16 @@ def _case_001(law: LawLibrary) -> BuiltCase:
         q,
         "Payment card fraud (ZZ Penal Code Article 24)",
         [
-            _el("E1", "The defendant used a payment card issued to another.", pc.cite(a24, "uses a payment card issued to another")),
-            _el("E2", "The use was without the cardholder's authorisation.", pc.cite(a24, "without that person's authorisation")),
+            _el(
+                "E1",
+                "The defendant used a payment card issued to another.",
+                pc.cite(a24, "uses a payment card issued to another"),
+            ),
+            _el(
+                "E2",
+                "The use was without the cardholder's authorisation.",
+                pc.cite(a24, "without that person's authorisation"),
+            ),
             _el(
                 "E3",
                 "The defendant obtained money or goods worth 1,000 ZZ crowns or more.",
@@ -225,7 +236,13 @@ def _case_001(law: LawLibrary) -> BuiltCase:
             ),
         ],
         [
-            _ln("L1", "E1", bank.cite("Card ending 4417, issued to Lena Hart."), SUPPORTS, "The card was issued to Lena Hart."),
+            _ln(
+                "L1",
+                "E1",
+                bank.cite("Card ending 4417, issued to Lena Hart."),
+                SUPPORTS,
+                "The card was issued to Lena Hart.",
+            ),
             _ln(
                 "L2",
                 "E1",
@@ -240,18 +257,33 @@ def _case_001(law: LawLibrary) -> BuiltCase:
                 SUPPORTS,
                 "The defendant says he used a found card to buy a laptop.",
             ),
-            _ln("L4", "E2", holder.cite("I did not allow anyone to use my card"), SUPPORTS, "The cardholder allowed no one to use the card."),
+            _ln(
+                "L4",
+                "E2",
+                holder.cite("I did not allow anyone to use my card"),
+                SUPPORTS,
+                "The cardholder allowed no one to use the card.",
+            ),
             _ln("L5", "E3", bank.cite("1,880 ZZ crowns"), SUPPORTS, "The purchase was for 1,880 ZZ crowns."),
         ],
     )
-    return _case(1, "Use of a found bank card (SYNTHETIC)", q, "en", expected, [indictment, bank, holder, cctv, statement], [FIN])
+    return _case(
+        1,
+        "Use of a found bank card (SYNTHETIC)",
+        q,
+        "en",
+        expected,
+        [indictment, bank, holder, cctv, statement],
+        [FIN],
+    )
 
 
 def _case_002(law: LawLibrary) -> BuiltCase:
     pc = law.get(PENAL_CODE, "2022")
     q = _query(
         2,
-        "We act for the defendant Ash Morrow, charged with intentional injury under Article 22 of the ZZ Penal "
+        "We act for the defendant Ash Morrow, charged with intentional injury under Article 22 of the ZZ "
+        "Penal "
         "Code for an incident outside the Lantern Bar on 19 August 2023. He says he acted in self-defence. "
         "Prepare an evidence outline of the prosecution's case showing which evidence supports and which "
         "contradicts each element, and any gaps.",
@@ -266,7 +298,8 @@ def _case_002(law: LawLibrary) -> BuiltCase:
         "en",
         [
             "INDICTMENT ZZ-PP-2023-0819 (SYNTHETIC)",
-            "The ZZ Public Prosecutor charges Ash Morrow with intentional injury contrary to Article 22 of the "
+            "The ZZ Public Prosecutor charges Ash Morrow with intentional injury contrary to Article 22 of "
+            "the "
             "ZZ Penal Code.",
         ],
     )
@@ -277,7 +310,8 @@ def _case_002(law: LawLibrary) -> BuiltCase:
         "en",
         [
             "FORENSIC INJURY EXAMINATION REPORT (SYNTHETIC)",
-            "Examiner: Dr. P. Lund. Method: clinical examination and X-ray. Date of examination: 20 August 2023.",
+            "Examiner: Dr. P. Lund. Method: clinical examination and X-ray. Date of examination: 20 August "
+            "2023.",
         ],
         ["Bram Holt has a fractured nasal bone.", "Classification: moderate injury."],
     )
@@ -328,7 +362,11 @@ def _case_002(law: LawLibrary) -> BuiltCase:
         q,
         "Intentional injury (ZZ Penal Code Article 22)",
         [
-            _el("E1", "The defendant caused bodily injury to another person.", pc.cite(a22, "causes bodily injury to another")),
+            _el(
+                "E1",
+                "The defendant caused bodily injury to another person.",
+                pc.cite(a22, "causes bodily injury to another"),
+            ),
             _el(
                 "E2",
                 "A forensic examiner classified the injury as moderate or serious.",
@@ -338,10 +376,34 @@ def _case_002(law: LawLibrary) -> BuiltCase:
             _el("E4", "The defendant caused the injury unlawfully.", pc.cite(a22, "unlawfully")),
         ],
         [
-            _ln("L1", "E1", complainant.cite("Ash Morrow punched me in the face."), SUPPORTS, "The complainant says the defendant punched him."),
-            _ln("L2", "E1", forensic.cite("Bram Holt has a fractured nasal bone."), SUPPORTS, "The complainant has a fractured nasal bone."),
-            _ln("L3", "E2", forensic.cite("Classification: moderate injury."), SUPPORTS, "The examiner classified the injury as moderate."),
-            _ln("L4", "E3", statement.cite("so I punched him once"), SUPPORTS, "The defendant says he punched deliberately."),
+            _ln(
+                "L1",
+                "E1",
+                complainant.cite("Ash Morrow punched me in the face."),
+                SUPPORTS,
+                "The complainant says the defendant punched him.",
+            ),
+            _ln(
+                "L2",
+                "E1",
+                forensic.cite("Bram Holt has a fractured nasal bone."),
+                SUPPORTS,
+                "The complainant has a fractured nasal bone.",
+            ),
+            _ln(
+                "L3",
+                "E2",
+                forensic.cite("Classification: moderate injury."),
+                SUPPORTS,
+                "The examiner classified the injury as moderate.",
+            ),
+            _ln(
+                "L4",
+                "E3",
+                statement.cite("so I punched him once"),
+                SUPPORTS,
+                "The defendant says he punched deliberately.",
+            ),
             _ln(
                 "L5",
                 "E4",
@@ -352,7 +414,9 @@ def _case_002(law: LawLibrary) -> BuiltCase:
             _ln(
                 "L6",
                 "E4",
-                eyewitness.cite("I saw Bram Holt swing a glass bottle at Ash Morrow's head before Ash hit him once."),
+                eyewitness.cite(
+                    "I saw Bram Holt swing a glass bottle at Ash Morrow's head before Ash hit him once."
+                ),
                 CONTRADICTS,
                 "An independent witness saw the complainant swing a bottle at the defendant before the blow.",
             ),
@@ -380,7 +444,8 @@ def _case_002(law: LawLibrary) -> BuiltCase:
         expected,
         [indictment, forensic, complainant, eyewitness, scene, statement],
         [CaseTag.DEFENCE_WITH_CONTRADICTING_EVIDENCE],
-        notes="Non-financial control case. The self-defence evidence is modelled as contradicting links on the "
+        notes="Non-financial control case. The self-defence evidence is modelled as contradicting links on "
+        "the "
         "unlawfulness element (ADR-0006 §4.1); E4 still has a supporting link, so it carries no gap.",
     )
 
@@ -389,7 +454,8 @@ def _case_003(law: LawLibrary) -> BuiltCase:
     pc = law.get(PENAL_CODE, "2012")
     q = _query(
         3,
-        "We act for Milo Thorne, charged with fraud under Article 21 of the ZZ Penal Code. The prosecution says "
+        "We act for Milo Thorne, charged with fraud under Article 21 of the ZZ Penal Code. The prosecution "
+        "says "
         "that on 1 June 2021 he sold Iris Penn a camera he described as new and genuine, which was a broken "
         "replica. Prepare an evidence outline of the prosecution's case and identify any gaps.",
         date(2021, 6, 1),
@@ -403,7 +469,8 @@ def _case_003(law: LawLibrary) -> BuiltCase:
         "en",
         [
             "INDICTMENT ZZ-PP-2021-0601 (SYNTHETIC)",
-            "The ZZ Public Prosecutor charges Milo Thorne with fraud contrary to Article 21 of the ZZ Penal Code.",
+            "The ZZ Public Prosecutor charges Milo Thorne with fraud contrary to Article 21 of the ZZ Penal "
+            "Code.",
         ],
     )
     victim = _file(
@@ -455,8 +522,20 @@ def _case_003(law: LawLibrary) -> BuiltCase:
             ),
         ],
         [
-            _ln("L1", "E1", victim.cite("Milo Thorne told me the camera was new and genuine."), SUPPORTS, "What the defendant told the victim."),
-            _ln("L2", "E1", messages.cite("Brand new, genuine, still sealed."), SUPPORTS, "The defendant's written description of the camera."),
+            _ln(
+                "L1",
+                "E1",
+                victim.cite("Milo Thorne told me the camera was new and genuine."),
+                SUPPORTS,
+                "What the defendant told the victim.",
+            ),
+            _ln(
+                "L2",
+                "E1",
+                messages.cite("Brand new, genuine, still sealed."),
+                SUPPORTS,
+                "The defendant's written description of the camera.",
+            ),
             _ln(
                 "L3",
                 "E1",
@@ -476,7 +555,8 @@ def _case_003(law: LawLibrary) -> BuiltCase:
             Gap(
                 element_id="E3",
                 kind=GapKind.NO_EVIDENCE,
-                description="No receipt, bank record, valuation or statement in the case file states the amount "
+                description="No receipt, bank record, valuation or statement in the case file states the "
+                "amount "
                 "handed over.",
             )
         ],
@@ -496,7 +576,8 @@ def _case_004(law: LawLibrary) -> BuiltCase:
     reg = law.get(SPECIAL_REGULATION, "2023")
     q = _query(
         4,
-        "请为林某涉嫌醉酒驾驶罪一案整理证据提纲，列明犯罪构成要件、对应证据和证据缺口。案发时间为2024年2月10日。",
+        "请为林某涉嫌醉酒驾驶罪一案整理证据提纲，列明犯罪构成要件、对应证据和证据缺口。案发时间为2024年2月10"
+        "日。",
         date(2024, 2, 10),
         "zh",
         PROSECUTION,
@@ -545,7 +626,11 @@ def _case_004(law: LawLibrary) -> BuiltCase:
         "醉酒驾驶罪（《ZZ刑事特别条例（SYNTHETIC）》第五条）",
         [
             _el("E1", "被告人在道路上驾驶机动车。", reg.cite(a5, "在道路上驾驶机动车")),
-            _el("E2", "被告人血液酒精含量达到每百毫升一百毫克以上。", reg.cite(a5, "血液酒精含量达到每百毫升一百毫克以上")),
+            _el(
+                "E2",
+                "被告人血液酒精含量达到每百毫升一百毫克以上。",
+                reg.cite(a5, "血液酒精含量达到每百毫升一百毫克以上"),
+            ),
         ],
         [
             _ln(
@@ -556,7 +641,13 @@ def _case_004(law: LawLibrary) -> BuiltCase:
                 "民警在滨河路拦停由林某驾驶的小型轿车。",
             ),
             _ln("L2", "E1", witness.cite("之后自己开车走了"), SUPPORTS, "林某饮酒后自行开车离开。"),
-            _ln("L3", "E2", blood.cite("林某血液中乙醇含量为每百毫升一百五十六毫克。"), SUPPORTS, "林某血液乙醇含量为每百毫升一百五十六毫克。"),
+            _ln(
+                "L3",
+                "E2",
+                blood.cite("林某血液中乙醇含量为每百毫升一百五十六毫克。"),
+                SUPPORTS,
+                "林某血液乙醇含量为每百毫升一百五十六毫克。",
+            ),
             _ln(
                 "L4",
                 "E2",
@@ -581,7 +672,8 @@ def _case_005(law: LawLibrary) -> BuiltCase:
     reg = law.get(SPECIAL_REGULATION, "2023")
     q = _query(
         5,
-        "请为吴某涉嫌职务侵占罪一案整理证据提纲。吴某系星河物流有限公司出纳，涉嫌于2023年9月30日将公司款项八千ZZ元"
+        "请为吴某涉嫌职务侵占罪一案整理证据提纲。吴某系星河物流有限公司出纳，涉嫌于2023年9月30日将公司款项八"
+        "千ZZ元"
         "转入本人账户。",
         date(2023, 9, 30),
         "zh",
@@ -644,7 +736,13 @@ def _case_005(law: LawLibrary) -> BuiltCase:
             _el("E4", "侵占数额在五千ZZ元以上。", reg.cite(a6, "数额在五千ZZ元以上")),
         ],
         [
-            _ln("L1", "E1", contract.cite("甲方：星河物流有限公司；乙方：吴某。"), SUPPORTS, "吴某与星河物流有限公司订有劳动合同。"),
+            _ln(
+                "L1",
+                "E1",
+                contract.cite("甲方：星河物流有限公司；乙方：吴某。"),
+                SUPPORTS,
+                "吴某与星河物流有限公司订有劳动合同。",
+            ),
             _ln(
                 "L2",
                 "E2",
@@ -660,8 +758,20 @@ def _case_005(law: LawLibrary) -> BuiltCase:
                 "款项无业务凭证转入吴某个人账户。",
             ),
             _ln("L4", "E3", audit.cite("截至审计日，该笔款项未退回公司。"), SUPPORTS, "款项至审计日未退回。"),
-            _ln("L5", "E3", witness.cite("公司从未批准向吴某个人账户支付这笔款项。"), SUPPORTS, "公司未批准该笔支付。"),
-            _ln("L6", "E3", statement.cite("这笔钱是公司欠我的加班费"), CONTRADICTS, "吴某称该款项是公司欠付的加班费。"),
+            _ln(
+                "L5",
+                "E3",
+                witness.cite("公司从未批准向吴某个人账户支付这笔款项。"),
+                SUPPORTS,
+                "公司未批准该笔支付。",
+            ),
+            _ln(
+                "L6",
+                "E3",
+                statement.cite("这笔钱是公司欠我的加班费"),
+                CONTRADICTS,
+                "吴某称该款项是公司欠付的加班费。",
+            ),
             _ln("L7", "E4", audit.cite("八千ZZ元"), SUPPORTS, "转账数额为八千ZZ元。"),
         ],
     )
@@ -687,7 +797,8 @@ def _fundraising_files() -> list[CaseFile]:
             "zh",
             [
                 "ZZ检察署起诉书 ZZ检诉〔2021〕73号（SYNTHETIC）",
-                "被告人冯某、何某以金穗投资管理有限公司名义，未经批准向社会公众募集资金，均以集资诈骗罪提起公诉。",
+                "被告人冯某、何某以金穗投资管理有限公司名义，未经批准向社会公众募集资金，均以集资诈骗罪提起公"
+                "诉。",
             ],
         ),
         _file(
@@ -746,7 +857,10 @@ def _fundraising_files() -> list[CaseFile]:
             "spending-record",
             "冯某个人消费记录调取笔录（SYNTHETIC）",
             "zh",
-            ["冯某个人消费记录调取笔录（SYNTHETIC）", "2020年5月，冯某以个人名义购买别墅一套，付款来源为公司募集资金。"],
+            [
+                "冯某个人消费记录调取笔录（SYNTHETIC）",
+                "2020年5月，冯某以个人名义购买别墅一套，付款来源为公司募集资金。",
+            ],
         ),
         _file(
             n,
@@ -768,15 +882,17 @@ def _fundraising_files() -> list[CaseFile]:
     ]
 
 
-def _fundraising_common(
-    reg: LawDoc, files: dict[str, CaseFile]
-) -> tuple[list[Element], list[EvidenceLink]]:
+def _fundraising_common(reg: LawDoc, files: dict[str, CaseFile]) -> tuple[list[Element], list[EvidenceLink]]:
     """Elements E1-E4 (第九条 conduct) and their links, identical for both defendant groups."""
     a9 = "第九条"
     elements = [
         _el("E1", "未经金融监管部门批准吸收资金（非法性）。", reg.cite(a9, "未经金融监管部门批准")),
         _el("E2", "通过公开宣传吸收资金（公开性）。", reg.cite(a9, "通过公开宣传")),
-        _el("E3", "承诺在一定期限内还本付息或者给付回报（利诱性）。", reg.cite(a9, "承诺在一定期限内还本付息或者给付回报")),
+        _el(
+            "E3",
+            "承诺在一定期限内还本付息或者给付回报（利诱性）。",
+            reg.cite(a9, "承诺在一定期限内还本付息或者给付回报"),
+        ),
         _el("E4", "向社会不特定对象吸收资金（社会性）。", reg.cite(a9, "向社会不特定对象吸收资金")),
     ]
     links = [
@@ -842,7 +958,9 @@ def _case_006(law: LawLibrary) -> BuiltCase:
     elements.append(_el("E5", "冯某具有非法占有募集资金的目的。", reg.cite("第十条", "以非法占有为目的")))
     audit = by_slug["fund-flow-audit"]
     links += [
-        _ln("L7", "E5", audit.cite("投入农业项目的不足百分之五"), SUPPORTS, "投入宣传项目的资金不足百分之五。"),
+        _ln(
+            "L7", "E5", audit.cite("投入农业项目的不足百分之五"), SUPPORTS, "投入宣传项目的资金不足百分之五。"
+        ),
         _ln(
             "L8",
             "E5",
@@ -874,7 +992,8 @@ def _case_006(law: LawLibrary) -> BuiltCase:
         expected,
         files,
         [FIN],
-        notes="Conduct 2019-03 to 2021-06 lies wholly inside the 2016 version window of the regulation; as_of is "
+        notes="Conduct 2019-03 to 2021-06 lies wholly inside the 2016 version window of the regulation; "
+        "as_of is "
         "the last day of the conduct.",
     )
 
@@ -885,7 +1004,8 @@ def _case_007(law: LawLibrary) -> BuiltCase:
     by_slug = {f.document.doc_id.removeprefix("zz-crim-006-"): f for f in files}
     q = _query(
         7,
-        "我们担任何某的辩护人。何某系金穗投资管理有限公司销售经理，与冯某一同被指控集资诈骗罪（行为期间2019年3月至"
+        "我们担任何某的辩护人。何某系金穗投资管理有限公司销售经理，与冯某一同被指控集资诈骗罪（行为期间2019年"
+        "3月至"
         "2021年6月）。请整理控方对何某的证据提纲，并指出证据缺口。",
         date(2021, 6, 30),
         "zh",
@@ -921,7 +1041,8 @@ def _case_007(law: LawLibrary) -> BuiltCase:
         Gap(
             element_id="E5",
             kind=GapKind.ONLY_CONTRADICTING,
-            description="卷宗中没有证据显示何某占有或支配募集资金；在案证据显示其只收到销售提成、无权调度资金，"
+            description="卷宗中没有证据显示何某占有或支配募集资金；在案证据显示其只收到销售提成、无权调度资金"
+            "，"
             "且称不知道资金去向。",
         )
     ]
@@ -934,7 +1055,8 @@ def _case_007(law: LawLibrary) -> BuiltCase:
         expected,
         [],
         [FIN, CaseTag.MISSING_EVIDENCE],
-        notes="Shares the case files of ZZ-CRIM-006 (case_id zz-crim-case-006). Same conduct elements; the intent "
+        notes="Shares the case files of ZZ-CRIM-006 (case_id zz-crim-case-006). Same conduct elements; the "
+        "intent "
         "element has only contradicting evidence for this defendant group.",
     )
 
@@ -943,7 +1065,8 @@ def _case_008(law: LawLibrary) -> BuiltCase:
     pc = law.get(PENAL_CODE, "2022")
     q = _query(
         8,
-        "请为Quinn Ashby涉嫌洗钱（ZZ Penal Code第25条）一案整理证据提纲。其涉嫌于2024年1月15日将Rhys Gale诈骗所得资金"
+        "请为Quinn Ashby涉嫌洗钱（ZZ Penal Code第25条）一案整理证据提纲。其涉嫌于2024年1月15日将Rhys Gale诈骗"
+        "所得资金"
         "转入其开设的多个账户并兑换为加密资产。",
         date(2024, 1, 15),
         "zh",
@@ -956,7 +1079,8 @@ def _case_008(law: LawLibrary) -> BuiltCase:
         "en",
         [
             "INDICTMENT ZZ-PP-2024-0115 (SYNTHETIC)",
-            "The ZZ Public Prosecutor charges Quinn Ashby with money laundering contrary to Article 25 of the "
+            "The ZZ Public Prosecutor charges Quinn Ashby with money laundering contrary to Article 25 of "
+            "the "
             "ZZ Penal Code.",
         ],
     )
@@ -978,9 +1102,11 @@ def _case_008(law: LawLibrary) -> BuiltCase:
         "en",
         [
             "FUND FLOW ANALYSIS REPORT (SYNTHETIC)",
-            "On 15 January 2024, 58,000 ZZ crowns from an account controlled by Rhys Gale were paid into three "
+            "On 15 January 2024, 58,000 ZZ crowns from an account controlled by Rhys Gale were paid into "
+            "three "
             "accounts opened by Quinn Ashby.",
-            "Within two days Quinn Ashby converted the funds into crypto-assets and sent them to a wallet that "
+            "Within two days Quinn Ashby converted the funds into crypto-assets and sent them to a wallet "
+            "that "
             "Rhys Gale controls.",
         ],
     )
@@ -991,7 +1117,8 @@ def _case_008(law: LawLibrary) -> BuiltCase:
         "en",
         [
             "MESSAGE EXTRACTION RECORD, phone of Quinn Ashby (SYNTHETIC)",
-            "Message from Rhys Gale to Quinn Ashby, 14 January 2024: The investor money is hot, break it up and "
+            "Message from Rhys Gale to Quinn Ashby, 14 January 2024: The investor money is hot, break it up "
+            "and "
             "turn it into coins.",
             "Reply from Quinn Ashby: Understood, I will use the new accounts so nobody can trace it.",
         ],
@@ -1014,13 +1141,19 @@ def _case_008(law: LawLibrary) -> BuiltCase:
             _el("E1", "涉案资金系犯罪所得。", pc.cite(a25, "funds are the proceeds of an offence")),
             _el("E2", "被告人明知资金系犯罪所得。", pc.cite(a25, "knowing that")),
             _el("E3", "被告人转移或转换了该资金。", pc.cite(a25, "transfers or converts the funds")),
-            _el("E4", "目的在于掩饰、隐瞒资金来源。", pc.cite(a25, "in order to conceal or disguise their origin")),
+            _el(
+                "E4",
+                "目的在于掩饰、隐瞒资金来源。",
+                pc.cite(a25, "in order to conceal or disguise their origin"),
+            ),
         ],
         [
             _ln(
                 "L1",
                 "E1",
-                judgment.cite("Rhys Gale is convicted of fraud for obtaining 60,000 ZZ crowns from investors"),
+                judgment.cite(
+                    "Rhys Gale is convicted of fraud for obtaining 60,000 ZZ crowns from investors"
+                ),
                 SUPPORTS,
                 "Rhys Gale已因诈骗投资人60,000 ZZ克朗被定罪。",
             ),
@@ -1083,7 +1216,8 @@ def _case_009(law: LawLibrary) -> BuiltCase:
     reg = law.get(SPECIAL_REGULATION, "2023")
     q = _query(
         9,
-        "We act for Chu (褚某), charged under Article 9 (第九条) of the ZZ Special Criminal Regulation (SYNTHETIC) "
+        "We act for Chu (褚某), charged under Article 9 (第九条) of the ZZ Special Criminal Regulation (SYNTH"
+        "ETIC) "
         "with illegally taking funds from the public through the Qinghe Mutual Aid Club (青禾互助会) from "
         "1 August to 31 December 2023. Prepare an evidence outline of the prosecution's case with any gaps.",
         date(2023, 12, 31),
@@ -1145,25 +1279,46 @@ def _case_009(law: LawLibrary) -> BuiltCase:
         "Illegally taking funds from the public (ZZ Special Criminal Regulation (SYNTHETIC) Article 9, "
         "非法吸收公众资金罪)",
         [
-            _el("E1", "The funds were taken without approval of the financial regulator.", reg.cite(a9, "未经金融监管部门批准")),
+            _el(
+                "E1",
+                "The funds were taken without approval of the financial regulator.",
+                reg.cite(a9, "未经金融监管部门批准"),
+            ),
             _el("E2", "The funds were solicited through public promotion.", reg.cite(a9, "通过公开宣传")),
             _el(
                 "E3",
                 "Repayment with interest or a return within a set period was promised.",
                 reg.cite(a9, "承诺在一定期限内还本付息或者给付回报"),
             ),
-            _el("E4", "The funds were taken from unspecified members of the public.", reg.cite(a9, "向社会不特定对象吸收资金")),
+            _el(
+                "E4",
+                "The funds were taken from unspecified members of the public.",
+                reg.cite(a9, "向社会不特定对象吸收资金"),
+            ),
         ],
         [
-            _ln("L1", "E1", regulator.cite("青禾互助会及褚某均未取得吸收公众资金的批准。"), SUPPORTS, "The regulator confirms no approval was given."),
+            _ln(
+                "L1",
+                "E1",
+                regulator.cite("青禾互助会及褚某均未取得吸收公众资金的批准。"),
+                SUPPORTS,
+                "The regulator confirms no approval was given.",
+            ),
             _ln(
                 "L2",
                 "E2",
                 chats.cite("褚某在三个公开微信群中发布入会邀请，群成员共一千余人，邀请可自由转发。"),
                 SUPPORTS,
-                "Invitations were posted in three open chat groups of over a thousand members and could be forwarded.",
+                "Invitations were posted in three open chat groups of over a thousand members and could be "
+                "forwarded.",
             ),
-            _ln("L3", "E2", statement.cite("没有对外公开"), CONTRADICTS, "The defendant says the club was not made public."),
+            _ln(
+                "L3",
+                "E2",
+                statement.cite("没有对外公开"),
+                CONTRADICTS,
+                "The defendant says the club was not made public.",
+            ),
             _ln(
                 "L4",
                 "E3",
@@ -1176,7 +1331,8 @@ def _case_009(law: LawLibrary) -> BuiltCase:
                 "E4",
                 members.cite("大多通过群内转发得知互助会，与褚某素不相识"),
                 SUPPORTS,
-                "Most of the sixty members questioned learned of the club by forwarding and did not know the defendant.",
+                "Most of the sixty members questioned learned of the club by forwarding and did not know the "
+                "defendant.",
             ),
             _ln(
                 "L6",
@@ -1202,8 +1358,10 @@ def _case_009(law: LawLibrary) -> BuiltCase:
 def _case_010(law: LawLibrary) -> BuiltCase:
     q = _query(
         10,
-        "We act for Nina Shaw. She is charged with crypto-asset market manipulation under Article 30 of the ZZ "
-        "Penal Code for placing and cancelling large sell orders for ZZcoin on the ZZX exchange on 1 May 2020. "
+        "We act for Nina Shaw. She is charged with crypto-asset market manipulation under Article 30 of the "
+        "ZZ "
+        "Penal Code for placing and cancelling large sell orders for ZZcoin on the ZZX exchange on 1 May "
+        "2020. "
         "Prepare an evidence outline for the charge.",
         date(2020, 5, 1),
         "en",
@@ -1227,7 +1385,8 @@ def _case_010(law: LawLibrary) -> BuiltCase:
         "en",
         [
             "ZZX EXCHANGE ORDER LOG EXTRACT (SYNTHETIC)",
-            "2020-05-01 21:14 to 21:40: account n.shaw placed 214 sell orders for ZZcoin and cancelled each of "
+            "2020-05-01 21:14 to 21:40: account n.shaw placed 214 sell orders for ZZcoin and cancelled each "
+            "of "
             "them within 3 seconds.",
         ],
     )
@@ -1255,7 +1414,8 @@ def _case_011(law: LawLibrary) -> BuiltCase:
     reg = law.get(SPECIAL_REGULATION, "2016")
     q = _query(
         11,
-        "我们是被告人陈某的辩护人。陈某被指控于2022年11月5日醉酒驾驶摩托车。请整理控方证据提纲，标明各要件的证据和缺口。",
+        "我们是被告人陈某的辩护人。陈某被指控于2022年11月5日醉酒驾驶摩托车。请整理控方证据提纲，标明各要件的"
+        "证据和缺口。",
         date(2022, 11, 5),
         "zh",
         DEFENDANT,
@@ -1297,17 +1457,34 @@ def _case_011(law: LawLibrary) -> BuiltCase:
         "醉酒驾驶罪（《ZZ刑事特别条例（SYNTHETIC）》第五条）",
         [
             _el("E1", "被告人在道路上驾驶机动车。", reg.cite(a5, "在道路上驾驶机动车")),
-            _el("E2", "被告人血液酒精含量达到每百毫升一百二十毫克以上。", reg.cite(a5, "血液酒精含量达到每百毫升一百二十毫克以上")),
+            _el(
+                "E2",
+                "被告人血液酒精含量达到每百毫升一百二十毫克以上。",
+                reg.cite(a5, "血液酒精含量达到每百毫升一百二十毫克以上"),
+            ),
         ],
         [
-            _ln("L1", "E1", police.cite("民警在环城路拦停一辆摩托车，驾驶人为陈某"), SUPPORTS, "民警在环城路拦停由陈某驾驶的摩托车。"),
-            _ln("L2", "E2", blood.cite("陈某血液中乙醇含量为每百毫升一百五十毫克。"), SUPPORTS, "鉴定意见书所载陈某血液乙醇含量。"),
+            _ln(
+                "L1",
+                "E1",
+                police.cite("民警在环城路拦停一辆摩托车，驾驶人为陈某"),
+                SUPPORTS,
+                "民警在环城路拦停由陈某驾驶的摩托车。",
+            ),
+            _ln(
+                "L2",
+                "E2",
+                blood.cite("陈某血液中乙醇含量为每百毫升一百五十毫克。"),
+                SUPPORTS,
+                "鉴定意见书所载陈某血液乙醇含量。",
+            ),
         ],
         [
             Gap(
                 element_id="E2",
                 kind=GapKind.INSUFFICIENT,
-                description="唯一证明血液酒精含量的鉴定意见书未载明鉴定方法；卷宗中没有其他证明血液酒精含量的证据。",
+                description="唯一证明血液酒精含量的鉴定意见书未载明鉴定方法；卷宗中没有其他证明血液酒精含量的"
+                "证据。",
             )
         ],
     )
@@ -1319,7 +1496,8 @@ def _case_011(law: LawLibrary) -> BuiltCase:
         expected,
         [indictment, police, blood],
         [CaseTag.DEFECTIVE_EVIDENCE, CaseTag.SUPERSEDED_VERSION_IN_FORCE],
-        notes="Non-financial control case. The defect matters under ZZ刑事证据规则（SYNTHETIC）第六条, which the "
+        notes="Non-financial control case. The defect matters under ZZ刑事证据规则（SYNTHETIC）第六条, which "
+        "the "
         "outline cannot cite in a gap; a builder is expected to flag the element as insufficiently proven.",
     )
 

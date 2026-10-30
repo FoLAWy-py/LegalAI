@@ -1,18 +1,18 @@
 """Fictional `ZZ` criminal law. Every text here is invented for testing and is not the law of any real place.
 
-Financial offences are the v1 focus: payment card fraud, money laundering and crypto-asset manipulation (Penal
-Code), illegal public fundraising and fundraising fraud (Special Criminal Regulation). Their structure, not their
-wording, is modelled on offence types found in real systems.
+Financial offences are the v1 focus: payment card fraud, money laundering and crypto-asset
+manipulation (Penal Code), illegal public fundraising and fundraising fraud (Special Criminal
+Regulation). Their structure, not their wording, is modelled on offence types found in real systems.
 
-Versions are chosen so that temporal traps exist: the ZZ Penal Code (SYNTHETIC) gained Article 30 only on
-2022-01-01, and the ZZ Special Criminal Regulation (SYNTHETIC) lowered its blood-alcohol threshold on 2023-07-01.
+Versions are chosen so that temporal traps exist: the ZZ Penal Code (SYNTHETIC) gained Article 30
+only on 2022-01-01, and the ZZ Special Criminal Regulation (SYNTHETIC) lowered its blood-alcohol
+threshold on 2023-07-01.
 """
 
 from dataclasses import dataclass
 from datetime import date
 
 from legalai_contracts import DocType
-
 from legalai_evaluation.synthetic._authoring import Article, LawDoc, make_law_doc
 
 PENAL_CODE = "zz-penal-code"
@@ -52,14 +52,16 @@ def _penal_articles(*, with_article_30: bool, theft_max: str) -> list[Article]:
         ),
         Article(
             "Article 21",
-            "Article 21 (Fraud). A person who, by deceiving another, causes that person to hand over property "
+            "Article 21 (Fraud). A person who, by deceiving another, causes that person to hand over "
+            "property "
             "and thereby obtains property worth 1,000 ZZ crowns or more commits fraud and is liable to "
             "imprisonment of up to five years.",
             ("fraud", "deceive", "deception", "诈骗"),
         ),
         Article(
             "Article 22",
-            "Article 22 (Intentional injury). A person who intentionally and unlawfully causes bodily injury to "
+            "Article 22 (Intentional injury). A person who intentionally and unlawfully causes bodily injury "
+            "to "
             "another that "
             "a forensic examiner classifies as moderate or serious commits intentional injury and is liable "
             "to imprisonment of up to seven years.",
@@ -67,7 +69,8 @@ def _penal_articles(*, with_article_30: bool, theft_max: str) -> list[Article]:
         ),
         Article(
             "Article 23",
-            "Article 23 (Criminal damage). A person who intentionally destroys or damages property of another, "
+            "Article 23 (Criminal damage). A person who intentionally destroys or damages property of "
+            "another, "
             "causing loss of 2,000 ZZ crowns or more, commits criminal damage and is liable to imprisonment "
             "of up to two years.",
             ("damage", "destroy", "毁坏", "故意毁坏财物", "财物"),
@@ -76,8 +79,10 @@ def _penal_articles(*, with_article_30: bool, theft_max: str) -> list[Article]:
     articles += [
         Article(
             "Article 24",
-            "Article 24 (Payment card fraud). A person who uses a payment card issued to another, without that "
-            "person's authorisation, to obtain money or goods worth 1,000 ZZ crowns or more commits payment card "
+            "Article 24 (Payment card fraud). A person who uses a payment card issued to another, without "
+            "that "
+            "person's authorisation, to obtain money or goods worth 1,000 ZZ crowns or more commits payment "
+            "card "
             "fraud and is liable to imprisonment of up to five years.",
             ("card", "payment card", "bank card", "信用卡", "银行卡", "盗刷"),
         ),
@@ -95,7 +100,8 @@ def _penal_articles(*, with_article_30: bool, theft_max: str) -> list[Article]:
                 "Article 30",
                 "Article 30 (Crypto-asset market manipulation). A person who places orders for crypto-assets "
                 "without intending them to be executed, in order to mislead other traders about the price, "
-                "commits crypto-asset market manipulation and is liable to imprisonment of up to three years.",
+                "commits crypto-asset market manipulation and is liable to imprisonment of up to three "
+                "years.",
                 ("crypto", "manipulation", "orders", "exchange", "加密资产", "操纵"),
             )
         )
@@ -135,7 +141,8 @@ def _regulation_articles(*, alcohol_threshold: str) -> list[Article]:
         ),
         Article(
             "第九条",
-            "第九条（非法吸收公众资金）未经金融监管部门批准，通过公开宣传，承诺在一定期限内还本付息或者给付回报，"
+            "第九条（非法吸收公众资金）未经金融监管部门批准，通过公开宣传，承诺在一定期限内还本付息或者给付回"
+            "报，"
             "向社会不特定对象吸收资金的，构成非法吸收公众资金罪，处五年以下有期徒刑。",
             ("fundraising", "deposits", "investors", "public", "非法集资", "吸收资金", "集资", "公众"),
         ),
@@ -230,7 +237,8 @@ def build_law_library() -> LawLibrary:
                 ),
                 Article(
                     "Article 11",
-                    "Article 11 (Standard of proof). A defendant may be convicted only if the evidence, taken "
+                    "Article 11 (Standard of proof). A defendant may be convicted only if the evidence, "
+                    "taken "
                     "as a whole, proves every element of the offence beyond reasonable doubt.",
                     ("standard", "reasonable doubt", "证明标准", "合理怀疑"),
                 ),

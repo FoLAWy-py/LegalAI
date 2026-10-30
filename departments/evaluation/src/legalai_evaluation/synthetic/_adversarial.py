@@ -1,9 +1,9 @@
 """Adversarial citation set: each item is a correct expected outline with exactly one bad citation."""
 
 from collections.abc import Callable, Sequence
+from datetime import date
 
 from legalai_contracts import Citation, Element, EvidenceLink, EvidenceOutline, SourceSpan
-
 from legalai_evaluation.dataset import AdversarialItem, AdversarialKind, EvalCase
 from legalai_evaluation.synthetic._authoring import CaseFile
 from legalai_evaluation.synthetic._law import NP_ORDINANCE, LawLibrary
@@ -58,9 +58,30 @@ def _first_element_citation(
         for i, citation in enumerate(element.legal_basis):
             replaced = transform(citation)
             if replaced is not None:
-                basis = element.legal_basis[:i] + (replaced,) + element.legal_basis[i + 1 :]
-                return element.model_copy(update={"legal_basis": basis}), citation
+                basis = (*element.legal_basis[:i], replaced, *element.legal_basis[i + 1 :])
+                rebuilt = Element(
+                    element_id=element.element_id,
+                    description=element.description,
+                    legal_basis=basis,
+                    burden_on=element.burden_on,
+                )
+                return rebuilt, citation
     return None
+
+
+def _not_in_force_on(law: LawLibrary, as_of: date) -> Callable[[Citation], Citation | None]:
+    """Same provision and quote, but from a version of the document not in force on `as_of`."""
+
+    def transform(c: Citation) -> Citation | None:
+        pinpoint = c.span.pinpoint or ""
+        for other in law.versions(c.span.doc_id):
+            if other.document.version_id == c.span.version_id or other.document.in_force_on(as_of):
+                continue
+            if pinpoint in other.articles and c.quote in other.articles[pinpoint].text:
+                return other.cite(pinpoint, c.quote)
+        return None
+
+    return transform
 
 
 def build_adversarial_set(
@@ -74,16 +95,7 @@ def build_adversarial_set(
         outline = case.expected
         if outline.abstained:
             continue
-        as_of = case.query.as_of
-
-        def not_in_force(c: Citation, as_of_day: object = as_of) -> Citation | None:
-            for other in law.versions(c.span.doc_id):
-                if other.document.version_id == c.span.version_id or other.document.in_force_on(as_of):
-                    continue
-                pinpoint = c.span.pinpoint or ""
-                if pinpoint in other.articles and c.quote in other.articles[pinpoint].text:
-                    return other.cite(pinpoint, c.quote)
-            return None
+        not_in_force = _not_in_force_on(law, case.query.as_of)
 
         element_mutations: list[tuple[AdversarialKind, Callable[[Citation], Citation | None], str]] = [
             (
@@ -133,10 +145,16 @@ def build_adversarial_set(
         link_mutations: list[tuple[AdversarialKind, Citation, str]] = [
             (
                 AdversarialKind.FABRICATED_CASE_DOCUMENT,
-                Citation(span=_respan(link.citation.span, doc_id=FABRICATED_CASE_DOC_ID), quote=link.citation.quote),
+                Citation(
+                    span=_respan(link.citation.span, doc_id=FABRICATED_CASE_DOC_ID), quote=link.citation.quote
+                ),
                 "evidence link cites a case document that does not exist",
             ),
-            (AdversarialKind.ALTERED_EVIDENCE_QUOTE, _alter_quote(link.citation), "evidence quote altered by one character"),
+            (
+                AdversarialKind.ALTERED_EVIDENCE_QUOTE,
+                _alter_quote(link.citation),
+                "evidence quote altered by one character",
+            ),
             (
                 AdversarialKind.EVIDENCE_FROM_OTHER_CASE,
                 Citation(span=other_passage, quote=other_passage.text),
@@ -150,7 +168,16 @@ def build_adversarial_set(
                     kind=kind,
                     base_case_id=case.case_id,
                     target_item_id=link.link_id,
-                    outline=_with_link(outline, link.model_copy(update={"citation": citation})),
+                    outline=_with_link(
+                        outline,
+                        EvidenceLink(
+                            link_id=link.link_id,
+                            element_id=link.element_id,
+                            citation=citation,
+                            relation=link.relation,
+                            purpose=link.purpose,
+                        ),
+                    ),
                     description=description,
                 )
             )

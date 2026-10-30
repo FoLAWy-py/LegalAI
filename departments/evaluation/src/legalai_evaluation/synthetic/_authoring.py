@@ -13,7 +13,6 @@ from legalai_contracts import (
     SourceKind,
     SourceSpan,
 )
-
 from legalai_evaluation.fakes import IndexedSpan
 
 SYNTHETIC_MARKER = "SYNTHETIC"

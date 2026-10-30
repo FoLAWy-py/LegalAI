@@ -76,7 +76,9 @@ class AdversarialItem(_Frozen):
     item_id: str = Field(min_length=1)
     kind: AdversarialKind
     base_case_id: str = Field(min_length=1)
-    target_item_id: str = Field(min_length=1, description="element_id or link_id that carries the bad citation")
+    target_item_id: str = Field(
+        min_length=1, description="element_id or link_id that carries the bad citation"
+    )
     outline: EvidenceOutline
     description: str = Field(min_length=1)
 
