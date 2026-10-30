@@ -3,7 +3,18 @@ name = "legalai-corpus"
 version = "0.1.0"
 description = "LegalAI corpus department"
 requires-python = ">=3.12"
-dependencies = ["legalai-contracts"]
+dependencies = [
+    "legalai-contracts",
+    "pydantic>=2.7",
+    # Independent extraction paths used by the spot check (an HTML parser other than the stdlib one used
+    # for ingestion, and two unrelated PDF text extractors).
+    "lxml>=5.2",
+    "pdfminer.six>=20240706",
+    "pypdf>=4.3",
+]
+
+[project.scripts]
+legalai-corpus = "legalai_corpus.cli:main"
 
 [build-system]
 requires = ["hatchling"]
