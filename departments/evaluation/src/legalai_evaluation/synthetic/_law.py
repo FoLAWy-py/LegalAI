@@ -38,7 +38,7 @@ def _penal_articles(*, with_article_30: bool, theft_max: str) -> list[Article]:
         ),
         Article(
             "Article 4",
-            "Article 4 (Self-defence). Conduct is not an offence if it was necessary to repel an imminent "
+            "Article 4 (Self-defence). Conduct is not unlawful if it was necessary to repel an imminent "
             "unlawful attack on the person or another and did not clearly exceed what was needed to repel "
             "the attack.",
             ("self-defence", "defence", "attack", "正当防卫", "防卫"),
@@ -59,7 +59,8 @@ def _penal_articles(*, with_article_30: bool, theft_max: str) -> list[Article]:
         ),
         Article(
             "Article 22",
-            "Article 22 (Intentional injury). A person who intentionally causes bodily injury to another that "
+            "Article 22 (Intentional injury). A person who intentionally and unlawfully causes bodily injury to "
+            "another that "
             "a forensic examiner classifies as moderate or serious commits intentional injury and is liable "
             "to imprisonment of up to seven years.",
             ("injury", "assault", "punch", "故意伤害", "伤害"),

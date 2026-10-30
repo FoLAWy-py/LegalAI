@@ -17,13 +17,13 @@ class _Frozen(BaseModel):
 class CaseTag(StrEnum):
     """Why a case is in the set. Used for coverage checks and breakdowns."""
 
+    FINANCIAL_OFFENCE = "financial_offence"
     CROSS_LINGUAL = "cross_lingual"
     MISSING_EVIDENCE = "missing_evidence"
     DEFECTIVE_EVIDENCE = "defective_evidence"
     DEFENCE_WITH_CONTRADICTING_EVIDENCE = "defence_with_contradicting_evidence"
     NO_APPLICABLE_LAW = "no_applicable_law"
     SUPERSEDED_VERSION_IN_FORCE = "superseded_version_in_force"
-    PROSECUTION_ROLE_CANDIDATE = "prosecution_role_candidate"
 
 
 class EvalCase(_Frozen):
