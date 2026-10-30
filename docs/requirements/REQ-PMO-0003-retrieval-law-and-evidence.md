@@ -4,7 +4,7 @@ title: Provide law and case-file retrieval with jurisdiction and temporal filter
 from: pmo
 to: retrieval
 owner: pmo
-status: delivered
+status: verified
 priority: P1
 created: 2026-10-30
 updated: 2026-10-30

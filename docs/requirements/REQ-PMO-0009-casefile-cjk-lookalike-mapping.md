@@ -4,7 +4,7 @@ title: Detect and handle CJK look-alike code points produced by PDF font maps
 from: pmo
 to: casefile
 owner: pmo
-status: delivered
+status: verified
 priority: P1
 created: 2026-10-30
 updated: 2026-10-30
