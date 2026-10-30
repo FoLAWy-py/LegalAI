@@ -7,6 +7,12 @@ Layout (one directory per version, written atomically, never modified afterwards
         text.txt         the extracted text, UTF-8, exactly the characters offsets refer to
         meta.json        CaseDocument + provenance (original filename, original SHA-256, extractor)
 
+Hashes (ADR-0007 §4): `CaseDocument.content_sha256` is the SHA-256 of `text.txt` (the UTF-8 stored text);
+`CaseDocument.original_sha256` is the SHA-256 of the received bytes (`original<.ext>`), the same value as the
+`original_sha256` provenance field of `meta.json`. Records written before REQ-PMO-0013 (schema 1 and 2)
+have no `original_sha256` inside their stored `CaseDocument`; on read it is taken from that provenance
+field, which was computed from the exact received bytes at intake. Stored files are never rewritten.
+
 Directories are created 0700 and files 0600 (P9). Single writer per data dir is assumed.
 """
 
@@ -39,8 +45,10 @@ from legalai_contracts import CaseDocument
 logger = logging.getLogger(__name__)
 
 _ID = re.compile(r"[A-Za-z0-9][A-Za-z0-9._-]{0,127}")
-_META_SCHEMA = 2
-_READABLE_SCHEMAS = frozenset({1, 2})  # 1 = before REQ-PMO-0009 (no substitution record)
+_META_SCHEMA = 3
+# 1 = before REQ-PMO-0009 (no substitution record); 2 = before REQ-PMO-0013 (no CaseDocument.original_sha256).
+_READABLE_SCHEMAS = frozenset({1, 2, 3})
+_LEGACY_NO_ORIGINAL_IN_DOCUMENT = frozenset({1, 2})
 _CACHE_SIZE = 16
 
 
@@ -174,6 +182,7 @@ class LocalCaseFileStore:
             content_sha256=hashlib.sha256(text_bytes).hexdigest(),
             char_count=len(extraction.text),
             page_starts=extraction.page_starts,
+            original_sha256=original_sha,
         )
         stored = StoredVersion(
             document=document,
@@ -269,11 +278,11 @@ class LocalCaseFileStore:
         cases = self._root / "cases"
         return sorted(p for p in cases.glob(f"*/{doc_id}") if p.is_dir()) if cases.is_dir() else []
 
-    def _doc_dir(self, doc_id: str) -> Path:
+    def _doc_dir(self, doc_id: str, version_id: str | None = None) -> Path:
         _check_id("doc_id", doc_id)
         found = self._doc_dirs(doc_id)
         if not found:
-            raise DocumentNotFoundError(f"no document {doc_id}")
+            raise DocumentNotFoundError(f"no document {doc_id}", doc_id=doc_id, version_id=version_id)
         if len(found) > 1:
             raise StoreIntegrityError(f"doc_id {doc_id} stored under more than one case")
         return found[0]
@@ -282,7 +291,8 @@ class LocalCaseFileStore:
     def _load_meta(version_dir: Path) -> StoredVersion:
         try:
             meta = json.loads((version_dir / "meta.json").read_bytes().decode("utf-8"))
-            if meta.get("schema") not in _READABLE_SCHEMAS:
+            schema = meta.get("schema")
+            if schema not in _READABLE_SCHEMAS:
                 raise StoreIntegrityError("unknown metadata schema")
             record = meta.get("substitutions")
             subs = (
@@ -293,11 +303,20 @@ class LocalCaseFileStore:
                     for off, orig, repl in record["positions"]
                 )
             )
+            original_sha = str(meta["original_sha256"])
+            document = CaseDocument.model_validate(meta["document"])
+            if document.original_sha256 is None:
+                if schema not in _LEGACY_NO_ORIGINAL_IN_DOCUMENT:
+                    raise StoreIntegrityError(f"metadata of version {version_dir.name} lacks original_sha256")
+                # Pre-REQ-PMO-0013 record: use the hash recorded at intake, validated like any contract value.
+                document = CaseDocument.model_validate({**meta["document"], "original_sha256": original_sha})
+            elif document.original_sha256 != original_sha:
+                raise StoreIntegrityError(f"original_sha256 of version {version_dir.name} is inconsistent")
             stored = StoredVersion(
-                document=CaseDocument.model_validate(meta["document"]),
+                document=document,
                 sequence=int(meta["sequence"]),
                 original_filename=str(meta["original_filename"]),
-                original_sha256=str(meta["original_sha256"]),
+                original_sha256=original_sha,
                 original_size=int(meta["original_size"]),
                 extractor=str(meta["extractor"]),
                 warnings=tuple(str(w) for w in meta["warnings"]),
@@ -329,9 +348,11 @@ class LocalCaseFileStore:
     def get_version(self, doc_id: str, version_id: str) -> StoredVersion:
         """One stored version with provenance."""
         _check_id("version_id", version_id)
-        version_dir = self._doc_dir(doc_id) / version_id
+        version_dir = self._doc_dir(doc_id, version_id) / version_id
         if not version_dir.is_dir():
-            raise DocumentNotFoundError(f"no version {version_id} of {doc_id}")
+            raise DocumentNotFoundError(
+                f"no version {version_id} of {doc_id}", doc_id=doc_id, version_id=version_id
+            )
         return self._load_meta(version_dir)
 
     def list_documents(self, case_id: str) -> list[CaseDocument]:
@@ -347,7 +368,10 @@ class LocalCaseFileStore:
         return latest
 
     def get_document(self, doc_id: str, version_id: str) -> CaseDocument:
-        """Metadata of one document version. Raises `DocumentNotFoundError` if absent."""
+        """Metadata of one document version.
+
+        Raises `DocumentNotFoundError` (a `legalai_contracts.DocumentNotFoundError`) if absent.
+        """
         return self.get_version(doc_id, version_id).document
 
     def _text(self, doc_id: str, version_id: str) -> str:
