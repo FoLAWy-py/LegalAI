@@ -21,7 +21,12 @@ Fixing failures (the responsible department, via REQ). Changing contracts (archi
 
 ## Interfaces
 - **Consumes:** public APIs of all departments and the `interface` pipeline factory.
-- **Provides:** eval runner, reports, and gate verdicts referenced in REQ §8 deliveries.
+- **Provides:** eval runner, reports, and gate verdicts referenced in REQ §8 deliveries. Public API
+  (`legalai_evaluation.__all__`): `run_evaluation(dataset, builder, verifier, ...)` → `EvalReport` (versioned,
+  dataset-pinned, with gate verdict) and `render_markdown`; `load_synthetic_dataset()` → `SyntheticDataset`
+  (synthetic `ZZ` criminal outlines, adversarial citation set, in-memory `SourceStore` / `CaseFileStore` /
+  `Retriever` / `EvidenceRetriever` fakes); calibration baselines `AlwaysAbstainBuilder`, `OracleBuilder`,
+  `AbstainingVerifier`, `RubberStampVerifier`. Golden-set format: `docs/golden-set-spec.md`.
 
 ## Release gate
 | Metric | Threshold | Type |
