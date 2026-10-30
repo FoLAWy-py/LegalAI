@@ -23,6 +23,7 @@ from dataclasses import dataclass
 from datetime import UTC, datetime
 from pathlib import Path, PurePath
 
+from legalai_casefile._cjk import CodePointSubstitution, restore_extracted_text
 from legalai_casefile._common import detect_language
 from legalai_casefile.errors import (
     CasefileError,
@@ -38,7 +39,8 @@ from legalai_contracts import CaseDocument
 logger = logging.getLogger(__name__)
 
 _ID = re.compile(r"[A-Za-z0-9][A-Za-z0-9._-]{0,127}")
-_META_SCHEMA = 1
+_META_SCHEMA = 2
+_READABLE_SCHEMAS = frozenset({1, 2})  # 1 = before REQ-PMO-0009 (no substitution record)
 _CACHE_SIZE = 16
 
 
@@ -57,7 +59,11 @@ def derive_doc_id(case_id: str, filename: str) -> str:
 
 @dataclass(frozen=True)
 class StoredVersion:
-    """One stored version of a case document, with its provenance (P5)."""
+    """One stored version of a case document, with its provenance (P5).
+
+    `substitutions` records every code point replaced after extraction (with `substitution_table`, the
+    mapping version); `LocalCaseFileStore.get_extracted_text` rebuilds the extractor's exact output.
+    """
 
     document: CaseDocument
     sequence: int
@@ -66,6 +72,8 @@ class StoredVersion:
     original_size: int
     extractor: str
     warnings: tuple[str, ...]
+    substitutions: tuple[CodePointSubstitution, ...] = ()
+    substitution_table: str | None = None
 
 
 @dataclass(frozen=True)
@@ -175,16 +183,20 @@ class LocalCaseFileStore:
             original_size=len(data),
             extractor=extraction.extractor,
             warnings=extraction.warnings,
+            substitutions=extraction.substitutions,
+            substitution_table=extraction.substitution_table,
         )
         self._write_version(doc_dir, stored, data, text_bytes, PurePath(name).suffix.lower())
         logger.info(
-            "casefile intake stored doc_id=%s version_id=%s media_type=%s pages=%d chars=%d warnings=%d",
+            "casefile intake stored doc_id=%s version_id=%s media_type=%s pages=%d chars=%d warnings=%d "
+            "substitutions=%d",
             doc_id,
             document.version_id,
             document.media_type,
             len(document.page_starts),
             document.char_count,
             len(extraction.warnings),
+            len(extraction.substitutions),
         )
         return IntakeResult(document, True, extraction.warnings)
 
@@ -235,6 +247,15 @@ class LocalCaseFileStore:
                 "original_size": stored.original_size,
                 "extractor": stored.extractor,
                 "warnings": list(stored.warnings),
+                "substitutions": None
+                if not stored.substitutions
+                else {
+                    "table": stored.substitution_table,
+                    "positions": [
+                        [s.offset, f"{ord(s.original):04X}", f"{ord(s.replacement):04X}"]
+                        for s in stored.substitutions
+                    ],
+                },
             }
             _write_private(tmp / "meta.json", json.dumps(meta, ensure_ascii=False, indent=2).encode("utf-8"))
             os.rename(tmp, final)
@@ -261,8 +282,17 @@ class LocalCaseFileStore:
     def _load_meta(version_dir: Path) -> StoredVersion:
         try:
             meta = json.loads((version_dir / "meta.json").read_bytes().decode("utf-8"))
-            if meta.get("schema") != _META_SCHEMA:
+            if meta.get("schema") not in _READABLE_SCHEMAS:
                 raise StoreIntegrityError("unknown metadata schema")
+            record = meta.get("substitutions")
+            subs = (
+                ()
+                if record is None
+                else tuple(
+                    CodePointSubstitution(int(off), chr(int(orig, 16)), chr(int(repl, 16)))
+                    for off, orig, repl in record["positions"]
+                )
+            )
             stored = StoredVersion(
                 document=CaseDocument.model_validate(meta["document"]),
                 sequence=int(meta["sequence"]),
@@ -271,6 +301,8 @@ class LocalCaseFileStore:
                 original_size=int(meta["original_size"]),
                 extractor=str(meta["extractor"]),
                 warnings=tuple(str(w) for w in meta["warnings"]),
+                substitutions=subs,
+                substitution_table=None if record is None else str(record["table"]),
             )
         except CasefileError:
             raise
@@ -336,6 +368,19 @@ class LocalCaseFileStore:
         if len(self._cache) > _CACHE_SIZE:
             self._cache.popitem(last=False)
         return text
+
+    def get_extracted_text(self, doc_id: str, version_id: str) -> str:
+        """The extractor's exact output for this version, before any recorded substitution (P5).
+
+        Equals the stored text when nothing was substituted. Raises `StoreIntegrityError` if the record
+        does not match the stored text.
+        """
+        stored = self.get_version(doc_id, version_id)
+        text = self._text(doc_id, version_id)
+        try:
+            return restore_extracted_text(text, stored.substitutions)
+        except ValueError as exc:
+            raise StoreIntegrityError(f"substitution record of {doc_id}/{version_id} does not match") from exc
 
     def get_text(self, doc_id: str, version_id: str, start_char: int, end_char: int) -> str:
         """Exactly `text[start_char:end_char]` of the stored version (code-point offsets).

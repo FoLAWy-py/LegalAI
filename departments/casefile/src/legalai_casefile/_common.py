@@ -4,6 +4,7 @@ import unicodedata
 from collections.abc import Sequence
 from dataclasses import dataclass
 
+from legalai_casefile._cjk import CodePointSubstitution
 from legalai_casefile.errors import EmptyDocumentError, PartialExtractionError, UnsupportedContentError
 
 PAGE_TERMINATOR = "\f"
@@ -14,13 +15,20 @@ _ALLOWED_CONTROLS = frozenset("\t\n\r\f")
 
 @dataclass(frozen=True)
 class Extraction:
-    """Exact text extracted from one file, with page boundaries (code-point offsets)."""
+    """Exact text extracted from one file, with page boundaries (code-point offsets).
+
+    `substitutions` lists every code point replaced after extraction (PDF radical mapping, REQ-PMO-0009),
+    under the mapping named by `substitution_table`; `restore_extracted_text(text, substitutions)` gives
+    the extractor's output back.
+    """
 
     text: str
     page_starts: tuple[int, ...]
     media_type: str
     extractor: str
     warnings: tuple[str, ...] = ()
+    substitutions: tuple[CodePointSubstitution, ...] = ()
+    substitution_table: str | None = None
 
 
 def check_characters(text: str, *, page: int | None = None) -> None:

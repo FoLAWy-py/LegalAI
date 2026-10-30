@@ -4,6 +4,7 @@ Intake of confidential case documents (.docx, .txt, .md, .eml, text-layer PDF) i
 page-addressable text, and the `CaseFileStore` implementation `LocalCaseFileStore`.
 """
 
+from legalai_casefile._cjk import CJK_MAPPING_VERSION, CodePointSubstitution, restore_extracted_text
 from legalai_casefile._common import detect_language
 from legalai_casefile.errors import (
     CasefileError,
@@ -34,10 +35,12 @@ from legalai_casefile.extraction import (
 from legalai_casefile.store import IntakeResult, LocalCaseFileStore, StoredVersion, derive_doc_id
 
 __all__ = [
+    "CJK_MAPPING_VERSION",
     "DEFAULT_MAX_BYTES",
     "PAGE_TERMINATOR",
     "SUPPORTED_EXTENSIONS",
     "CasefileError",
+    "CodePointSubstitution",
     "CorruptDocumentError",
     "DocumentNotFoundError",
     "EmptyDocumentError",
@@ -61,4 +64,5 @@ __all__ = [
     "derive_doc_id",
     "detect_language",
     "extract_document",
+    "restore_extracted_text",
 ]
