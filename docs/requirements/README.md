@@ -38,11 +38,13 @@ draft ──► open ──► accepted ──► in-progress ──► delivere
 |---|---|---|---|---|
 | REQ-PMO-0005 | Synthetic outline set, golden-set spec, eval runner | pmo → evaluation | open | 1 |
 | REQ-PMO-0001 | Case document intake and CaseFileStore | pmo → casefile | open | 1 |
-| REQ-PMO-0002 | Origins assessment and v1 CN + US federal law | pmo → corpus | open | 1 |
+| REQ-PMO-0002 | Origins assessment and v1 CN criminal law | pmo → corpus | open | 1 |
 | REQ-PMO-0004 | Outline verification (deterministic, then model) | pmo → verification | open | 1 |
 | REQ-PMO-0003 | Law and case-file retrieval | pmo → retrieval | open | 1 |
 | REQ-ARCH-0001 | Agent framework spike for ADR-0002 | architecture → reasoning | open | 2 (needs PMO-0005 synthetic set) |
 | REQ-PMO-0006 | Outline pipeline, config, CLI | pmo → interface | open | 2 |
+| REQ-PMO-0007 | Re-scope v1 to CN criminal cases (ADR-0006, PROJECT, contracts 0.3.0) | pmo → architecture | delivered | 1 (contracts serialized) |
+| REQ-PMO-0008 | CN financial-crime pilot dataset from SPP Guiding Case 175 | pmo → evaluation | draft | 2 (needs PMO-0002, PMO-0005, PMO-0007) |
 
 Wave 1 REQs touch disjoint departments and can be dispatched to subagents in parallel, each working against
 `ZZ` fakes. Wave 2 starts when its dependencies are delivered.

@@ -12,6 +12,8 @@ build/
 departments/*/data/
 departments/*/.cache/
 .claude/settings.local.json
+# Parallel subagent worktrees; never commit them
+.claude/worktrees/
 !.env.example
 # Local runtime data root (LEGALAI_DATA_DIR)
 data/
