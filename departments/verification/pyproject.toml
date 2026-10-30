@@ -11,3 +11,22 @@ build-backend = "hatchling.build"
 
 [tool.uv.sources]
 legalai-contracts = { workspace = true }
+
+[tool.ruff]
+# Inherit every root setting; only the confusables list below is added.
+extend = "../../pyproject.toml"
+
+[tool.ruff.lint]
+# CN-first (ADR-0004): full-width punctuation, the ideographic space and full-width digits are
+# authoritative legal-text content in this department's fixtures and adversarial suite, not typos.
+# Only these exact code points are allowed; every other confusable is still reported.
+allowed-confusables = [
+    "，", # U+FF0C FULLWIDTH COMMA
+    "：", # U+FF1A FULLWIDTH COLON
+    "（", # U+FF08 FULLWIDTH LEFT PARENTHESIS
+    "）", # U+FF09 FULLWIDTH RIGHT PARENTHESIS
+    "？", # U+FF1F FULLWIDTH QUESTION MARK
+    "　", # U+3000 IDEOGRAPHIC SPACE
+    "０", # U+FF10 FULLWIDTH DIGIT ZERO
+    "１", # U+FF11 FULLWIDTH DIGIT ONE
+]

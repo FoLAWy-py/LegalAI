@@ -24,7 +24,10 @@ Writing or repairing answers (reasoning). Deciding what the user sees (interface
 
 ## Interfaces
 - **Consumes:** `EvidenceOutline`, `DraftAnswer`, ports `SourceStore`, `CaseFileStore` (injected).
-- **Provides:** a `Verifier` implementation producing `VerificationReport`.
+- **Provides:** a `Verifier` implementation producing `VerificationReport`. Public API (`legalai_verification.__all__`):
+  `IndependentVerifier(source_store=, case_store=, model=)` (implements `Verifier`), `JsonChatModel` (model port),
+  `OpenAICompatibleChatModel` + `VerificationModelConfig` (injected by interface; no env reads), `ModelCallError`,
+  `VERIFIER_VERSION`.
 
 ## Quality bars
 - Deterministic checks: zero false PASS on the adversarial citation set (fabricated, altered, outdated quotes).
