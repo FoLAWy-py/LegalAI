@@ -82,7 +82,8 @@ Decision: **accept** (corpus, 2026-10-30), with these clarifications:
 
 1. Origins: assessed in `departments/corpus/docs/origins.md` under the PMO rule (§2.1). Besides the charter
    candidates, corpus also assesses `www.npc.gov.cn` (the NPC site that publishes the NPCSC Gazette) and
-   `www.spp.gov.cn` (named in §2.1), because `flk.npc.gov.cn` forbids automated retrieval in its robots.txt.
+   `www.spp.gov.cn` and `www.csrc.gov.cn` (named in §2.1/§2.2), because `flk.npc.gov.cn` forbids automated
+   retrieval in its robots.txt.
 2. Fidelity: stored text is derived mechanically from the raw official file, which is stored and hashed
    next to it. The normalization rules are written down in `departments/corpus/docs/normalization.md`. No text is
    typed, condensed or filled in from memory or mirrors.
@@ -92,4 +93,108 @@ Decision: **accept** (corpus, 2026-10-30), with these clarifications:
 4. Answer to §6: see the "Historical versions" table in `origins.md` and §8.
 
 ## 8. Delivery
-_Pending (corpus)._
+**Status: partial; ingestion is blocked on PMO origin decisions** (corpus, 2026-10-30). Status stays `in-progress`.
+
+Under the §2.1 rule and PMO's fail-closed instruction of 2026-10-30, **no origin is approved**, so **no law text
+has been ingested**. All infrastructure is built and tested offline on synthetic `ZZ` data. Once PMO approves an
+origin, the CN manifest can be written from the official texts and run without code changes.
+
+- **What changed** (all under `departments/corpus/`):
+  - `docs/origins.md`: assessment of every charter candidate, plus www.npc.gov.cn, www.csrc.gov.cn,
+    www.spp.gov.cn and www.uscourts.gov, each with exact evidence (URL, status, headers, time).
+  - `docs/normalization.md`: extraction rules N0–N6, including the look-alike code point policy.
+  - `src/legalai_corpus/origins.py`: origin registry; the fetcher refuses any host not `approved`, including
+    cached copies.
+  - `fetch.py`: robots-aware polite fetcher.
+    - It reads robots.txt first and treats an unavailable one (non-200, HTML, or redirect to a homepage) as
+      not permitted.
+    - It waits at least 3 s between requests to a host (floor 2 s; a larger `Crawl-delay` wins) and sends an
+      identifying UA.
+    - It checks every redirect hop against the registry.
+    - Raw files are cached content-addressed with an append-only fetch log.
+    - `--refresh` sends a conditional GET and compares hashes: `unchanged` / `not-modified` / `changed`.
+  - `extract.py`: HTML extraction (stdlib parser) and PDF extraction (pdfminer.six), plus detection of
+    Kangxi Radicals, CJK Radicals Supplement and CJK Compatibility Ideographs. These are rejected by default;
+    one-for-one mapping happens only under an explicit per-source policy, and every change is recorded.
+  - `structure.py`: pinpoint units for 编 / 分编 / 章 / 节 / 条 / 款 / 项, and 一、 items of amendment acts.
+  - `manifest.py`: manifest model. Every date needs official evidence quotes, and one quote must render the
+    date itself.
+  - `store.py`: `FileSourceStore`, which implements `SourceStore`.
+    - Versions are immutable.
+    - The text hash is verified on every read (fail closed).
+    - Versions of one document may not overlap in validity.
+  - `ingest.py`: manifest → official raw file → mechanical text → stored version. Every evidence quote must be
+    re-found verbatim in the extracted official text.
+  - `spotcheck.py`: independent comparison (lxml for HTML, pypdf for PDF).
+  - `cli.py`, `__main__.py`, and the public API in `__init__.py`.
+  - `CHARTER.md`: Interfaces section, scope note for ADR-0006, pointer to origins.md.
+  - New dependencies in `departments/corpus/pyproject.toml`: pydantic, lxml, pdfminer.six, pypdf (`uv.lock`
+    updated).
+- **Origins** (evidence in `origins.md` §3–§4):
+
+  | Decision | Origins | Reason |
+  |---|---|---|
+  | rejected | flk.npc.gov.cn | robots.txt `User-agent: * Disallow: /` and "禁止使用任何自动化工具、脚本、爬虫程序采集或复制网站数据" |
+  | rejected | wenshu.court.gov.cn | PMO rule; robots.txt `User-agent: * Disallow: /` |
+  | rejected | CourtListener | aggregator; robots.txt request got CloudFront 403 |
+  | pending-pmo | www.npc.gov.cn | WAF answers 403 to an honest UA containing "robots"; HTTPS unusable from the corpus host |
+  | pending-pmo | www.court.gov.cn | `/robots.txt` is an HTML error page |
+  | pending-pmo | www.csrc.gov.cn | `/robots.txt` redirects (302) to the homepage |
+  | pending-pmo | www.spp.gov.cn | `/robots.txt` redirects (302) to the homepage; footer forbids reposting, excerpting and mirroring |
+  | pending-pmo (paper only) | govinfo, ecfr, uscode.house.gov, uscourts | no US download under this REQ |
+
+- **What was ingested:** nothing.
+  - 9 raw files were downloaded from www.npc.gov.cn on 2026-10-30, 09:47–09:48 GMT, before PMO's fail-closed
+    instruction. No civil-law text was downloaded.
+  - They are kept unopened and not ingested at `<data>/corpus/raw/objects/`. URLs and full sha256 hashes are
+    in `origins.md` §5.
+- **Answer to §6 (historical versions):** see `origins.md` §6.
+  - Expected gap: no official consolidated Criminal Law (刑法) text was found for the periods before
+    amendment XI (修正案（十一）) on any candidate origin except flk, which is rejected. Such versions will be
+    reported, not constructed.
+  - The SPC site carries the old and new interpretations as separate pages. The NPC site carries each
+    amendment act and the 2018 Criminal Procedure Law (刑事诉讼法).
+- **Look-alike code points (PMO note of 2026-10-30):** 0 documents ingested, so there is nothing to report
+  per document yet. Detection runs on every extracted text, from any format. Default `reject` makes ingestion
+  fail; an HTML rendering is preferred over a PDF. Counts and changes go into `provenance.json`
+  (`compat_codepoints`).
+- **Acceptance criteria:**
+
+  | AC | Status | How it is met |
+  |---|---|---|
+  | 1 | met | `origins.md` covers every charter candidate plus four more. |
+  | 2 | mechanism met; real data blocked | Ingestion builds and validates `SourceDocument`s; the store re-hashes on read and `verify_all`. Tests: `test_end_to_end_two_versions_non_overlapping`, `test_tampered_stored_text_is_refused`. No real documents yet. |
+  | 3 | blocked | The tool exists and is tested, including detection of a single re-typed character (`test_spotcheck_detects_retyped_text`). No ≥20-article list is possible without ingested documents. |
+  | 4 | mechanism met on ZZ; real data blocked | Two versions with adjacent half-open intervals (`test_end_to_end_two_versions_non_overlapping`); the overlap guard is tested. |
+  | 5 | met | `test_fetch.py`: rate limit, crawl-delay, robots fail closed, no requests on re-run, change detection by hash, raw history kept. |
+  | 6 | met | `check_all` passes (tail below). The live test `test_live_flk_robots_still_disallows_everything` is marked `live`. |
+
+- **How to verify:**
+  ```sh
+  uv run python scripts/check_all.py
+  uv run pytest -q departments/corpus
+  uv run pytest -q -m live departments/corpus     # network: robots.txt of flk only
+  uv run python -m legalai_corpus fetch --data-dir data http://www.npc.gov.cn/   # refused: pending-pmo
+  ```
+- **Evidence** (`check_all` tail, 2026-10-30, after merging main with contracts 0.3.0):
+  ```
+  $ mypy scripts
+  Success: no issues found in 3 source files
+  $ pytest -q
+  430 passed, 2 deselected in 1.03s
+  ALL CHECKS PASSED
+  ```
+  Corpus alone: 45 tests pass offline, and the live test passes.
+- **Known limitations:**
+  - The PDF paragraph rule is not yet validated on a real official PDF, and its line joining suits CJK only.
+  - The stdlib robots parser does not support `*` wildcards in paths. This matters for US sites (govinfo),
+    not CN.
+  - An open `effective_to` cannot say "not confirmed"; corpus records `validity_note` in provenance only.
+    Making that visible to verification would need a contract change (a REQ to architecture if PMO wants it).
+  - The test files carry a file-level `# ruff: noqa: RUF001` because synthetic CN fixtures need full-width
+    punctuation.
+- **Decisions needed from PMO before ingestion can proceed:**
+  1. Approve or reject www.npc.gov.cn, www.court.gov.cn and www.csrc.gov.cn, given the evidence. If approved,
+     also say whether the 9 NPC raw files may be used or must be re-downloaded.
+  2. SPP: obtain written authorisation, or reject the origin.
+  3. Whether consolidated Criminal Law versions without an official text are acceptable as recorded gaps.
