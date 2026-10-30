@@ -14,7 +14,7 @@ Given a query, return the smallest set of exact source spans that contains what 
 - Indexing `SourceDocument`s (lexical and semantic; hybrid by default), chunking along legal structure.
 - Query understanding for search (expansion, legal-term synonyms), reranking.
 - Filtering by jurisdiction and by validity on `as_of` **before** ranking.
-- The `Retriever` implementation (law) and the `EvidenceRetriever` implementation (case files, ADR-0005).
+- The `Retriever` implementation (law) and the `EvidenceRetriever` implementation (case files, ADR-0006).
 - Case-file indexes are per `case_id`, stored under `<LEGALAI_DATA_DIR>/retrieval/`, and deleted with the case (P9).
 - Cross-lingual search: Chinese queries find English sources and vice versa (ADR-0004).
 
@@ -24,6 +24,14 @@ Source acquisition and storage (corpus). Answer generation (reasoning). Judging 
 ## Interfaces
 - **Consumes:** `LegalQuery`, `SourceDocument`, `CaseDocument`, ports `SourceStore`, `CaseFileStore` (injected, for indexing).
 - **Provides:** `Retriever` and `EvidenceRetriever` implementations returning `SourceSpan`s whose offsets match the corpus text exactly.
+- **Public API** (`legalai_retrieval.__all__`, REQ-PMO-0003):
+  - `LawRetriever(store, embedder, config)`: `build_index(jurisdictions)`, `retrieve`, `retrieve_scored`, `indexed_jurisdictions`.
+  - `CaseEvidenceRetriever(store, embedder, config)`: `index_case`, `search_case`, `search_case_scored`, `delete_case`.
+    Interface MUST call `delete_case` when a case is deleted (P9).
+  - `RetrievalConfig` (injected; holds `data_dir` and the documented eligibility thresholds), `SearchMode`.
+  - `Embedder` port; `SentenceTransformerEmbedder` (local files only, optional `embeddings` extra);
+    `KNOWN_MODELS` / `DEFAULT_EMBEDDING_MODEL`; `HashingEmbedder` (deterministic, non-semantic, tests only).
+  - `ScoredSpan`, `IndexStats`; errors `RetrievalError`, `IndexNotFoundError`, `StaleIndexError`, `IndexBuildError`.
 
 ## Quality bars
 - Span fidelity: 100% of returned spans match `SourceStore.get_text` for their offsets.

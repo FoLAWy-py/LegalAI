@@ -1,0 +1,4 @@
+Account statement extract (SYNTHETIC test data)
+Account holder: Mouxx Investment Consulting Co. (fictional)
+2022-05-03 Outgoing transfer of 500,000 ZZ dollars to the personal account of Wang (fictional), reference "loan repayment".
+2022-06-11 Outgoing transfer of 300,000 ZZ dollars to a car dealership, reference "vehicle purchase".

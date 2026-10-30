@@ -1,0 +1,277 @@
+# Bilingual search glossary (zh <-> en), owner: retrieval, version: 1 (2026-10-30).
+#
+# PURPOSE: query expansion for cross-lingual lexical search ONLY.
+# Each line is one concept group: Chinese terms <TAB> English terms, alternatives separated by "|".
+# Pairs are approximate translations of general legal vocabulary. They are NOT statements that a
+# Chinese legal concept and a US/common-law concept are equivalent (ADR-0004 §6), are never shown to
+# users, and are never used to verify anything. They only widen the set of candidate spans.
+# Changelog: v1 initial list: contract and civil-procedure vocabulary, then criminal, financial-crime
+# and criminal-procedure vocabulary (v1 practice area per ADR-0006).
+#
+# --- parties and roles ---
+当事人|双方	party|parties
+一方	one party|either party
+对方|相对人	other party|counterparty
+买方|买受人|购买方	buyer|purchaser
+卖方|出卖人|销售方|供货方	seller|vendor|supplier
+出租人	lessor|landlord
+承租人	lessee|tenant
+借款人	borrower
+贷款人|出借人	lender
+债权人	creditor|obligee
+债务人	debtor|obligor
+保证人	guarantor|surety
+代理人	agent
+被代理人|委托人	principal
+第三人	third party
+原告	plaintiff
+被告	defendant
+法院|人民法院	court
+法官	judge
+证人	witness
+鉴定人	expert witness|appraiser
+# --- formation ---
+合同|契约|协议	contract|agreement
+要约	offer
+承诺	acceptance|accept
+要约邀请	invitation to offer|invitation to treat
+订立|缔结	conclude|formation|form|enter into
+成立	formation|formed|established
+生效	effective|take effect|enter into force
+书面形式|书面	writing|written|in writing
+口头	oral|orally|verbal
+签名|签字	signature|sign|signed
+盖章	seal|stamp
+条款	clause|term|provision
+格式条款	standard term|standard terms|boilerplate
+附件	annex|schedule|attachment
+# --- validity ---
+无效	void|invalid
+可撤销|撤销	voidable|revoke|rescind|set aside
+欺诈	fraud|fraudulent
+胁迫	duress|coercion
+重大误解	material mistake|mistake
+显失公平	unconscionable|grossly unfair
+民事行为能力|行为能力	capacity|legal capacity
+# --- performance ---
+履行	perform|performance
+全面履行	full performance|perform fully
+继续履行|实际履行	specific performance|continue to perform
+交付	deliver|delivery|tender
+交货	deliver goods|delivery of goods|deliver
+货物|标的物	goods|subject matter
+价款|价格	price
+支付|付款	pay|payment
+报酬	remuneration|fee|compensation
+期限|履行期限	time limit|deadline|period|time for performance
+迟延|延迟|逾期	delay|late|overdue|delayed
+提前	early|in advance
+地点|履行地点	place|place of performance
+数量	quantity
+质量	quality
+瑕疵|缺陷	defect|defective|nonconformity|nonconforming
+检验|验收	inspect|inspection|examine|acceptance inspection
+异议	objection|notice of nonconformity|object
+包装	packaging|package
+运输|运送	transport|carriage|shipment|shipping
+风险	risk
+风险转移	passing of risk|transfer of risk
+所有权	ownership|title
+转移	transfer|pass
+发票	invoice
+收据	receipt
+送货单|交货单	delivery note|delivery receipt
+# --- breach and remedies ---
+违约	breach|breach of contract|default
+违约责任	liability for breach|liability for breach of contract
+根本违约	fundamental breach|material breach
+预期违约	anticipatory breach|repudiation
+责任	liability|responsibility|liable
+赔偿	compensate|compensation|damages|indemnify
+损失	loss|losses
+损害赔偿|赔偿损失	damages|compensatory damages
+可得利益	expected profit|lost profits|expectation
+违约金	liquidated damages|penalty|contractual penalty
+定金	deposit|earnest money
+利息	interest
+补救措施	remedy|remedies|cure
+修理|更换|重作	repair|replace|replacement
+减少价款|减价	price reduction|reduce the price
+解除	terminate|termination|rescind|rescission|cancel|cancellation
+终止	terminate|termination|end|discharge
+通知	notice|notify|notification
+催告	demand|reminder|demand for performance
+合理期限|合理期间	reasonable time|reasonable period
+不可抗力	force majeure|act of god
+情势变更	change of circumstances|hardship
+免责	exemption|exclusion of liability|exempt|excuse
+减损|减轻损失	mitigate|mitigation
+过错	fault
+抵销	set-off|setoff|offset
+同时履行抗辩	defense of simultaneous performance
+抗辩	defense|defence|plea
+# --- obligations, guarantees, transfer ---
+债务	debt|obligation
+债权	claim|right of claim|receivable
+义务	obligation|duty
+权利	right|rights
+担保	security|guarantee|collateral
+保证	guarantee|guaranty|suretyship|warranty
+抵押	mortgage
+质押	pledge
+转让	assign|assignment|transfer
+代位	subrogation
+代理	agency|agent|represent
+授权	authorize|authorization|authority
+# --- contract types ---
+买卖合同	sales contract|contract for sale|sale of goods
+借款合同	loan contract|loan agreement
+租赁合同|租赁	lease|lease contract|tenancy
+承揽合同|承揽	work contract|contract for work
+建设工程	construction
+运输合同	contract of carriage
+委托合同	mandate|agency contract
+服务	service|services
+# --- procedure ---
+诉讼	litigation|lawsuit|action|proceedings
+起诉	sue|file suit|bring an action|commence an action
+诉讼请求	claim|claims for relief|prayer for relief
+上诉	appeal
+管辖	jurisdiction|venue
+判决	judgment|judgement
+裁定	ruling|order
+调解	mediation|conciliation
+仲裁	arbitration|arbitrate
+诉讼时效|时效	limitation period|statute of limitations|limitation
+期间	period|time period
+送达	service|serve
+答辩	answer|defense|response
+反诉	counterclaim
+撤诉	withdraw|withdrawal of action|dismiss
+# --- evidence ---
+证据	evidence
+举证	burden of proof|produce evidence|adduce evidence
+举证责任	burden of proof|burden of production
+证明	prove|proof|demonstrate|establish
+证明目的	purpose of proof|what the evidence is offered to prove
+证明标准	standard of proof
+高度可能性|高度盖然性	preponderance|more likely than not|high probability
+书证	documentary evidence|document|documents
+物证	physical evidence|real evidence
+电子数据	electronic data|electronic evidence|email|emails|electronic records
+证人证言|证言	testimony|witness testimony
+鉴定意见	expert opinion|expert report
+原件	original
+复印件|复制件	copy|duplicate
+质证	cross-examination|examine evidence|challenge evidence
+自认	admission|admit
+免证|无需举证	not required to prove|judicial notice
+相关性|关联性	relevance|relevant
+真实性	authenticity|authentic|genuine
+合法性	legality|lawfully obtained|admissibility
+采信	admit|accept evidence|credit
+传闻	hearsay
+举证期限	time limit for evidence|deadline for producing evidence
+# --- general ---
+法律	law|statute
+规定	provide|provision|prescribe|rule
+适用	apply|application|applicable
+解释	interpretation|interpret|construe
+合理	reasonable
+善意	good faith|bona fide
+诚信|诚实信用	good faith|honesty|integrity
+公平	fairness|fair
+书面通知	written notice
+日	day|days
+月	month|months
+年	year|years
+# --- criminal law: general ---
+犯罪|罪	crime|offence|offense|criminal
+刑法	criminal law|penal code
+罪名	charge|offence|name of the offence
+刑事责任	criminal liability|criminal responsibility
+被告人	defendant|accused
+犯罪嫌疑人	suspect|criminal suspect
+被害人	victim
+公诉|公诉机关|人民检察院|检察院	prosecution|prosecutor|procuratorate
+辩护人|辩护律师	defense counsel|defence counsel|defense lawyer
+辩方	defense|defence
+起诉书	indictment|bill of indictment
+刑罚|处罚|判处	punishment|penalty|sentence|punish|sentenced
+有期徒刑	fixed-term imprisonment|imprisonment
+无期徒刑	life imprisonment
+拘役	criminal detention
+罚金	fine
+没收|没收财产	confiscate|confiscation|forfeiture
+退赃|退赔|追缴	restitution|return of proceeds|recover
+故意	intent|intentional|intentionally
+明知	knowingly|knowing|with knowledge|knew
+以非法占有为目的|非法占有	intent to illegally possess|intent to permanently deprive|unlawful appropriation
+共同犯罪	joint crime|joint offence|complicity
+主犯	principal offender|principal
+从犯	accessory|accomplice|secondary role
+自首|自动投案	voluntary surrender|surrender|turn oneself in
+如实供述	truthful confession|confess truthfully
+从轻处罚|减轻处罚|从轻|减轻	lighter punishment|mitigated punishment|leniency|mitigation
+单位犯罪	corporate crime|offence by a company|entity crime
+主管人员|直接负责的主管人员	responsible managers|person in charge|managers
+情节严重|严重情节	serious circumstances|aggravating circumstances|seriously
+数额较大	relatively large amount|large amount
+数额巨大	huge amount|very large amount
+追诉时效	limitation period for prosecution
+# --- financial crime ---
+金融	financial|finance
+金融犯罪	financial crime|financial offence
+金融管理	financial regulation|financial administration
+金融机构	financial institution
+金融牌照|资质	financial licence|financial license|licence|license|authorisation|authorization
+非法集资	illegal fundraising
+集资|募集资金	fundraising|raise funds|solicit funds
+集资诈骗	fundraising fraud
+非法吸收公众存款	illegally taking deposits from the public|unauthorised deposit-taking|illegal deposit-taking
+吸收存款|吸收资金	taking deposits|deposit-taking|solicit deposits|take deposits
+社会公众|公众|不特定对象	general public|public|unspecified persons
+存款	deposit|deposits
+资金	funds|money
+还本付息	repay principal and interest|principal and interest|principal with interest
+回报|收益	return|returns|profit|yield
+承诺	promise|promising|promised
+宣传|推介	advertise|publicize|promote|solicit
+投资人|集资参与人|投资者	investor|investors
+理财产品	wealth management product|investment product
+诈骗|欺诈	fraud|defraud|deception|deceive
+贷款诈骗	loan fraud
+洗钱	money laundering|launder|laundering
+犯罪所得|违法所得	proceeds of crime|criminal proceeds|proceeds|illegal gains
+掩饰|隐瞒	conceal|disguise|concealment
+来源	origin|source
+转移	transfer|move|moving
+转账|汇款|支付结算	transfer|wire transfer|remittance|payment settlement
+账户|资金账户|个人账户	account|bank account|personal account
+银行	bank
+内幕交易	insider trading|insider dealing
+内幕信息	inside information|insider information
+证券|股票	securities|stock|shares
+未公开	not public|not been made public|undisclosed
+兑付	repay|redeem|payout
+# --- criminal procedure and evidence ---
+刑事诉讼	criminal procedure|criminal proceedings
+定罪	conviction|convict|convicted
+量刑	sentencing
+证据确实充分|证据确实、充分	reliable and sufficient evidence|sufficient evidence
+排除合理怀疑	beyond reasonable doubt|exclude reasonable doubt
+非法证据|非法证据排除	illegally obtained evidence|exclusion of illegal evidence|exclusionary rule
+排除	exclude|exclusion|excluded
+刑讯逼供	torture to extract a confession|torture|coerced confession
+口供|供述	confession|statement of the accused
+讯问	interrogation|interrogate|questioning
+讯问笔录	interrogation record|record of interrogation
+询问笔录	witness interview record|record of questioning
+核对|签名确认	verify|check|sign|confirm
+审计报告|审计	audit report|audit
+司法会计鉴定	forensic accounting|forensic accounting report
+银行流水|交易记录|流水	bank statement|transaction records|bank records|account statement
+涉案财物|涉案金额|涉案	property involved|amount involved|involved in the case
+查封	seal up|seal
+扣押	seize|seizure
+冻结	freeze|freezing
