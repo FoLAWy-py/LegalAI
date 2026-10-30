@@ -49,7 +49,7 @@ draft ──► open ──► accepted ──► in-progress ──► delivere
 | REQ-PMO-0010 | Close contract gaps found in Wave 1 (contracts 0.4.0, ADR-0007) | pmo → architecture | verified | 1 (contracts serialized) |
 | REQ-PMO-0009 | CJK look-alike mapping for PDF output | pmo → casefile | verified | 1 |
 | REQ-PMO-0012 | Adopt contracts 0.4.0 in verification | pmo → verification | open | 3 (adopt 0.4.0; gate for reference dates) |
-| REQ-PMO-0013 | Adopt contracts 0.4.0 in casefile | pmo → casefile | delivered | 3 (adopt 0.4.0) |
+| REQ-PMO-0013 | Adopt contracts 0.4.0 in casefile | pmo → casefile | verified | 3 (adopt 0.4.0) |
 | REQ-PMO-0014 | Adopt contracts 0.4.0 in corpus | pmo → corpus | open | 3 (adopt 0.4.0) |
 | REQ-PMO-0015 | Adopt contracts 0.4.0 in reasoning | pmo → reasoning | open | 3 (adopt 0.4.0) |
 | REQ-PMO-0016 | Adopt contracts 0.4.0 in interface | pmo → interface | open | 3 (adopt 0.4.0) |

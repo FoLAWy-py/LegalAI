@@ -4,7 +4,7 @@ title: "Adopt contracts 0.4.0 in casefile: contract not-found error and original
 from: pmo
 to: casefile
 owner: pmo
-status: delivered
+status: verified
 priority: P2
 created: 2026-10-30
 updated: 2026-10-30
@@ -94,3 +94,10 @@ change. Those records keep `original_sha256` in the `meta.json` provenance field
     schema" (fails closed).
   - No real data directory was inspected (P9). Legacy handling was tested on synthetic records that were
     rewritten to the exact schema-1 and schema-2 layout.
+
+### PMO verification (2026-10-30)
+Verified by the issuer. AC1–AC3 checked against the diff and tests: changes are confined to `departments/casefile/`;
+the only edit to an existing test is the expected metadata schema (2 → 3), a direct consequence of storing
+`original_sha256`. Back-filling old records from the intake-time hash in `meta.json` (no re-hash, no rewrite) is accepted:
+it is the hash casefile already kept (ADR-0007 §4). Merged to `main`; `scripts/check_all.py`: 542 passed, ALL CHECKS PASSED.
+
