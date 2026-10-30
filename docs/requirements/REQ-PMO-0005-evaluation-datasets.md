@@ -16,14 +16,16 @@ depends_on: [ADR-0004, ADR-0005]
 ## 1. Context
 Nothing ships unmeasured (P6). The framework spike (REQ-ARCH-0001) needs a synthetic set now; the real golden
 sets need qualified human review. Sequencing (project owner, 2026-10-30): CN first, US later.
-**Practice area (project owner, 2026-10-30, revises D6):** CN **criminal** cases replace civil contract disputes.
+**Practice area (project owner, 2026-10-30, revises D6):** CN **criminal** cases replace civil contract disputes, with
+**financial crimes** as the v1 focus.
 
 PMO check of the owner-supplied pilot `<data_dir>/evaluation/yu-huan-pilot/` (2026-10-30): hashes and offsets are
 internally consistent, but document 01 is not verbatim to its official source page, and three documents are secondary
 mirrors. The pilot is therefore **not** golden data in its current form.
 
 ## 2. Requirement
-1. A synthetic `ZZ` dataset of ≥ 10 **criminal** cases: fictional penal and criminal-procedure provisions, fictional
+1. A synthetic `ZZ` dataset of ≥ 10 **criminal** cases, at least 7 of them fictional **financial** offences (e.g. modelled
+   on the structure — not the text — of illegal fundraising, fund fraud, money laundering, card fraud): fictional penal and criminal-procedure provisions, fictional
    case files (e.g. indictment, witness statements, forensic and inspection records), the charged offence, expected
    elements of the offence, expected evidence links and expected gaps; at least 3 cases in Chinese, 3 in English,
    2 cross-lingual, 2 with deliberately missing evidence for an element, 1 with a justification or defence supported

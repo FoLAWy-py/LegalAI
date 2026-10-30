@@ -15,7 +15,8 @@ depends_on: [ADR-0004, ADR-0005]
 
 ## 1. Context
 Project owner decisions (2026-10-30), given to the Program Office in session:
-- **D6 revised:** the v1 practice area is **criminal cases**, replacing civil contract disputes.
+- **D6 revised:** the v1 practice area is **criminal cases**, replacing civil contract disputes, with **financial crimes**
+  as the v1 focus (owner answer, same day). The v1 pilot is SPP 检例第175号 (REQ-PMO-0008).
 - **Sequencing:** CN first; US law is considered only after the CN vertical slice is confirmed end to end.
 - **Origin approval** for corpus is delegated to the Program Office (rule in REQ-PMO-0002 §2.1).
 

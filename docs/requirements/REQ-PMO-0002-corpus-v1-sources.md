@@ -18,7 +18,7 @@ Elements must be grounded in authoritative, versioned law (P1, P4, P5). Scope pe
 
 **Sequencing (project owner, 2026-10-30):** CN first; US law follows in a separate REQ once the CN
 vertical slice is confirmed end to end. **Practice area (project owner, 2026-10-30, revises D6):** CN **criminal**
-cases replace civil contract disputes; ADR-0005 is being amended accordingly. **Origin approval** is delegated by the project owner to the
+cases replace civil contract disputes, with **financial crimes** as the v1 focus; ADR-0005 is being amended accordingly. **Origin approval** is delegated by the project owner to the
 Program Office and is decided by the rule in §2.1 below.
 
 Lesson from the Yu Huan pilot (PMO check, 2026-10-30): a local "public text extract" labelled as an official
@@ -40,10 +40,17 @@ byte-faithful to the official rendering, never re-typed, summarised or copied fr
    Criminal Procedure Law (刑事诉讼法); the SPC interpretation on applying the Criminal Procedure Law; and the
    official provisions on examining and judging evidence and on excluding illegal evidence in criminal cases
    (identify the exact official titles, issuers and versions from the official sources). Corpus SHOULD also ingest
-   the SPP rules of criminal procedure for procuratorates if its origin is approved. For the v1 pilot case
-   (SPC Guiding Case 270, REQ-PMO-0008), corpus MUST also ingest the joint opinions on handling drunk-driving criminal
-   cases: the version cited by that case (高检发办字〔2023〕187号) and the version it replaced, if any, as in force in
-   2022. Identify both from official sources. All versions with correct
+   the SPP rules of criminal procedure for procuratorates if its origin is approved.
+   **Financial-crime focus:** corpus MUST ingest the SPC (and joint SPC/SPP) judicial interpretations on illegal
+   fundraising — every version in force from 2014-01-01 onward, including 法释〔2022〕5号 and the version it replaced —
+   and SHOULD ingest the official interpretations on money laundering, credit-card crimes and securities/futures
+   crimes (identify titles, document numbers and versions from official sources).
+   **Pilot (SPP 检例第175号, REQ-PMO-0008):** the conduct ran from 2014 to 2018, so for the Criminal Law and the
+   illegal-fundraising interpretations corpus MUST cover every version in force from **2014-01-01** (not only from
+   2021). Corpus MUST also ingest the non-criminal provisions that case cites for the illegality element — the
+   Commercial Banking Law (商业银行法), the Securities Investment Fund Law (证券投资基金法) and the CSRC interim measures
+   on private investment funds (证监会令第105号) — from their official issuing-body origins (NPC database; CSRC),
+   all versions in force over the same period. All versions with correct
    `effective_from` / `effective_to` taken from the official source (never from memory). Where only an amendment
    act and no official consolidated text exists for some version, record that and do not construct a consolidated
    text yourself. `origins.md` also assesses the US candidates so the US REQ can start quickly, but
@@ -65,7 +72,7 @@ byte-faithful to the official rendering, never re-typed, summarised or copied fr
 6. `scripts/check_all.py` passes (network tests marked `live`).
 
 ## 5. Out of scope
-Civil law (no longer v1 scope), case law incl. guiding cases (later REQ), all US law (later REQ), judgments from wenshu.court.gov.cn, indexing.
+Civil law (no longer v1 scope) except the financial-regulation statutes named in §2.2, case law incl. guiding cases (later REQ), all US law (later REQ), judgments from wenshu.court.gov.cn, indexing.
 
 ## 6. Open questions
 - Which origin provides authoritative historical versions for each document?
