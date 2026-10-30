@@ -40,7 +40,9 @@ architecture-owned and may lag.
 | D3 | Origin approval delegated to PMO. Approved: court.gov.cn, csrc.gov.cn, spp.gov.cn (private local use). Rejected: flk.npc.gov.cn, wenshu, CourtListener. www.npc.gov.cn: automated retrieval with the honest UA only; a refusal is final, then manual import | REQ-PMO-0002 §7; REQ-PMO-0011 |
 | D13 | **Access-control rule:** never change UA, headers, IP or timing to get past a refusal. Owner answered "allow automated fetching" for npc.gov.cn on 2026-10-31. That is read as automated fetching under this rule, not around it | REQ-PMO-0002 §7.2 |
 | D12 | No constructed consolidations; the 1997 text and amendment acts are stored and cited separately; missing versions are recorded gaps | REQ-PMO-0002 §7.4 |
-| — | Owner chooses qualified reviewers; PMO asks when one is needed | (owner instruction) |
+| D14 | **Defences:** shown as `contradicts` links (ADR-0006 §4) **and** each defence MUST cite the legal provisions supporting it (owner, 2026-10-31) | REQ-PMO-0019 |
+| D15 | **Look-alike characters** may be corrected, but every correction MUST be clearly marked and traceable to the original text (owner, 2026-10-31). Confirms casefile's mapping and charter amendment (REQ-PMO-0009) | REQ-PMO-0019 |
+| — | Owner chooses qualified reviewers; PMO asks when one is needed. **Not needed yet** (owner asked 2026-10-31): first needed when REQ-PMO-0008 annotations are drafted, which requires CN law ingested (0002/0011) | (owner instruction) |
 | — | Owner-supplied Yu Huan pilot (`data/evaluation/yu-huan-pilot/`) is **not** golden data: doc 01 is not verbatim to the official SPC page; docs 05–07 are mirrors | REQ-PMO-0005 §1 |
 
 ## 3. REQ board
@@ -54,7 +56,7 @@ architecture-owned and may lag.
 | 0006 interface pipeline/CLI | interface | open | In flight in worktree `ae038e…` (second session) |
 | 0007 criminal re-scope | architecture | verified | — |
 | 0008 SPP 175 pilot | evaluation | draft | Open it after 0002/0011 and 0017. Needs a **qualified reviewer** (ask owner) |
-| 0009 CJK look-alikes | casefile | verified | Owner/architecture to confirm casefile's narrow charter amendment (§7 of 0009) |
+| 0009 CJK look-alikes | casefile | verified | Owner confirmed (D15). Marking downstream via 0019 |
 | 0010 contract gaps (0.4.0) | architecture | verified | — |
 | 0011 manual import | corpus | open | In flight with corpus (`a4bd54…`) |
 | 0012 adopt 0.4.0 verification | verification | open | **Delivered on branch `worktree-agent-ae0fc3fc99456b9ef`, not merged.** Verify and merge |
@@ -64,6 +66,7 @@ architecture-owned and may lag.
 | 0016 adopt 0.4.0 interface | interface | open | In flight (`ae038e…`) |
 | 0017 adopt 0.4.0 evaluation | evaluation | open | Not dispatched |
 | 0018 case-file recall | retrieval | open | Not dispatched |
+| 0019 defence law basis + marked corrections | architecture | open | Not dispatched. **Contract change: run it alone** (ORGANIZATION §6). Then issue adoption REQs from its §8 |
 | ARCH-0001 framework spike | reasoning | open | In flight (`ad4d8b…`). Afterwards, evaluation runs both builders live on `ZZ-SYNTH-CRIM-OUTLINE`, then ADR-0002 is decided |
 
 ## 4. Agent worktrees (as of 2026-10-31)
@@ -102,8 +105,8 @@ architecture-owned and may lag.
    - whether an open `effective_to` can be marked "not confirmed" (corpus).
 3. **Corpus to confirm:** `SourceStore.list_documents(jurisdiction)` returns all versions, not only current (retrieval
    assumes so).
-4. **Owner to confirm:** defences as `contradicts` links (ADR-0006 §4); casefile charter amendment (0009).
-5. **Owner input pending:** qualified CN reviewer (PRC criminal lawyer, or former prosecutor or judge, with
+4. ~~Owner to confirm defences / casefile charter amendment~~: decided 2026-10-31 (D14, D15), now in REQ-PMO-0019.
+5. **Owner input pending (not yet needed):** qualified CN reviewer (PRC criminal lawyer, or former prosecutor or judge, with
    illegal-fundraising experience) before 0008 annotations can gate a release.
 
 ## 7. Incidents (for the record)
