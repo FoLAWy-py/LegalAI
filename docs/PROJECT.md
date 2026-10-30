@@ -22,7 +22,7 @@ These block specific REQs. Record answers here and in an ADR where they bind sev
 |---|---|---|---|
 | D1 | Target jurisdiction(s) and language(s) | US and CN, multi-language | ADR-0004 |
 | D2 | First use case | Evidence outline: proof chart with gap analysis | ADR-0006 (was ADR-0005) |
-| D3 | Source origins and licensing | Public sources, downloaded locally. Approval of each origin is delegated to the Program Office, by the rule in REQ-PMO-0002 §2.1 (2026-10-30) | corpus CHARTER; REQ-PMO-0002 |
+| D3 | Source origins and licensing | Public sources, downloaded locally and kept for private local use only. Automated fetching is approved for official sites with no robots policy (court.gov.cn, csrc.gov.cn, spp.gov.cn). Sites that forbid or refuse bots are not circumvented; their documents come in by manual import (2026-10-30) | REQ-PMO-0002 §7; REQ-PMO-0011 |
 | D4 | Deployment and model provider | Local; `deepseek-ai/DeepSeek-V4.1-Flash-1017` on DeepInfra | ADR-0003 |
 | D5 | Agent framework | Open — decided by spike REQ-ARCH-0001 | ADR-0002 |
 | D6 | Practice area | **Criminal cases**, with **financial crimes** as the v1 focus (revised 2026-10-30; replaces civil contract disputes) | ADR-0006 |
@@ -30,7 +30,9 @@ These block specific REQs. Record answers here and in an ADR where they bind sev
 | D8 | Which US state | **Deferred**: re-opened together with D7 | ADR-0006 |
 | D9 | Input formats | Digital documents only (no OCR) | ADR-0006 (was ADR-0005) |
 | D10 | Sequencing | CN first; US law only after the CN vertical slice is confirmed end to end (2026-10-30) | ADR-0006 |
-| D11 | v1 pilot case | SPP 检例第175号, selected by the Program Office (2026-10-30) | ADR-0006; REQ-PMO-0008 |
+| D11 | v1 pilot case | SPP 检例第175号, selected by the Program Office; private local copy only (2026-10-30) | ADR-0006; REQ-PMO-0008 |
+| D12 | Historical law versions | No constructed consolidations; original 1997 text and amendment acts are stored and cited separately (2026-10-30) | REQ-PMO-0002 §7 |
+| D13 | Access control | Never get past a site's refusal or block (UA, headers, IP, timing); the 9 NPC files obtained that way are deleted (2026-10-30) | REQ-PMO-0002 §7 |
 
 ## Roadmap (phase gates)
 1. **Foundation** — contracts v0.2, boundaries, standards, v1 decisions (done 2026-10-30).

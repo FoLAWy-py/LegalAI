@@ -8,7 +8,7 @@ status: open
 priority: P2
 created: 2026-10-30
 updated: 2026-10-30
-depends_on: [ADR-0003, ADR-0005]
+depends_on: [ADR-0003, ADR-0006]
 ---
 
 # REQ-PMO-0006: Wire the outline pipeline, configuration and CLI
@@ -21,8 +21,10 @@ Interface is the composition root and the last gate before the user (P3, P8, P9)
    or invalid values; never log the API key.
 2. `build_pipeline(config)` constructs and injects all ports; usable by evaluation. Until departments deliver,
    it may wire `ZZ` fakes behind an explicit `--synthetic` flag.
-3. CLI: ingest a case directory; produce an outline for (`--jurisdiction`, `--as-of`, `--role`, `--lang`, cause
-   of action text); render as proof chart or 证据目录 (Markdown).
+3. CLI: ingest a case directory; produce an outline for a **charged offence** (ADR-0006): `--jurisdiction`, `--as-of`,
+   `--role` (`prosecution` | `defendant`), `--lang`, and the charged-offence / facts text. Render it as a proof chart or
+   a 证据目录 (Markdown). When contracts carry per-citation reference dates (REQ-PMO-0010), show them next to each
+   legal basis.
 4. Render only items verified SUPPORTED; elements whose basis failed verification are shown as "unverified —
    withheld" with the reason; gaps always shown. Every output states jurisdiction, as-of date, model, and disclaimer
    that the output is not legal advice and that excerpts were processed by the model provider.

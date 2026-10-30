@@ -92,6 +92,30 @@ Decision: **accept** (corpus, 2026-10-30), with these clarifications:
    is left out and listed in §8 instead of being guessed.
 4. Answer to §6: see the "Historical versions" table in `origins.md` and §8.
 
+### PMO decisions and amendment (2026-10-30, project owner via PMO)
+Answers to the three decisions corpus asked for in §8. The receiver acknowledges this amendment on resumption (STD-DOC §4).
+
+1. **Amended approval rule (replaces the robots clause of §2.1):** an official issuing-body origin **with no robots
+   policy** (robots.txt missing, an HTML error page, or a redirect) is **approved for automated retrieval**, as long
+   as its terms do not forbid automated access. An explicit `Disallow` that applies to our crawler, or an explicit
+   ban on automated tools, still means **rejected**. Every other §2.1 condition is unchanged: polite rate, honest
+   identifying UA, official origin, no mirrors.
+   - **Approved:** `www.court.gov.cn`, `www.csrc.gov.cn`, `www.spp.gov.cn`. Stored copies are for private local
+     analysis only, never redistributed or committed. This satisfies CSRC's "no alteration / sale / lease" terms and
+     SPP's "no reposting / excerpting / mirroring" footer.
+   - **Still rejected:** `flk.npc.gov.cn` (explicit ban), `wenshu.court.gov.cn`.
+   - **`www.npc.gov.cn`:** automated retrieval is allowed **only with the honest UA**. A firewall refusal (403) means
+     *not permitted* for automation; the document then comes in through the manual-import path (REQ-PMO-0011).
+2. **Access-control rule (new, binding on every department):** never change the user agent, headers, IP, timing or
+   any other request property to get past a refusal, block, CAPTCHA or firewall. A refusal is final for automated
+   access.
+3. **The 9 raw files** from `www.npc.gov.cn` (downloaded after the UA was changed to get past the firewall) MUST be
+   **deleted** from the raw store, with the deletion recorded in the fetch log and `origins.md` §5. Those documents
+   are re-obtained through an approved path.
+4. **Versions without an official consolidated text:** accepted as recorded gaps. Corpus stores the original
+   1997 Criminal Law text and every amendment act as **separate official documents**, so an outline can cite the
+   original article and the amending provision side by side. No consolidated text is constructed (§2.2 unchanged).
+
 ## 8. Delivery
 **Status: partial; ingestion is blocked on PMO origin decisions** (corpus, 2026-10-30). Status stays `in-progress`.
 

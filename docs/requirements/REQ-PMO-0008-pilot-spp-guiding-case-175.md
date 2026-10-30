@@ -38,7 +38,8 @@ evidence documents.
 
 ## 2. Requirement
 1. Capture the official page byte-faithfully: raw HTML, retrieval time, URL, sha256. Derive the 检例第175号 text from the
-   raw HTML mechanically, without retyping. spp.gov.cn must first be approved under REQ-PMO-0002 §2.1.
+   raw HTML mechanically, without retyping. spp.gov.cn is approved (REQ-PMO-0002 §7, PMO decisions 2026-10-30) for a **private local copy only**: kept
+   under the data dir, never committed, published or redistributed (project owner decision, 2026-10-30).
 2. Store it under `<data_dir>/evaluation/cn-spp175-pilot/` with a manifest, in the shape the golden-set spec
    (REQ-PMO-0005) defines.
 3. Draft annotations with exact offsets, each marked `review_status: pending`:

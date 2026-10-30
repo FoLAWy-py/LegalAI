@@ -44,6 +44,7 @@ draft ──► open ──► accepted ──► in-progress ──► delivere
 | REQ-ARCH-0001 | Agent framework spike for ADR-0002 | architecture → reasoning | open | 2 (needs PMO-0005 synthetic set) |
 | REQ-PMO-0006 | Outline pipeline, config, CLI | pmo → interface | open | 2 |
 | REQ-PMO-0007 | Re-scope v1 to CN criminal cases (ADR-0006, PROJECT, contracts 0.3.0) | pmo → architecture | delivered | 1 (contracts serialized) |
+| REQ-PMO-0011 | Manual-import path; delete 9 NPC files; 403 is final | pmo → corpus | open | 2 (with PMO-0002 resumption) |
 | REQ-PMO-0008 | CN financial-crime pilot dataset from SPP Guiding Case 175 | pmo → evaluation | draft | 2 (needs PMO-0002, PMO-0005, PMO-0007) |
 
 Wave 1 REQs touch disjoint departments and can be dispatched to subagents in parallel, each working against
