@@ -22,18 +22,28 @@ Indexing or ranking (retrieval). Deciding what is relevant to a query (retrieval
 
 ## Interfaces
 - **Consumes:** `SourceDocument`, `SourceSpan`.
-- **Provides:** a `SourceStore` implementation; an ingestion API producing `SourceDocument`s.
+- **Provides** (public API in `legalai_corpus.__all__`):
+  - `FileSourceStore(data_dir)` implements the `SourceStore` port. Extras: `full_text`, `get_units`
+    (pinpoint offsets), `get_provenance`, `versions`, `verify_all`.
+  - The ingestion API: `load_manifest`, `ingest_manifest`, `PoliteFetcher`, `RawStore`, the origin registry
+    `ORIGINS`, and the error types.
+  - Operator CLI: `python -m legalai_corpus {fetch,ingest,verify,spotcheck} --data-dir D`.
 
-## v1 scope (ADR-0005)
-- **CN:** Civil Code (contract book), Civil Procedure Law, SPC provisions on evidence in civil procedure, related judicial interpretations — all versions with effective dates.
-- **US:** Federal Rules of Evidence, Federal Rules of Civil Procedure; the chosen state's (D8) contract statutes, UCC Article 2 enactment and public case law.
+## v1 scope (ADR-0006, which supersedes ADR-0005)
+- **CN:** criminal law with a financial-crime focus, exactly as listed in REQ-PMO-0002 §2.2. All versions have
+  effective dates taken from official sources.
+- **US:** deferred to a later REQ (federal rules, then the D8 state).
 
 ## Approved origins
 Policy (D3): public sources downloaded locally. An origin becomes **approved** only after corpus records,
 in `docs/origins.md`, its terms of use / robots policy, rate limits, update cadence, and how versions and
 effective dates are obtained. Downloads must respect terms and rate limits.
 
-Candidates to assess (not yet approved):
+The current decision for each origin, with its evidence, is in `docs/origins.md` (mirrored in code by
+`legalai_corpus.origins.ORIGINS`). As of 2026-10-30 no origin is approved. The charter candidates below
+were all assessed there, together with www.npc.gov.cn, www.csrc.gov.cn, www.spp.gov.cn and www.uscourts.gov.
+
+Charter candidates:
 
 | Jurisdiction | Origin | Content |
 |---|---|---|
@@ -52,4 +62,4 @@ Candidates to assess (not yet approved):
 
 ## Reliability duties
 P4 (validity intervals), P5 (provenance, hashing), P1 (authoritative text that verification re-reads).
-Never "clean up" legal wording (no spelling fixes, no paraphrase); normalization rules are documented in `docs/`.
+Never "clean up" legal wording (no spelling fixes, no paraphrase); normalization rules are documented in `docs/normalization.md`.
