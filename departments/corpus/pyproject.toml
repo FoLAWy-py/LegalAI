@@ -1,0 +1,13 @@
+[project]
+name = "legalai-corpus"
+version = "0.1.0"
+description = "LegalAI corpus department"
+requires-python = ">=3.12"
+dependencies = ["legalai-contracts"]
+
+[build-system]
+requires = ["hatchling"]
+build-backend = "hatchling.build"
+
+[tool.uv.sources]
+legalai-contracts = { workspace = true }

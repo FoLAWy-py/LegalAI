@@ -1,0 +1,17 @@
+.venv/
+__pycache__/
+*.pyc
+.pytest_cache/
+.mypy_cache/
+.ruff_cache/
+dist/
+build/
+.env
+.env.*
+# Department runtime data (indexes, downloads, traces) — never commit client data (P9)
+departments/*/data/
+departments/*/.cache/
+.claude/settings.local.json
+!.env.example
+# Local runtime data root (LEGALAI_DATA_DIR)
+data/

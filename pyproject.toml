@@ -1,0 +1,56 @@
+[project]
+name = "legalai-workspace"
+version = "0.1.0"
+description = "LegalAI workspace root (not a package)"
+requires-python = ">=3.12"
+dependencies = [
+    "legalai-contracts",
+    "legalai-casefile",
+    "legalai-corpus",
+    "legalai-retrieval",
+    "legalai-reasoning",
+    "legalai-verification",
+    "legalai-evaluation",
+    "legalai-interface",
+]
+
+[dependency-groups]
+dev = ["pytest>=8", "ruff>=0.6", "mypy>=1.11", "pyyaml>=6", "types-pyyaml"]
+
+[tool.uv]
+package = false
+
+[tool.uv.workspace]
+members = ["departments/*"]
+
+[tool.uv.sources]
+legalai-contracts = { workspace = true }
+legalai-casefile = { workspace = true }
+legalai-corpus = { workspace = true }
+legalai-retrieval = { workspace = true }
+legalai-reasoning = { workspace = true }
+legalai-verification = { workspace = true }
+legalai-evaluation = { workspace = true }
+legalai-interface = { workspace = true }
+
+[tool.pytest.ini_options]
+testpaths = ["departments"]
+addopts = "--import-mode=importlib -m 'not live'"
+markers = ["live: calls real model APIs or network; skipped by default"]
+
+[tool.ruff]
+line-length = 110
+target-version = "py312"
+
+[tool.ruff.lint]
+select = ["E", "F", "W", "I", "B", "UP", "SIM", "BLE", "RUF"]
+
+[tool.ruff.lint.isort]
+known-first-party = [
+    "legalai_contracts", "legalai_casefile", "legalai_corpus", "legalai_retrieval", "legalai_reasoning",
+    "legalai_verification", "legalai_evaluation", "legalai_interface",
+]
+
+[tool.mypy]
+strict = true
+plugins = ["pydantic.mypy"]

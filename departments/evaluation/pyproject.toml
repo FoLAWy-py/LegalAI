@@ -1,0 +1,19 @@
+[project]
+name = "legalai-evaluation"
+version = "0.1.0"
+description = "LegalAI evaluation department"
+requires-python = ">=3.12"
+dependencies = ["legalai-contracts", "legalai-casefile", "legalai-corpus", "legalai-retrieval", "legalai-reasoning", "legalai-verification", "legalai-interface"]
+
+[build-system]
+requires = ["hatchling"]
+build-backend = "hatchling.build"
+
+[tool.uv.sources]
+legalai-contracts = { workspace = true }
+legalai-casefile = { workspace = true }
+legalai-corpus = { workspace = true }
+legalai-retrieval = { workspace = true }
+legalai-reasoning = { workspace = true }
+legalai-verification = { workspace = true }
+legalai-interface = { workspace = true }
