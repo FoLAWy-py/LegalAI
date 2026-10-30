@@ -91,24 +91,57 @@ class EmbeddingModelSpec:
     query_prefix: str = ""
     document_prefix: str = ""
     query_prompt_name: str | None = None
+    recommended: bool = True
+    note: str = ""
 
+
+_E5_NOTE = "cross-lingual zh<->en recall@5 <= 0.36 and negatives overlap positives; not recommended"
 
 KNOWN_MODELS: dict[str, EmbeddingModelSpec] = {
     spec.name: spec
     for spec in (
         EmbeddingModelSpec(
-            "intfloat/multilingual-e5-small", "MIT", 0.80, query_prefix="query: ", document_prefix="passage: "
+            "Qwen/Qwen3-Embedding-0.6B",
+            "Apache-2.0",
+            0.45,
+            query_prompt_name="query",
+            note="default: best zh<->en recall and widest positive/negative similarity gap",
         ),
         EmbeddingModelSpec(
-            "intfloat/multilingual-e5-base", "MIT", 0.80, query_prefix="query: ", document_prefix="passage: "
+            "BAAI/bge-m3", "MIT", 0.50, note="strong; weights only as pickled pytorch_model.bin"
         ),
-        EmbeddingModelSpec("sentence-transformers/paraphrase-multilingual-MiniLM-L12-v2", "Apache-2.0", 0.50),
-        EmbeddingModelSpec("BAAI/bge-m3", "MIT", 0.50),
-        EmbeddingModelSpec("Qwen/Qwen3-Embedding-0.6B", "Apache-2.0", 0.50, query_prompt_name="query"),
+        EmbeddingModelSpec(
+            "sentence-transformers/paraphrase-multilingual-MiniLM-L12-v2",
+            "Apache-2.0",
+            0.50,
+            note="small; positive and negative similarities overlap",
+        ),
+        EmbeddingModelSpec(
+            "intfloat/multilingual-e5-base",
+            "MIT",
+            0.85,
+            query_prefix="query: ",
+            document_prefix="passage: ",
+            recommended=False,
+            note=_E5_NOTE,
+        ),
+        EmbeddingModelSpec(
+            "intfloat/multilingual-e5-small",
+            "MIT",
+            0.85,
+            query_prefix="query: ",
+            document_prefix="passage: ",
+            recommended=False,
+            note=_E5_NOTE,
+        ),
     )
 }
-"""Thresholds are calibrated on retrieval's synthetic ZZ set (REQ-PMO-0003 §8).
-They MUST be re-calibrated on the evaluation golden set before release."""
+"""Thresholds are calibrated on retrieval's synthetic ZZ set (REQ-PMO-0003 §8): each lies between the
+highest similarity of any negative query and the lowest similarity of an expected span. They MUST be
+re-calibrated on the evaluation golden set (REQ-PMO-0005) before release."""
+
+DEFAULT_EMBEDDING_MODEL = "Qwen/Qwen3-Embedding-0.6B"
+"""The model interface should wire by default; chosen by the comparison in REQ-PMO-0003 §8."""
 
 
 class SentenceTransformerEmbedder:

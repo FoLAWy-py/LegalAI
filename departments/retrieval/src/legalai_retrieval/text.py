@@ -45,6 +45,28 @@ CJK_STOP_CHARS = frozenset(
 )
 """Function characters. They still form bigrams but never count toward query coverage."""
 
+CJK_QUERY_FILLERS = (
+    "什么时候",
+    "多长时间",
+    "能不能",
+    "可不可以",
+    "是不是",
+    "有没有",
+    "怎么办",
+    "为什么",
+    "什么",
+    "时候",
+    "开始",
+    "多长",
+    "多久",
+    "多少",
+    "怎样",
+    "哪里",
+    "一般",
+    "还能",
+)
+"""Question filler words. Like stop characters, they never count toward query coverage."""
+
 
 def normalize(text: str) -> str:
     """NFKC + casefold. Only for deriving tokens; never used to compute span offsets."""
@@ -223,15 +245,21 @@ def query_units(norm: str) -> list[QueryUnit]:
             for i in range(m.start(), m.end()):
                 masked[i] = " "
     masked_text = "".join(masked)
+    filler: set[int] = set()
+    for word in CJK_QUERY_FILLERS:
+        pos = masked_text.find(word)
+        while pos != -1:
+            filler.update(range(pos, pos + len(word)))
+            pos = masked_text.find(word, pos + 1)
     for m in _SCAN_RE.finditer(masked_text):
         if m.group("cjk"):
             run, base = m.group("cjk"), m.start()
             if len(run) == 1:
-                if run not in CJK_STOP_CHARS:
+                if run not in CJK_STOP_CHARS and base not in filler:
                     units.append(QueryUnit(base, base + 1, frozenset({run})))
                 continue
             for i, ch in enumerate(run):
-                if ch in CJK_STOP_CHARS:
+                if ch in CJK_STOP_CHARS or base + i in filler:
                     continue
                 adjacent = set()
                 if i > 0:

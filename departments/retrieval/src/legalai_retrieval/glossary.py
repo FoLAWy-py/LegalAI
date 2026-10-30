@@ -58,7 +58,9 @@ class Glossary:
 
     @classmethod
     def default(cls) -> "Glossary":
-        text = resources.files("legalai_retrieval").joinpath("resources/glossary_zh_en.tsv").read_text("utf-8")
+        text = (
+            resources.files("legalai_retrieval").joinpath("resources/glossary_zh_en.tsv").read_text("utf-8")
+        )
         return cls(_parse(text), GLOSSARY_VERSION)
 
     @classmethod

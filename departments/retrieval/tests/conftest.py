@@ -164,9 +164,12 @@ def case_retriever(
     case_store: FakeCaseFileStore, embedder: Embedder, config: RetrievalConfig
 ) -> CaseEvidenceRetriever:
     retriever = CaseEvidenceRetriever(case_store, embedder, config)
-    retriever.index_case("zz-case-001")
-    retriever.index_case("zz-case-002")
+    for case_id in CASE_IDS:
+        retriever.index_case(case_id)
     return retriever
+
+
+CASE_IDS = ("zz-case-001", "zz-case-002", "zz-case-003")
 
 
 def law_query(text: str, as_of: str, jurisdiction: str = "ZZ", qid: str = "q") -> LegalQuery:
@@ -225,3 +228,37 @@ def evaluate_cases(retriever: CaseEvidenceRetriever, zz: ZZSet, limit: int = 10)
 @pytest.fixture
 def evaluators() -> dict[str, Callable[..., RecallReport]]:
     return {"law": evaluate_law, "cases": evaluate_cases}
+
+
+@pytest.fixture
+def make_query() -> Callable[..., LegalQuery]:
+    return law_query
+
+
+@pytest.fixture
+def stores() -> dict[str, type]:
+    """The fake store classes, for tests that build their own (e.g. with a mutated document set)."""
+    return {"source": FakeSourceStore, "case": FakeCaseFileStore}
+
+
+CROSS_LINGUAL = {"zh-en", "en-zh"}
+
+
+def summarize(report: RecallReport) -> str:
+    rows = []
+    for label, cats in (
+        ("zh-zh", {"zh-zh"}),
+        ("en-en", {"en-en"}),
+        ("cross-lingual", CROSS_LINGUAL),
+        ("all", None),
+    ):
+        h1, n = report.recall(1, cats)
+        h5, _ = report.recall(5, cats)
+        if n:
+            rows.append(f"{label}: R@1 {h1}/{n}={h1 / n:.2f} R@5 {h5}/{n}={h5 / n:.2f}")
+    return " | ".join(rows) + f" | misses@5: {report.misses(5)}"
+
+
+@pytest.fixture
+def summary() -> Callable[[RecallReport], str]:
+    return summarize

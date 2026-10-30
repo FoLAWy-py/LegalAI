@@ -7,6 +7,10 @@
     {"doc_id": "zz-sale-of-goods", "version_id": "1", "title": "ZZ Sale of Goods Act (SYNTHETIC)", "jurisdiction": "ZZ", "doc_type": "statute", "language": "en", "effective_from": "2018-07-01", "effective_to": null, "file": "law/zz-sale-of-goods.txt"},
     {"doc_id": "zz-evidence-rules", "version_id": "1", "title": "ZZ Rules of Civil Evidence (SYNTHETIC)", "jurisdiction": "ZZ", "doc_type": "regulation", "language": "en", "effective_from": "2017-01-01", "effective_to": null, "file": "law/zz-evidence-rules.txt"},
     {"doc_id": "zz-ecommerce", "version_id": "1", "title": "ZZ国电子商务合同规定（SYNTHETIC）", "jurisdiction": "ZZ", "doc_type": "regulation", "language": "zh-CN", "effective_from": "2030-01-01", "effective_to": null, "file": "law/zz-ecommerce.txt"},
+    {"doc_id": "zz-criminal-law", "version_id": "2018-01-01", "title": "ZZ国刑法（SYNTHETIC）", "jurisdiction": "ZZ", "doc_type": "statute", "language": "zh-CN", "effective_from": "2018-01-01", "effective_to": "2024-03-01", "file": "law/zz-criminal-law-v2018.txt"},
+    {"doc_id": "zz-criminal-law", "version_id": "2024-03-01", "title": "ZZ国刑法（SYNTHETIC）", "jurisdiction": "ZZ", "doc_type": "statute", "language": "zh-CN", "effective_from": "2024-03-01", "effective_to": null, "file": "law/zz-criminal-law-v2024.txt"},
+    {"doc_id": "zz-criminal-evidence", "version_id": "1", "title": "ZZ国刑事诉讼证据规定（SYNTHETIC）", "jurisdiction": "ZZ", "doc_type": "judicial_interpretation", "language": "zh-CN", "effective_from": "2021-01-01", "effective_to": null, "file": "law/zz-criminal-evidence.txt"},
+    {"doc_id": "zz-financial-offences", "version_id": "1", "title": "ZZ Financial Offences Act (SYNTHETIC)", "jurisdiction": "ZZ", "doc_type": "statute", "language": "en", "effective_from": "2019-01-01", "effective_to": null, "file": "law/zz-financial-offences.txt"},
     {"doc_id": "zz-ot-contract", "version_id": "1", "title": "ZZ-OT地区合同条例（SYNTHETIC）", "jurisdiction": "ZZ-OT", "doc_type": "regulation", "language": "zh-CN", "effective_from": "2015-01-01", "effective_to": null, "file": "law/zz-ot-contract.txt"}
   ],
   "case_documents": [
@@ -15,7 +19,12 @@
     {"case_id": "zz-case-001", "doc_id": "c1-email", "version_id": "1", "title": "Email from seller (SYNTHETIC)", "language": "en", "file": "cases/c1-email.txt"},
     {"case_id": "zz-case-001", "doc_id": "c1-notice", "version_id": "1", "title": "解除合同通知书（SYNTHETIC）", "language": "zh-CN", "file": "cases/c1-notice.txt"},
     {"case_id": "zz-case-002", "doc_id": "c2-contract", "version_id": "1", "title": "购销合同（SYNTHETIC）", "language": "zh-CN", "file": "cases/c2-contract.txt"},
-    {"case_id": "zz-case-002", "doc_id": "c2-email", "version_id": "1", "title": "Email (SYNTHETIC)", "language": "en", "file": "cases/c2-email.txt"}
+    {"case_id": "zz-case-002", "doc_id": "c2-email", "version_id": "1", "title": "Email (SYNTHETIC)", "language": "en", "file": "cases/c2-email.txt"},
+    {"case_id": "zz-case-003", "doc_id": "c3-indictment", "version_id": "1", "title": "起诉书（SYNTHETIC）", "language": "zh-CN", "file": "cases/c3-indictment.txt"},
+    {"case_id": "zz-case-003", "doc_id": "c3-witness", "version_id": "1", "title": "证人询问笔录（SYNTHETIC）", "language": "zh-CN", "file": "cases/c3-witness.txt"},
+    {"case_id": "zz-case-003", "doc_id": "c3-interrogation", "version_id": "1", "title": "被告人讯问笔录（SYNTHETIC）", "language": "zh-CN", "file": "cases/c3-interrogation.txt"},
+    {"case_id": "zz-case-003", "doc_id": "c3-audit", "version_id": "1", "title": "司法会计鉴定意见书（SYNTHETIC）", "language": "zh-CN", "file": "cases/c3-audit.txt"},
+    {"case_id": "zz-case-003", "doc_id": "c3-bank", "version_id": "1", "title": "Bank account statement (SYNTHETIC)", "language": "en", "file": "cases/c3-bank.txt"}
   ],
   "law_queries": [
     {"id": "zz01", "category": "zh-zh", "text": "违约金约定得太高了，法院可以减少吗？", "as_of": "2026-01-01", "expected": [["zz-contract-law", "2025-01-01", "第十八条"]]},
@@ -69,7 +78,35 @@
     {"id": "zz49", "category": "en-zh", "text": "Can a witness who cannot appear in court for health reasons give written testimony?", "as_of": "2026-01-01", "expected": [["zz-evidence-provisions", "1", "第十条"]]},
     {"id": "zz50", "category": "en-zh", "text": "Can evidence that was never cross-examined be used to establish the facts?", "as_of": "2026-01-01", "expected": [["zz-evidence-provisions", "1", "第七条"]]},
     {"id": "zz51", "category": "en-zh", "text": "Must the party supplying standard terms draw attention to clauses that exclude its liability?", "as_of": "2026-01-01", "expected": [["zz-contract-law", "2025-01-01", "第七条"]]},
-    {"id": "zz52", "category": "en-zh", "text": "Does the court examine the authenticity, legality and relevance of evidence?", "as_of": "2026-01-01", "expected": [["zz-evidence-provisions", "1", "第八条"]]}
+    {"id": "zz52", "category": "en-zh", "text": "Does the court examine the authenticity, legality and relevance of evidence?", "as_of": "2026-01-01", "expected": [["zz-evidence-provisions", "1", "第八条"]]},
+    {"id": "cr01", "category": "zh-zh", "domain": "criminal", "text": "向社会公众承诺还本付息并吸收资金，构成什么犯罪？", "as_of": "2026-01-01", "expected": [["zz-criminal-law", "2024-03-01", "第一百零一条"]]},
+    {"id": "cr02", "category": "zh-zh", "domain": "criminal", "text": "非法吸收公众存款的人在提起公诉前退赃退赔，可以从轻处罚吗？", "as_of": "2026-01-01", "expected": [["zz-criminal-law", "2024-03-01", "第一百零一条"]]},
+    {"id": "cr03", "category": "zh-zh", "domain": "criminal", "text": "向社会公众吸收资金数额巨大的，处几年有期徒刑？", "as_of": "2022-06-01", "expected": [["zz-criminal-law", "2018-01-01", "第一百零一条"]]},
+    {"id": "cr04", "category": "zh-zh", "domain": "criminal", "text": "以非法占有为目的用诈骗方法集资，应当怎样处罚？", "as_of": "2026-01-01", "expected": [["zz-criminal-law", "2024-03-01", "第一百零二条"]]},
+    {"id": "cr05", "category": "zh-zh", "domain": "criminal", "text": "明知是金融犯罪所得，帮助提供账户转移资金掩饰来源，是什么罪？", "as_of": "2026-01-01", "expected": [["zz-criminal-law", "2024-03-01", "第一百零三条"]]},
+    {"id": "cr06", "category": "zh-zh", "domain": "criminal", "text": "犯罪人本人掩饰隐瞒自己的犯罪所得来源，也要处罚吗？", "as_of": "2026-01-01", "expected": [["zz-criminal-law", "2024-03-01", "第一百零三条之一"]]},
+    {"id": "cr07", "category": "zh-zh", "domain": "criminal", "text": "知道内幕信息后在信息公开前买卖证券，情节严重的怎么处罚？", "as_of": "2026-01-01", "expected": [["zz-criminal-law", "2024-03-01", "第一百零四条"]]},
+    {"id": "cr08", "category": "zh-zh", "domain": "criminal", "text": "犯罪后自动投案并如实供述罪行，可以减轻处罚吗？", "as_of": "2026-01-01", "expected": [["zz-criminal-law", "2024-03-01", "第十二条"]]},
+    {"id": "cr09", "category": "zh-zh", "domain": "criminal", "text": "共同犯罪中只起辅助作用的人应当怎么处罚？", "as_of": "2026-01-01", "expected": [["zz-criminal-law", "2024-03-01", "第十一条"]]},
+    {"id": "cr10", "category": "zh-zh", "domain": "criminal", "text": "公司实施犯罪的，直接负责的主管人员要承担刑事责任吗？", "as_of": "2026-01-01", "expected": [["zz-criminal-law", "2024-03-01", "第十三条"]]},
+    {"id": "cr11", "category": "zh-zh", "domain": "criminal", "text": "通过刑讯逼供取得的口供能不能使用？", "as_of": "2026-01-01", "expected": [["zz-criminal-evidence", "1", "第三条"]]},
+    {"id": "cr12", "category": "zh-zh", "domain": "criminal", "text": "只有被告人的口供，没有其他证据，能定罪吗？", "as_of": "2026-01-01", "expected": [["zz-criminal-evidence", "1", "第二条"]]},
+    {"id": "cr13", "category": "zh-zh", "domain": "criminal", "text": "认定被告人有罪的证明标准是什么？", "as_of": "2026-01-01", "expected": [["zz-criminal-evidence", "1", "第一条"]]},
+    {"id": "cr14", "category": "zh-zh", "domain": "criminal", "text": "非法集资的涉案金额可以根据审计报告认定吗？", "as_of": "2026-01-01", "expected": [["zz-criminal-evidence", "1", "第五条"]]},
+    {"id": "cr15", "category": "zh-zh", "domain": "criminal", "text": "讯问笔录没有经过犯罪嫌疑人核对签名，可以作为定案根据吗？", "as_of": "2026-01-01", "expected": [["zz-criminal-evidence", "1", "第四条"]]},
+    {"id": "cr16", "category": "zh-en", "domain": "criminal", "text": "未经批准向公众吸收存款并承诺回报，是什么犯罪？", "as_of": "2026-01-01", "expected": [["zz-financial-offences", "1", "Section 1"]]},
+    {"id": "cr17", "category": "zh-en", "domain": "criminal", "text": "明知是犯罪所得，通过银行账户转移资金掩饰其来源", "as_of": "2026-01-01", "expected": [["zz-financial-offences", "1", "Section 3"]]},
+    {"id": "cr18", "category": "zh-en", "domain": "criminal", "text": "掌握未公开的内幕信息进行证券交易", "as_of": "2026-01-01", "expected": [["zz-financial-offences", "1", "Section 4"]]},
+    {"id": "cr19", "category": "zh-en", "domain": "criminal", "text": "法院可以没收犯罪所得并责令退赔投资人吗？", "as_of": "2026-01-01", "expected": [["zz-financial-offences", "1", "Section 7"]]},
+    {"id": "cr20", "category": "zh-en", "domain": "criminal", "text": "审计报告能否作为涉案金额的证据，辩方可以质疑吗？", "as_of": "2026-01-01", "expected": [["zz-financial-offences", "1", "Section 6"]]},
+    {"id": "cr21", "category": "zh-en", "domain": "criminal", "text": "以欺骗手段从投资人处获取资金并意图永久占有，构成什么罪？", "as_of": "2026-01-01", "expected": [["zz-financial-offences", "1", "Section 2"]]},
+    {"id": "cr22", "category": "en-zh", "domain": "criminal", "text": "Is it an offence to take deposits from the general public by promising repayment of principal and interest?", "as_of": "2026-01-01", "expected": [["zz-criminal-law", "2024-03-01", "第一百零一条"]]},
+    {"id": "cr23", "category": "en-zh", "domain": "criminal", "text": "What is the punishment for fundraising fraud committed with intent to illegally possess the funds?", "as_of": "2026-01-01", "expected": [["zz-criminal-law", "2024-03-01", "第一百零二条"]]},
+    {"id": "cr24", "category": "en-zh", "domain": "criminal", "text": "Must a confession obtained by torture be excluded?", "as_of": "2026-01-01", "expected": [["zz-criminal-evidence", "1", "第三条"]]},
+    {"id": "cr25", "category": "en-zh", "domain": "criminal", "text": "Can a defendant be convicted on his own confession alone without other evidence?", "as_of": "2026-01-01", "expected": [["zz-criminal-evidence", "1", "第二条"]]},
+    {"id": "cr26", "category": "en-zh", "domain": "criminal", "text": "Can the amount involved in the case be determined from an audit report?", "as_of": "2026-01-01", "expected": [["zz-criminal-evidence", "1", "第五条"]]},
+    {"id": "cr27", "category": "en-zh", "domain": "criminal", "text": "Does voluntary surrender with a truthful confession allow a lighter punishment?", "as_of": "2026-01-01", "expected": [["zz-criminal-law", "2024-03-01", "第十二条"]]},
+    {"id": "cr28", "category": "en-zh", "domain": "criminal", "text": "Can the procuratorate freeze or seize the property of a criminal suspect?", "as_of": "2026-01-01", "expected": [["zz-criminal-evidence", "1", "第七条"]]}
   ],
   "law_negatives": [
     {"id": "neg01", "category": "off-topic", "text": "火星殖民地的个人所得税税率是多少？"},
@@ -78,7 +115,7 @@
     {"id": "neg04", "category": "off-topic", "text": "Which planet in the solar system has the most moons?"},
     {"id": "neg05", "category": "off-topic", "text": "量子计算机的工作原理"},
     {"id": "neg06", "category": "off-topic", "text": "Best hiking trails near the mountains in autumn"},
-    {"id": "hneg01", "category": "legal-out-of-corpus", "text": "故意杀人罪一般判处多少年有期徒刑？"},
+    {"id": "hneg01", "category": "legal-out-of-corpus", "text": "交通肇事后逃逸的驾驶员怎么处理？"},
     {"id": "hneg02", "category": "legal-out-of-corpus", "text": "What is the criminal penalty for tax evasion?"},
     {"id": "hneg03", "category": "legal-out-of-corpus", "text": "离婚后孩子的抚养权归谁？"},
     {"id": "hneg04", "category": "legal-out-of-corpus", "text": "How is a patent application examined and granted?"}
@@ -94,10 +131,20 @@
     {"id": "cq08", "category": "zh-zh", "case_id": "zz-case-001", "text": "买方付款期限", "expected": [["c1-contract", "第三条"]]},
     {"id": "cq09", "category": "en-zh", "case_id": "zz-case-001", "text": "time limit for quality inspection after receipt of the goods", "expected": [["c1-contract", "第四条"]]},
     {"id": "cq10", "category": "zh-zh", "case_id": "zz-case-001", "text": "合同约定的争议管辖法院", "expected": [["c1-contract", "第六条"]]},
-    {"id": "cq11", "category": "en-zh", "case_id": "zz-case-001", "text": "liquidated damages for each day of late delivery", "expected": [["c1-contract", "第五条"]]}
+    {"id": "cq11", "category": "en-zh", "case_id": "zz-case-001", "text": "liquidated damages for each day of late delivery", "expected": [["c1-contract", "第五条"]]},
+    {"id": "ccq01", "category": "zh-zh", "domain": "criminal", "case_id": "zz-case-003", "text": "被告人以承诺高额回报的方式向公众宣传", "expected": [["c3-indictment", "承诺年化回报"], ["c3-witness", "传单"]]},
+    {"id": "ccq02", "category": "zh-zh", "domain": "criminal", "case_id": "zz-case-003", "text": "被告人是否明知公司没有吸收存款的资质", "expected": [["c3-interrogation", "金融牌照"]]},
+    {"id": "ccq03", "category": "zh-zh", "domain": "criminal", "case_id": "zz-case-003", "text": "集资款的去向和用途", "expected": [["c3-audit", "资金流向"], ["c3-interrogation", "用于支付"]]},
+    {"id": "ccq04", "category": "zh-zh", "domain": "criminal", "case_id": "zz-case-003", "text": "吸收资金的总额和未兑付的金额", "expected": [["c3-indictment", "未能兑付"], ["c3-audit", "一千二百万"]]},
+    {"id": "ccq05", "category": "en-zh", "domain": "criminal", "case_id": "zz-case-003", "text": "investors were promised a fixed annual return", "expected": [["c3-witness", "年化收益"], ["c3-indictment", "承诺年化回报"]]},
+    {"id": "ccq06", "category": "en-zh", "domain": "criminal", "case_id": "zz-case-003", "text": "the defendant knew the company had no financial licence", "expected": [["c3-interrogation", "金融牌照"]]},
+    {"id": "ccq07", "category": "zh-en", "domain": "criminal", "case_id": "zz-case-003", "text": "资金转入被告人个人账户的银行记录", "expected": [["c3-bank", "personal account"]]},
+    {"id": "ccq08", "category": "en-en", "domain": "criminal", "case_id": "zz-case-003", "text": "transfer of money to a car dealership for a vehicle purchase", "expected": [["c3-bank", "car dealership"]]},
+    {"id": "ccq09", "category": "en-zh", "domain": "criminal", "case_id": "zz-case-003", "text": "how much money did the witness invest", "expected": [["c3-witness", "二十万"]]}
   ],
   "case_negatives": [
     {"id": "cneg01", "case_id": "zz-case-001", "text": "员工加班工资的计算方法"},
-    {"id": "cneg02", "case_id": "zz-case-001", "text": "patent infringement by a competitor's software"}
+    {"id": "cneg02", "case_id": "zz-case-001", "text": "patent infringement by a competitor's software"},
+    {"id": "cneg03", "case_id": "zz-case-003", "text": "离婚财产分割协议"}
   ]
 }

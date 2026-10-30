@@ -5,7 +5,8 @@
 # Pairs are approximate translations of general legal vocabulary. They are NOT statements that a
 # Chinese legal concept and a US/common-law concept are equivalent (ADR-0004 §6), are never shown to
 # users, and are never used to verify anything. They only widen the set of candidate spans.
-# Changelog: v1 initial list of general contract-dispute and civil-procedure vocabulary.
+# Changelog: v1 initial list: contract and civil-procedure vocabulary, then criminal, financial-crime
+# and criminal-procedure vocabulary (v1 practice area per ADR-0006).
 #
 # --- parties and roles ---
 当事人|双方	party|parties
@@ -184,3 +185,93 @@
 日	day|days
 月	month|months
 年	year|years
+# --- criminal law: general ---
+犯罪|罪	crime|offence|offense|criminal
+刑法	criminal law|penal code
+罪名	charge|offence|name of the offence
+刑事责任	criminal liability|criminal responsibility
+被告人	defendant|accused
+犯罪嫌疑人	suspect|criminal suspect
+被害人	victim
+公诉|公诉机关|人民检察院|检察院	prosecution|prosecutor|procuratorate
+辩护人|辩护律师	defense counsel|defence counsel|defense lawyer
+辩方	defense|defence
+起诉书	indictment|bill of indictment
+刑罚|处罚|判处	punishment|penalty|sentence|punish|sentenced
+有期徒刑	fixed-term imprisonment|imprisonment
+无期徒刑	life imprisonment
+拘役	criminal detention
+罚金	fine
+没收|没收财产	confiscate|confiscation|forfeiture
+退赃|退赔|追缴	restitution|return of proceeds|recover
+故意	intent|intentional|intentionally
+明知	knowingly|knowing|with knowledge|knew
+以非法占有为目的|非法占有	intent to illegally possess|intent to permanently deprive|unlawful appropriation
+共同犯罪	joint crime|joint offence|complicity
+主犯	principal offender|principal
+从犯	accessory|accomplice|secondary role
+自首|自动投案	voluntary surrender|surrender|turn oneself in
+如实供述	truthful confession|confess truthfully
+从轻处罚|减轻处罚|从轻|减轻	lighter punishment|mitigated punishment|leniency|mitigation
+单位犯罪	corporate crime|offence by a company|entity crime
+主管人员|直接负责的主管人员	responsible managers|person in charge|managers
+情节严重|严重情节	serious circumstances|aggravating circumstances|seriously
+数额较大	relatively large amount|large amount
+数额巨大	huge amount|very large amount
+追诉时效	limitation period for prosecution
+# --- financial crime ---
+金融	financial|finance
+金融犯罪	financial crime|financial offence
+金融管理	financial regulation|financial administration
+金融机构	financial institution
+金融牌照|资质	financial licence|financial license|licence|license|authorisation|authorization
+非法集资	illegal fundraising
+集资|募集资金	fundraising|raise funds|solicit funds
+集资诈骗	fundraising fraud
+非法吸收公众存款	illegally taking deposits from the public|unauthorised deposit-taking|illegal deposit-taking
+吸收存款|吸收资金	taking deposits|deposit-taking|solicit deposits|take deposits
+社会公众|公众|不特定对象	general public|public|unspecified persons
+存款	deposit|deposits
+资金	funds|money
+还本付息	repay principal and interest|principal and interest|principal with interest
+回报|收益	return|returns|profit|yield
+承诺	promise|promising|promised
+宣传|推介	advertise|publicize|promote|solicit
+投资人|集资参与人|投资者	investor|investors
+理财产品	wealth management product|investment product
+诈骗|欺诈	fraud|defraud|deception|deceive
+贷款诈骗	loan fraud
+洗钱	money laundering|launder|laundering
+犯罪所得|违法所得	proceeds of crime|criminal proceeds|proceeds|illegal gains
+掩饰|隐瞒	conceal|disguise|concealment
+来源	origin|source
+转移	transfer|move|moving
+转账|汇款|支付结算	transfer|wire transfer|remittance|payment settlement
+账户|资金账户|个人账户	account|bank account|personal account
+银行	bank
+内幕交易	insider trading|insider dealing
+内幕信息	inside information|insider information
+证券|股票	securities|stock|shares
+未公开	not public|not been made public|undisclosed
+兑付	repay|redeem|payout
+# --- criminal procedure and evidence ---
+刑事诉讼	criminal procedure|criminal proceedings
+定罪	conviction|convict|convicted
+量刑	sentencing
+证据确实充分|证据确实、充分	reliable and sufficient evidence|sufficient evidence
+排除合理怀疑	beyond reasonable doubt|exclude reasonable doubt
+非法证据|非法证据排除	illegally obtained evidence|exclusion of illegal evidence|exclusionary rule
+排除	exclude|exclusion|excluded
+刑讯逼供	torture to extract a confession|torture|coerced confession
+口供|供述	confession|statement of the accused
+讯问	interrogation|interrogate|questioning
+讯问笔录	interrogation record|record of interrogation
+询问笔录	witness interview record|record of questioning
+核对|签名确认	verify|check|sign|confirm
+审计报告|审计	audit report|audit
+司法会计鉴定	forensic accounting|forensic accounting report
+银行流水|交易记录|流水	bank statement|transaction records|bank records|account statement
+涉案财物|涉案金额|涉案	property involved|amount involved|involved in the case
+查封	seal up|seal
+扣押	seize|seizure
+冻结	freeze|freezing

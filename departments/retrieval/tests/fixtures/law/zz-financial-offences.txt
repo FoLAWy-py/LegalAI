@@ -1,0 +1,15 @@
+ZZ Financial Offences Act (SYNTHETIC)
+Synthetic test data. This is not real law of any jurisdiction; offences and penalties are fictional.
+
+PART I OFFENCES
+
+Section 1. A person who, without authorisation, solicits deposits or investments from the general public by promising repayment of principal with interest or other returns commits the offence of unauthorised deposit-taking.
+Section 2. A person who obtains funds from investors by deception with intent to permanently deprive them of the funds commits fundraising fraud.
+Section 3. A person who knowingly conceals or disguises the origin of the proceeds of a financial offence, including by transferring funds through bank accounts, commits money laundering.
+Section 4. A person who deals in securities while in possession of inside information that has not been made public commits insider dealing.
+Section 5. Where an offence under this Act is committed by a company, the company is liable to a fine and the responsible managers are liable to punishment.
+
+PART II PROCEEDINGS
+
+Section 6. In proceedings under this Act, an audit report on the flow of funds may be admitted as evidence of the amount involved, and the defence may challenge its findings.
+Section 7. The court may order confiscation of the proceeds of an offence under this Act and restitution to investors.

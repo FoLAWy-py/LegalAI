@@ -9,6 +9,7 @@
 from legalai_retrieval.cases import CaseEvidenceRetriever
 from legalai_retrieval.config import DEFAULT_MIN_LEXICAL_COVERAGE, RetrievalConfig, SearchMode
 from legalai_retrieval.embedding import (
+    DEFAULT_EMBEDDING_MODEL,
     KNOWN_MODELS,
     Embedder,
     EmbeddingModelSpec,
@@ -20,6 +21,7 @@ from legalai_retrieval.law import LawRetriever
 from legalai_retrieval.results import IndexStats, ScoredSpan
 
 __all__ = [
+    "DEFAULT_EMBEDDING_MODEL",
     "DEFAULT_MIN_LEXICAL_COVERAGE",
     "KNOWN_MODELS",
     "CaseEvidenceRetriever",
