@@ -4,7 +4,7 @@ title: Ingest digital case documents and serve them through CaseFileStore
 from: pmo
 to: casefile
 owner: pmo
-status: open
+status: in-progress
 priority: P1
 created: 2026-10-30
 updated: 2026-10-30
@@ -43,7 +43,19 @@ OCR, audio, chat exports, retrieval/indexing.
 - Which PDF extraction library gives reliable reading order for Chinese text? Record the choice and evidence in §8.
 
 ## 7. Response
-_Pending (casefile)._
+Decision: **accept** (casefile, 2026-10-30). No contract change needed; `CaseDocument` and `CaseFileStore`
+from contracts 0.2.0 are sufficient.
+
+Plan and interpretation (no change to the acceptance criteria):
+- Sequencing per PMO: Chinese (CN) documents first. Every format is tested with Chinese, English and mixed
+  zh/en text, including full-width punctuation and characters outside the BMP.
+- Offsets are Unicode code points into the stored text. Pages of a PDF are joined by a form feed (`\f`)
+  ending each page, so every page owns at least one character and `page_starts` stays strictly increasing.
+- Fail closed: image-only pages, unmapped glyphs (U+FFFD, `(cid:N)`, private-use code points), encrypted
+  files, tracked changes, undecodable text and empty documents raise typed `IntakeError` subclasses whose
+  messages never contain document text.
+- §6 is answered from evidence: synthetic Chinese multi-page PDFs are built in-test and at least two
+  candidate libraries are compared on extracted text and reading order; result and licenses go in §8.
 
 ## 8. Delivery
 _Pending (casefile)._

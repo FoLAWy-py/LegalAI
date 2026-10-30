@@ -3,7 +3,7 @@ name = "legalai-casefile"
 version = "0.1.0"
 description = "LegalAI casefile department"
 requires-python = ">=3.12"
-dependencies = ["legalai-contracts"]
+dependencies = ["legalai-contracts", "pypdf>=6.21,<7"]
 
 [build-system]
 requires = ["hatchling"]
