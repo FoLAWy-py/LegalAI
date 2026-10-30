@@ -1,9 +1,9 @@
 """Operator CLI for corpus. The data dir is always an explicit argument (no environment reading here).
 
-    python -m legalai_corpus fetch    --data-dir D URL...           # download/cache raw files
-    python -m legalai_corpus ingest   --data-dir D --manifest M     # fetch + extract + store versions
-    python -m legalai_corpus verify   --data-dir D                  # re-hash every stored version
-    python -m legalai_corpus spotcheck --data-dir D --manifest M --checks C
+python -m legalai_corpus fetch    --data-dir D URL...           # download/cache raw files
+python -m legalai_corpus ingest   --data-dir D --manifest M     # fetch + extract + store versions
+python -m legalai_corpus verify   --data-dir D                  # re-hash every stored version
+python -m legalai_corpus spotcheck --data-dir D --checks C        # offline, independent re-parse
 """
 
 import argparse
@@ -37,7 +37,7 @@ def main(argv: list[str] | None = None) -> int:
         p.add_argument("--contact", default=None, help="optional operator contact appended to User-Agent")
         if name == "fetch":
             p.add_argument("urls", nargs="+")
-        if name in ("ingest", "spotcheck"):
+        if name == "ingest":
             p.add_argument("--manifest", required=True)
         if name == "spotcheck":
             p.add_argument("--checks", required=True)
@@ -47,15 +47,18 @@ def main(argv: list[str] | None = None) -> int:
         fetcher = _fetcher(args)
         for url in args.urls:
             result = fetcher.fetch(url, refresh=args.refresh)
-            print(json.dumps({"outcome": result.outcome.value, **result.record.to_json()}, ensure_ascii=False))
+            print(
+                json.dumps({"outcome": result.outcome.value, **result.record.to_json()}, ensure_ascii=False)
+            )
         return 0
     if args.cmd == "ingest":
         from legalai_corpus.ingest import ingest_manifest, load_manifest
+        from legalai_corpus.store import FileSourceStore
 
         report = ingest_manifest(
             load_manifest(Path(args.manifest)),
             _fetcher(args),
-            _corpus_root(args.data_dir),
+            FileSourceStore(Path(args.data_dir).expanduser().resolve()),
             refresh=args.refresh,
         )
         print(json.dumps(report, ensure_ascii=False, indent=1))
@@ -63,17 +66,14 @@ def main(argv: list[str] | None = None) -> int:
     if args.cmd == "verify":
         from legalai_corpus.store import FileSourceStore
 
-        store = FileSourceStore(Path(args.data_dir))
+        store = FileSourceStore(Path(args.data_dir).expanduser().resolve())
         count = store.verify_all()
         print(f"verified {count} stored versions: content hashes and contract validation OK")
         return 0
     if args.cmd == "spotcheck":
-        from legalai_corpus.ingest import load_manifest
         from legalai_corpus.spotcheck import run_spotcheck
 
-        results = run_spotcheck(
-            Path(args.data_dir), load_manifest(Path(args.manifest)), Path(args.checks), _fetcher(args)
-        )
+        results = run_spotcheck(Path(args.data_dir).expanduser().resolve(), Path(args.checks))
         print(json.dumps(results, ensure_ascii=False, indent=1))
         return 0 if all(r["match"] for r in results) else 1
     return 2

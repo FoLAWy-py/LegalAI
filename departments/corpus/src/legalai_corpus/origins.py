@@ -33,30 +33,29 @@ class OriginNotApproved(Exception):
 
 
 ORIGINS: tuple[Origin, ...] = (
+    # No CN origin is APPROVED as of 2026-10-30. Evidence for each status: docs/origins.md.
     Origin(
         key="cn-npc-www",
         hosts=("www.npc.gov.cn",),
         jurisdiction="CN",
-        status=OriginStatus.APPROVED,
-        reason="NPC official site (hosted by the NPCSC General Office); publishes law texts and the NPCSC "
-        "Gazette. robots.txt disallows only YisouSpider; no terms restricting retrieval. HTTPS handshake "
-        "fails from the corpus host, so http is allowed (see origins.md).",
+        status=OriginStatus.PENDING_PMO,
+        reason="Official NPC site; robots.txt permissive, but the site WAF answers HTTP 403 to a "
+        "User-Agent containing 'robots' (automated access blocked for some agents); HTTPS unusable.",
         schemes=("http", "https"),
     ),
     Origin(
         key="cn-spc",
         hosts=("www.court.gov.cn",),
         jurisdiction="CN",
-        status=OriginStatus.APPROVED,
-        reason="SPC official site; no robots.txt (soft-404 HTML); no terms beyond a copyright notice.",
+        status=OriginStatus.PENDING_PMO,
+        reason="Official SPC site; /robots.txt is an HTML error page (robots.txt unavailable).",
     ),
     Origin(
         key="cn-csrc",
         hosts=("www.csrc.gov.cn",),
         jurisdiction="CN",
-        status=OriginStatus.APPROVED,
-        reason="CSRC official site; no robots.txt; legal statement forbids altering, selling or leasing "
-        "site information (we store unaltered raw files and do not sell).",
+        status=OriginStatus.PENDING_PMO,
+        reason="Official CSRC site; /robots.txt serves the homepage HTML (robots.txt unavailable).",
     ),
     Origin(
         key="cn-npc-flk",
@@ -70,7 +69,8 @@ ORIGINS: tuple[Origin, ...] = (
         hosts=("www.spp.gov.cn",),
         jurisdiction="CN",
         status=OriginStatus.PENDING_PMO,
-        reason="Footer forbids reposting, excerpting or mirroring without written authorisation.",
+        reason="/robots.txt serves the homepage HTML; footer forbids reposting, excerpting or mirroring "
+        "without written authorisation.",
     ),
     Origin(
         key="cn-wenshu",

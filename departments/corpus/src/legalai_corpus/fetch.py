@@ -2,8 +2,9 @@
 
 Guarantees:
 - Only URLs of APPROVED origins are requested (including every redirect hop). Links are never followed.
-- robots.txt of each host is fetched first and obeyed for the configured user agent; an unreadable
-  robots.txt (5xx, network error, 401/403/429) blocks the host (fail closed).
+- robots.txt of each host is fetched first and obeyed for the configured user agent. A robots.txt that
+  is unavailable (any non-200 status, network error, or an HTML page instead of robots rules) blocks the
+  host (fail closed, PMO rule).
 - At most one request per host every `min_interval` seconds (>= 2 s; robots Crawl-delay wins if larger).
 - Raw bytes are stored content-addressed (`raw/objects/<sha256>`) and never modified. Every network
   response is appended to `raw/fetch-log.jsonl`; `raw/latest.json` maps URL -> latest record.
@@ -390,19 +391,23 @@ def parse_robots(
 ) -> tuple[urllib.robotparser.RobotFileParser | None, float, str | None]:
     """Interpret a robots.txt response. Returns (parser, crawl_delay, blocked_reason).
 
-    RFC 9309: 4xx "unavailable" means no restrictions, except that 401/403/429 are treated here as a
-    block (conservative). 5xx means complete disallow. A 200 body is parsed as robots rules; a body that
-    is an HTML page (soft-404) contains no rules and therefore restricts nothing.
+    Stricter than RFC 9309, by PMO rule (REQ-PMO-0002, 2026-10-30): a robots.txt that is unavailable
+    means "not permitted". So any non-200 status blocks the host, and so does a 200 response whose body
+    is an HTML page (a soft-404 or homepage served in place of robots.txt), because that is not a
+    robots policy at all. Only a real robots file is parsed and obeyed.
     """
+    if resp.status != 200:
+        return None, 0.0, f"robots.txt HTTP {resp.status}: unavailable, treated as not permitted"
+    if _looks_like_html(resp):
+        return None, 0.0, "robots.txt is an HTML page (no robots policy): treated as not permitted"
     parser = urllib.robotparser.RobotFileParser()
-    if resp.status == 200:
-        text = resp.body.decode("utf-8", errors="replace")
-        parser.parse(text.splitlines())
-        delay = parser.crawl_delay(user_agent)
-        return parser, float(delay) if delay is not None else 0.0, None
-    if resp.status in (401, 403, 429):
-        return None, 0.0, f"robots.txt HTTP {resp.status} (treated as disallow)"
-    if 400 <= resp.status < 500:
-        parser.parse([])
-        return parser, 0.0, None
-    return None, 0.0, f"robots.txt HTTP {resp.status} (treated as disallow)"
+    parser.parse(resp.body.decode("utf-8", errors="replace").splitlines())
+    delay = parser.crawl_delay(user_agent)
+    return parser, float(delay) if delay is not None else 0.0, None
+
+
+def _looks_like_html(resp: HttpResponse) -> bool:
+    if "html" in resp.headers.get("content-type", "").lower():
+        return True
+    head = resp.body[:512].lstrip().lower()
+    return head.startswith((b"<!doctype", b"<html", b"<?xml", b"<head", b"<"))
