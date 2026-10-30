@@ -117,5 +117,5 @@ architecture-owned and may lag.
 - 2026-10-30/31: two PMO sessions ran at once (see §0.1).
 
 ## 8. Remote
-`origin` = https://github.com/FoLAWy-py/LegalAI.git. Only the initial commit has been pushed. Everything since then
-is local on `main`. Push only when the owner asks.
+`origin` = https://github.com/FoLAWy-py/LegalAI.git. `main` was pushed through 037c748 on 2026-10-31 at the owner's
+request. Push again only when the owner asks.
