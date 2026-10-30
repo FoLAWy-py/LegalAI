@@ -24,6 +24,12 @@ Public law (corpus). Searching case files (retrieval). Deciding what evidence pr
 ## Interfaces
 - **Consumes:** `CaseDocument`.
 - **Provides:** an intake API producing `CaseDocument`s; a `CaseFileStore` implementation.
+  Public API (`legalai_casefile.__all__`): `LocalCaseFileStore(data_dir)` (`ingest`, `ingest_file`,
+  `list_documents`, `get_document`, `get_text`, `list_versions`, `get_version`), `IntakeResult`,
+  `StoredVersion`, `extract_document`, `Extraction`, `derive_doc_id`, `detect_language`,
+  `PAGE_TERMINATOR`, `SUPPORTED_EXTENSIONS`, `DEFAULT_MAX_BYTES`, and the typed errors
+  (`IntakeError` subclasses with `IntakeReason`; store errors). Offsets are Unicode code points;
+  each PDF page ends with `PAGE_TERMINATOR` (form feed).
 
 ## Quality bars
 - `get_text` returns exactly the stored characters for any offset range; `page_of` matches the page shown

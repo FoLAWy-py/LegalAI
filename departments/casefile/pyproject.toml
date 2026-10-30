@@ -3,7 +3,7 @@ name = "legalai-casefile"
 version = "0.1.0"
 description = "LegalAI casefile department"
 requires-python = ">=3.12"
-dependencies = ["legalai-contracts"]
+dependencies = ["legalai-contracts", "pypdf>=6.21,<7"]
 
 [build-system]
 requires = ["hatchling"]
@@ -11,3 +11,29 @@ build-backend = "hatchling.build"
 
 [tool.uv.sources]
 legalai-contracts = { workspace = true }
+
+[tool.ruff]
+# Inherit every root setting; only the confusables list below is added.
+extend = "../../pyproject.toml"
+
+[tool.ruff.lint]
+# CN-first (ADR-0004, REQ-PMO-0001): full-width punctuation, digits and letters are the case-document
+# content our synthetic fixtures test extraction of, not typos. Only these exact code points are
+# allowed; every other confusable is still reported.
+allowed-confusables = [
+    "！", # U+FF01 FULLWIDTH EXCLAMATION MARK
+    "（", # U+FF08 FULLWIDTH LEFT PARENTHESIS
+    "）", # U+FF09 FULLWIDTH RIGHT PARENTHESIS
+    "，", # U+FF0C FULLWIDTH COMMA
+    "０", # U+FF10 FULLWIDTH DIGIT ZERO
+    "１", # U+FF11 FULLWIDTH DIGIT ONE
+    "２", # U+FF12 FULLWIDTH DIGIT TWO
+    "３", # U+FF13 FULLWIDTH DIGIT THREE
+    "６", # U+FF16 FULLWIDTH DIGIT SIX
+    "：", # U+FF1A FULLWIDTH COLON
+    "；", # U+FF1B FULLWIDTH SEMICOLON
+    "？", # U+FF1F FULLWIDTH QUESTION MARK
+    "Ａ", # U+FF21 FULLWIDTH LATIN CAPITAL LETTER A
+    "Ｂ", # U+FF22 FULLWIDTH LATIN CAPITAL LETTER B
+    "Ｃ", # U+FF23 FULLWIDTH LATIN CAPITAL LETTER C
+]

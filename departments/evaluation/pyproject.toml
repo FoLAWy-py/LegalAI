@@ -17,3 +17,21 @@ legalai-retrieval = { workspace = true }
 legalai-reasoning = { workspace = true }
 legalai-verification = { workspace = true }
 legalai-interface = { workspace = true }
+
+[tool.ruff]
+# Inherit every root setting; only the confusables list below is added.
+extend = "../../pyproject.toml"
+
+[tool.ruff.lint]
+# CN-first (ADR-0004): full-width punctuation is authoritative content of the synthetic Chinese law and case
+# files, never to be normalised (corpus/casefile charters). Only these exact code points are allowed; every
+# other confusable is still reported.
+allowed-confusables = [
+    "，", # U+FF0C FULLWIDTH COMMA
+    "：", # U+FF1A FULLWIDTH COLON
+    "；", # U+FF1B FULLWIDTH SEMICOLON
+    "（", # U+FF08 FULLWIDTH LEFT PARENTHESIS
+    "）", # U+FF09 FULLWIDTH RIGHT PARENTHESIS
+    "〔", # U+3014 LEFT TORTOISE SHELL BRACKET
+    "〕", # U+3015 RIGHT TORTOISE SHELL BRACKET
+]

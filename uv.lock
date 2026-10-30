@@ -395,10 +395,14 @@ version = "0.1.0"
 source = { editable = "departments/casefile" }
 dependencies = [
     { name = "legalai-contracts" },
+    { name = "pypdf" },
 ]
 
 [package.metadata]
-requires-dist = [{ name = "legalai-contracts", editable = "departments/contracts" }]
+requires-dist = [
+    { name = "legalai-contracts", editable = "departments/contracts" },
+    { name = "pypdf", specifier = ">=6.21,<7" },
+]
 
 [[package]]
 name = "legalai-contracts"
