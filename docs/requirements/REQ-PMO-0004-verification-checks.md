@@ -4,7 +4,7 @@ title: Verify evidence outlines — deterministic checks first, model checks sec
 from: pmo
 to: verification
 owner: pmo
-status: delivered
+status: verified
 priority: P1
 created: 2026-10-30
 updated: 2026-10-30
