@@ -40,7 +40,10 @@ byte-faithful to the official rendering, never re-typed, summarised or copied fr
    Criminal Procedure Law (刑事诉讼法); the SPC interpretation on applying the Criminal Procedure Law; and the
    official provisions on examining and judging evidence and on excluding illegal evidence in criminal cases
    (identify the exact official titles, issuers and versions from the official sources). Corpus SHOULD also ingest
-   the SPP rules of criminal procedure for procuratorates if its origin is approved. All versions with correct
+   the SPP rules of criminal procedure for procuratorates if its origin is approved. For the v1 pilot case
+   (SPC Guiding Case 270, REQ-PMO-0008), corpus MUST also ingest the joint opinions on handling drunk-driving criminal
+   cases: the version cited by that case (高检发办字〔2023〕187号) and the version it replaced, if any, as in force in
+   2022. Identify both from official sources. All versions with correct
    `effective_from` / `effective_to` taken from the official source (never from memory). Where only an amendment
    act and no official consolidated text exists for some version, record that and do not construct a consolidated
    text yourself. `origins.md` also assesses the US candidates so the US REQ can start quickly, but
