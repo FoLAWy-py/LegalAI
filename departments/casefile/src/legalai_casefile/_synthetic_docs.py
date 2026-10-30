@@ -19,10 +19,12 @@ _NS = (
     'xmlns:r="http://schemas.openxmlformats.org/officeDocument/2006/relationships"'
 )
 _REL = "http://schemas.openxmlformats.org/officeDocument/2006/relationships/"
+_PKG_REL = "http://schemas.openxmlformats.org/package/2006/relationships"
 
 
 def run(text: str) -> str:
-    return f'<w:r><w:rPr><w:rFonts w:eastAsia="SimSun"/></w:rPr><w:t xml:space="preserve">{escape(text)}</w:t></w:r>'
+    props = '<w:rPr><w:rFonts w:eastAsia="SimSun"/></w:rPr>'
+    return f'<w:r>{props}<w:t xml:space="preserve">{escape(text)}</w:t></w:r>'
 
 
 def para(*parts: str) -> str:
@@ -49,7 +51,10 @@ def textbox(text: str) -> str:
     )
 
 
-IMAGE_RUN = '<w:r><w:drawing><pic:pic><pic:blipFill><a:blip r:embed="rIdImg"/></pic:blipFill></pic:pic></w:drawing></w:r>'
+IMAGE_RUN = (
+    '<w:r><w:drawing><pic:pic><pic:blipFill><a:blip r:embed="rIdImg"/></pic:blipFill>'
+    "</pic:pic></w:drawing></w:r>"
+)
 
 
 def build_docx(
@@ -99,14 +104,14 @@ def build_docx(
         )
         zf.writestr(
             "_rels/.rels",
-            '<?xml version="1.0"?><Relationships xmlns="http://schemas.openxmlformats.org/package/2006/relationships">'
-            f'<Relationship Id="rId1" Type="{_REL}officeDocument" Target="word/document.xml"/></Relationships>',
+            f'<?xml version="1.0"?><Relationships xmlns="{_PKG_REL}">'
+            f'<Relationship Id="rId1" Type="{_REL}officeDocument" Target="word/document.xml"/>'
+            "</Relationships>",
         )
         zf.writestr("word/document.xml", document)
         zf.writestr(
             "word/_rels/document.xml.rels",
-            '<?xml version="1.0"?><Relationships xmlns="http://schemas.openxmlformats.org/package/2006/relationships">'
-            f"{rel_xml}</Relationships>",
+            f'<?xml version="1.0"?><Relationships xmlns="{_PKG_REL}">{rel_xml}</Relationships>',
         )
         for name, data in files.items():
             zf.writestr(name, data)

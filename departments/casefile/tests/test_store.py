@@ -1,4 +1,3 @@
-# ruff: noqa: RUF001 - full-width CJK punctuation is the data under test, not a typo.
 """LocalCaseFileStore: intake of every format, exact ranges (AC3), versioning, integrity, logging (AC5)."""
 
 import logging

@@ -1,4 +1,3 @@
-# ruff: noqa: RUF001 - full-width CJK punctuation is the data under test, not a typo.
 """Synthetic PDF fixture corpus (jurisdiction ZZ) shared by the tests and the extractor comparison.
 
 Each fixture lists the true lines of every page in reading order. All text is invented; it is not

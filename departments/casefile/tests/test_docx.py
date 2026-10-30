@@ -1,4 +1,3 @@
-# ruff: noqa: RUF001 - full-width CJK punctuation is the data under test, not a typo.
 """.docx intake: exact text for Chinese / English / mixed content and fail-closed constructs."""
 
 import pytest
@@ -76,7 +75,8 @@ def test_field_result_kept_field_code_dropped() -> None:
 
 def test_special_characters_map_as_documented() -> None:
     xml = para("A", "<w:r><w:noBreakHyphen/><w:softHyphen/><w:cr/></w:r>", "B")
-    assert extract_document("SYNTHETIC.docx", build_docx(xml)).text == "A‑­\nB\n"
+    expected = "A" + chr(0x2011) + chr(0x00AD) + "\nB\n"
+    assert extract_document("SYNTHETIC.docx", build_docx(xml)).text == expected
 
 
 def test_astral_characters() -> None:

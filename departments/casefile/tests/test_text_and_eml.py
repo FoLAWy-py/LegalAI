@@ -1,4 +1,3 @@
-# ruff: noqa: RUF001 - full-width CJK punctuation is the data under test, not a typo.
 """Plain text, Markdown and e-mail intake: strict decoding, exact text, fail-closed cases."""
 
 import codecs
@@ -16,7 +15,11 @@ from legalai_casefile import (
     extract_document,
 )
 
-ZH = "SYNTHETIC 收据\r\n今收到示例乙交来货款人民币捌仟元整（¥8,000.00）。\r\n收款人：示例甲；日期：２０２６年１０月３０日\r\n"
+ZH = (
+    "SYNTHETIC 收据\r\n"
+    "今收到示例乙交来货款人民币捌仟元整（¥8,000.00）。\r\n"
+    "收款人：示例甲；日期：２０２６年１０月３０日\r\n"
+)
 EN = "SYNTHETIC Notice of Default\nThe Buyer has not paid invoice ZZ-001 by 2026-10-01.\n"
 MIXED = (
     "# SYNTHETIC 会议纪要 Minutes\n\n- 甲方 (Party A) agreed to 延期交付 until 2026-12-01；\n- 张𠀀 signed.\n"

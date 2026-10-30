@@ -1,4 +1,3 @@
-# ruff: noqa: RUF001 - full-width CJK punctuation is the data under test, not a typo.
 """PDF intake: exact Chinese / mixed text, page mapping (AC2), scanned and partial rejection (AC4)."""
 
 import re
