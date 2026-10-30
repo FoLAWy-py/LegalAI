@@ -11,6 +11,7 @@ from legalai_contracts.answers import (
     PartyRole,
     TaskType,
 )
+from legalai_contracts.errors import DocumentNotFoundError
 from legalai_contracts.outline import (
     Element,
     EvidenceLink,
@@ -18,6 +19,8 @@ from legalai_contracts.outline import (
     EvidenceRelation,
     Gap,
     GapKind,
+    ReferenceDate,
+    ReferenceDateKind,
 )
 from legalai_contracts.ports import (
     Answerer,
@@ -36,7 +39,7 @@ from legalai_contracts.verification import (
     VerificationReport,
 )
 
-CONTRACT_VERSION = "0.3.0"
+CONTRACT_VERSION = "0.4.0"
 
 __all__ = [
     "CONTRACT_VERSION",
@@ -48,6 +51,7 @@ __all__ = [
     "Claim",
     "ClaimKind",
     "DocType",
+    "DocumentNotFoundError",
     "DraftAnswer",
     "Element",
     "EvidenceLink",
@@ -61,6 +65,8 @@ __all__ = [
     "ModelTrace",
     "OutlineBuilder",
     "PartyRole",
+    "ReferenceDate",
+    "ReferenceDateKind",
     "ReportStatus",
     "Retriever",
     "SourceDocument",

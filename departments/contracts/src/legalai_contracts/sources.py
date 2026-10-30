@@ -7,6 +7,19 @@ from pydantic import Field, model_validator
 
 from legalai_contracts._base import JURISDICTION_PATTERN, ContractModel
 
+_SHA256_PATTERN = r"^[0-9a-f]{64}$"
+
+_CONTENT_SHA256_DESCRIPTION = (
+    "Lowercase hex SHA-256 of the UTF-8 encoding (no BOM, no normalization) of exactly the stored text: "
+    "the string of `char_count` code points that offsets index and the store's `get_text` slices. "
+    "Stores verify it before serving text (ADR-0007 §4)."
+)
+
+_ORIGINAL_SHA256_DESCRIPTION = (
+    "Lowercase hex SHA-256 of the exact bytes of the original file the stored text was extracted from, "
+    "before any extraction or normalization. None = not recorded (ADR-0007 §4, contracts 0.4.0)."
+)
+
 
 class DocType(StrEnum):
     CONSTITUTION = "constitution"
@@ -26,7 +39,12 @@ class SourceKind(StrEnum):
 
 
 class SourceDocument(ContractModel):
-    """One specific version of a legal source, with full provenance (P4, P5)."""
+    """One specific version of a legal source, with full provenance (P4, P5).
+
+    `content_sha256` covers the stored text; `original_sha256` covers the raw file as retrieved from
+    `source_uri` (ADR-0007 §4). Several versions may share one `original_sha256` when one raw file yields
+    several documents.
+    """
 
     doc_id: str = Field(min_length=1)
     version_id: str = Field(min_length=1)
@@ -38,8 +56,11 @@ class SourceDocument(ContractModel):
     effective_to: date | None = None
     source_uri: str = Field(min_length=1)
     retrieved_at: datetime
-    content_sha256: str = Field(pattern=r"^[0-9a-f]{64}$")
+    content_sha256: str = Field(pattern=_SHA256_PATTERN, description=_CONTENT_SHA256_DESCRIPTION)
     char_count: int = Field(gt=0)
+    original_sha256: str | None = Field(
+        default=None, pattern=_SHA256_PATTERN, description=_ORIGINAL_SHA256_DESCRIPTION
+    )
 
     @model_validator(mode="after")
     def _validity_interval(self) -> "SourceDocument":
@@ -53,7 +74,12 @@ class SourceDocument(ContractModel):
 
 
 class CaseDocument(ContractModel):
-    """One user-supplied case file (contract, email, invoice, pleading). Confidential (P9)."""
+    """One user-supplied case file (contract, email, invoice, pleading). Confidential (P9).
+
+    `content_sha256` covers the stored (extracted) text; `original_sha256` covers the file exactly as
+    received at intake (ADR-0007 §4). Re-extracting the same file differently keeps `original_sha256`
+    and changes `content_sha256`.
+    """
 
     case_id: str = Field(min_length=1)
     doc_id: str = Field(min_length=1)
@@ -62,10 +88,13 @@ class CaseDocument(ContractModel):
     language: str = Field(min_length=2)
     media_type: str = Field(min_length=1)
     received_at: datetime
-    content_sha256: str = Field(pattern=r"^[0-9a-f]{64}$")
+    content_sha256: str = Field(pattern=_SHA256_PATTERN, description=_CONTENT_SHA256_DESCRIPTION)
     char_count: int = Field(gt=0)
     page_starts: tuple[int, ...] = Field(
         min_length=1, description="Character offset at which each page begins; first is 0."
+    )
+    original_sha256: str | None = Field(
+        default=None, pattern=_SHA256_PATTERN, description=_ORIGINAL_SHA256_DESCRIPTION
     )
 
     @model_validator(mode="after")
