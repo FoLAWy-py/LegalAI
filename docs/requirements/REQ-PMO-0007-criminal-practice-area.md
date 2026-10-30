@@ -4,7 +4,7 @@ title: Re-scope v1 to CN criminal cases in ADRs, project brief and contracts
 from: pmo
 to: architecture
 owner: pmo
-status: delivered
+status: verified
 priority: P1
 created: 2026-10-30
 updated: 2026-10-30
