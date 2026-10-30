@@ -12,11 +12,14 @@ stream itself to detect them and refuses the file instead of returning incomplet
 """
 
 import io
+from bisect import bisect_right
+from collections import Counter
 from dataclasses import dataclass, field
 
 import pypdf
 from pypdf.generic import ArrayObject, ContentStream, DictionaryObject, IndirectObject
 
+from legalai_casefile._cjk import CJK_MAPPING_VERSION, describe, is_compat_ideograph, map_radicals
 from legalai_casefile._common import PAGE_TERMINATOR, Extraction, check_characters
 from legalai_casefile.errors import (
     CorruptDocumentError,
@@ -297,8 +300,38 @@ def _extract(data: bytes) -> Extraction:
     for text in texts:
         starts.append(offset)
         offset += len(text) + len(PAGE_TERMINATOR)
-    full = "".join(t + PAGE_TERMINATOR for t in texts)
-    return Extraction(full, tuple(starts), MEDIA_TYPE, f"pypdf {pypdf.__version__}", tuple(warnings))
+    raw = "".join(t + PAGE_TERMINATOR for t in texts)
+
+    # REQ-PMO-0009: font maps that name radicals instead of ideographs. Mapped 1:1 and recorded.
+    full, subs, unmappable = map_radicals(raw)
+    if unmappable:
+        found = Counter((raw[o], "") for o in unmappable)
+        raise PartialExtractionError(
+            f"{len(unmappable)} CJK radical code point(s) with no equivalent unified ideograph "
+            f"({describe(found)})",
+            pages=tuple(sorted({bisect_right(starts, o) for o in unmappable})),
+        )
+    if subs:
+        pairs = Counter((s.original, s.replacement) for s in subs)
+        warnings.append(
+            f"PDF font map produced {len(subs)} CJK radical code point(s) in place of ideographs; mapped 1:1 "
+            f"with {CJK_MAPPING_VERSION}, every position recorded: {describe(pairs)}"
+        )
+    compat = Counter((ch, "") for ch in full if is_compat_ideograph(ch))
+    if compat:
+        warnings.append(
+            f"{compat.total()} CJK compatibility ideograph(s) kept unchanged (distinct forms; searches "
+            f"for the unified ideograph will not match them): {describe(compat)}"
+        )
+    return Extraction(
+        full,
+        tuple(starts),
+        MEDIA_TYPE,
+        f"pypdf {pypdf.__version__}",
+        tuple(warnings),
+        substitutions=subs,
+        substitution_table=CJK_MAPPING_VERSION if subs else None,
+    )
 
 
 def _pages(pages: list[int]) -> str:

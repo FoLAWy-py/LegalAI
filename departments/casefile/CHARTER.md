@@ -25,9 +25,11 @@ Public law (corpus). Searching case files (retrieval). Deciding what evidence pr
 - **Consumes:** `CaseDocument`.
 - **Provides:** an intake API producing `CaseDocument`s; a `CaseFileStore` implementation.
   Public API (`legalai_casefile.__all__`): `LocalCaseFileStore(data_dir)` (`ingest`, `ingest_file`,
-  `list_documents`, `get_document`, `get_text`, `list_versions`, `get_version`), `IntakeResult`,
+  `list_documents`, `get_document`, `get_text`, `list_versions`, `get_version`, `get_extracted_text`),
+  `IntakeResult`,
   `StoredVersion`, `extract_document`, `Extraction`, `derive_doc_id`, `detect_language`,
-  `PAGE_TERMINATOR`, `SUPPORTED_EXTENSIONS`, `DEFAULT_MAX_BYTES`, and the typed errors
+  `PAGE_TERMINATOR`, `SUPPORTED_EXTENSIONS`, `DEFAULT_MAX_BYTES`,
+  `CodePointSubstitution`, `restore_extracted_text`, `CJK_MAPPING_VERSION`, and the typed errors
   (`IntakeError` subclasses with `IntakeReason`; store errors). Offsets are Unicode code points;
   each PDF page ends with `PAGE_TERMINATOR` (form feed).
 
@@ -40,4 +42,8 @@ Public law (corpus). Searching case files (retrieval). Deciding what evidence pr
 ## Reliability duties
 P1 (exact, re-readable evidence text), P5 (hash, received time, original filename), P9 (owner of the most
 sensitive data: no plaintext logging, no copies outside the data dir, never used as fixtures).
-Never normalize or "correct" document text beyond documented, reversible whitespace rules.
+Never normalize or "correct" document text beyond documented, reversible whitespace rules. The one other
+exception (REQ-PMO-0009) applies to PDF output only. CJK radical code points produced by font maps are mapped 1:1
+to their Unicode `Equivalent_Unified_Ideograph`, which leaves length and offsets unchanged. Every mapped position
+and its original code point is recorded, so the extractor's output stays reproducible.
+Text that the author typed (in .docx, .eml, .txt or .md files) is never mapped.
