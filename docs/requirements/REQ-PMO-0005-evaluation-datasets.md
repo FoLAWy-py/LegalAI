@@ -4,7 +4,7 @@ title: Build synthetic outline set, golden-set spec and eval runner
 from: pmo
 to: evaluation
 owner: pmo
-status: open
+status: in-progress
 priority: P1
 created: 2026-10-30
 updated: 2026-10-30
@@ -43,7 +43,27 @@ Producing real golden items (needs the reviewer and D8).
 - Who is the qualified reviewer for CN items and for US items? (Project owner.)
 
 ## 7. Response
-_Pending (evaluation)._
+Decision: **accept** (evaluation, 2026-10-30).
+
+Accepted against the 2026-10-30 amended text of §1–§2 as communicated by PMO (CN first, US later; the
+yu-huan pilot is not golden data; the golden-set spec MUST require byte-faithful capture of the official rendering
+with URL, retrieval time and hash, an authority tier per document where secondary sources cannot support a
+SUPPORTED label, and a verbatim check of every annotation quote; US section may be a stub). Note for PMO: these
+amendments were not present in the copy of this REQ in the evaluation worktree; PMO should merge them.
+
+Plan:
+1. Synthetic set `ZZ-SYNTH-OUTLINE` (11 cases: 4 zh, 5 en, 2 cross-lingual, 2 missing evidence, 1 no law in force
+   → abstain), built in memory from fictional `ZZ` statutes and fictional case files; exposed as in-memory
+   `SourceStore`, `CaseFileStore`, `Retriever`, `EvidenceRetriever` fakes plus expected `EvidenceOutline`s, and a
+   derived adversarial citation set, all via `legalai_evaluation.__all__`.
+2. Golden-set spec at `departments/evaluation/docs/golden-set-spec.md` (CN complete, US stub).
+3. Runner `run_evaluation(dataset, builder, verifier, ...)` computing every release-gate metric with
+   per-jurisdiction and per-language breakdowns and a versioned, dataset-pinned `EvalReport`; tested with
+   trivial baselines (always-abstain, oracle, abstaining and rubber-stamp verifiers) against hand-computed values.
+
+Answer to §6: the qualified reviewer is a project-owner decision. The spec records reviewer identity and
+qualification per item and leaves the named CN and US reviewers as TBD; no real golden item can be admitted
+until they are named.
 
 ## 8. Delivery
 _Pending (evaluation)._
