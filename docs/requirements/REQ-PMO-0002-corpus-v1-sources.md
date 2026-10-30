@@ -4,7 +4,7 @@ title: Assess origins and ingest v1 CN criminal law with versions
 from: pmo
 to: corpus
 owner: pmo
-status: open
+status: in-progress
 priority: P1
 created: 2026-10-30
 updated: 2026-10-30
@@ -68,7 +68,18 @@ Civil law (no longer v1 scope), case law incl. guiding cases (later REQ), all US
 - Which origin provides authoritative historical versions for each document?
 
 ## 7. Response
-_Pending (corpus)._
+Decision: **accept** (corpus, 2026-10-30), with these clarifications:
+
+1. Origins: assessed in `departments/corpus/docs/origins.md` under the PMO rule (§2.1). Besides the charter
+   candidates, corpus also assesses `www.npc.gov.cn` (the NPC site that publishes the NPCSC Gazette) and
+   `www.spp.gov.cn` (named in §2.1), because `flk.npc.gov.cn` forbids automated retrieval in its robots.txt.
+2. Fidelity: stored text is derived mechanically from the raw official file, which is stored and hashed
+   next to it. The normalization rules are written down in `departments/corpus/docs/normalization.md`. No text is
+   typed, condensed or filled in from memory or mirrors.
+3. Dates: every `effective_from` / `effective_to` carries a recorded evidence pointer (URL plus the exact
+   official sentence it was read from). If corpus cannot find an official date or consolidated text, the version
+   is left out and listed in §8 instead of being guessed.
+4. Answer to §6: see the "Historical versions" table in `origins.md` and §8.
 
 ## 8. Delivery
 _Pending (corpus)._
